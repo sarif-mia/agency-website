@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 // API Configuration and Service Functions
-// This will be updated after deployment with your actual Railway URL
+// Updated with proper production backend URL
 const API_BASE_URL = import.meta.env.VITE_API_URL || (
   import.meta.env.PROD 
-    ? 'https://agency-website-hu7g.onrender.com/api'  // Your Render backend URL
+    ? 'https://sitegenit-backend.onrender.com/api'  // Updated backend URL
     : 'http://localhost:8000/api'
 );
 
