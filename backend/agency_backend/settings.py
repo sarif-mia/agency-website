@@ -113,6 +113,14 @@ else:
         }
     }
 
+# Add this for Railway compatibility
+import sys
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:'
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -227,14 +235,18 @@ if not DEBUG:
     SECURE_HSTS_PRELOAD = True
 
 # Email Configuration
-# For testing, we'll use SMTP backend regardless of DEBUG setting
-# In production, you can revert to the conditional logic
+# Production settings - use SMTP backend
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='sitegenit@gmail.com')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+# Add this for Railway compatibility
+if not EMAIL_HOST_PASSWORD or EMAIL_HOST_PASSWORD == 'your-gmail-app-password-here':
+    # Fallback to console backend if no password is set
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DEFAULT_FROM_EMAIL = 'Agency Website <sitegenit@gmail.com>'
 
