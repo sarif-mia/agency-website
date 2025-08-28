@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   const [currentWord, setCurrentWord] = useState(0);
   const words = ['Digital', 'Creative', 'Marketing', 'Branding', 'Innovation'];
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -14,8 +16,8 @@ const Hero = () => {
   
   // Handle button clicks
   const handleStartProject = () => {
-    // Navigate directly to the quote page
-    window.location.href = '/quote';
+    // Navigate directly to the quote page using React Router
+    navigate('/quote');
   };
   
   const handleViewWork = () => {

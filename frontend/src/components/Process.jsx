@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Search, Lightbulb, Code2, Rocket } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Process = () => {
+  const navigate = useNavigate();
+  
   // Handle get started button
   const handleGetStarted = () => {
     // Navigate directly to contact section
@@ -10,8 +13,8 @@ const Process = () => {
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
     } else {
-      // Fallback: navigate to quote page
-      window.location.href = '/quote';
+      // Fallback: navigate to quote page using React Router
+      navigate('/quote');
     }
   };
   const steps = [

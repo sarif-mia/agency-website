@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
 const Testimonials = () => {
@@ -10,6 +11,7 @@ const Testimonials = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isDesktop, setIsDesktop] = useState(false);
+  const navigate = useNavigate();
   
   // Handle CTA button
   const handleGetStarted = () => {
@@ -18,8 +20,8 @@ const Testimonials = () => {
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
     } else {
-      // Fallback: navigate to quote page
-      window.location.href = '/quote';
+      // Fallback: navigate to quote page using React Router
+      navigate('/quote');
     }
   };
   
