@@ -1,6 +1,6 @@
-/* Modern Admin Dashboard Styling - Fixed Dark Theme */
+/* Modern Admin Dashboard Styling - SiteGenIT Dark Theme */
 
-/* Color Variables for Dark Theme (Fixed) */
+/* Color Variables for SiteGenIT Branding */
 :root {
     --primary-color: #00f5ff;
     --secondary-color: #9966ff;
@@ -19,6 +19,22 @@
     --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.3);
     --shadow-medium: 0 5px 20px rgba(0, 0, 0, 0.4);
     --shadow-heavy: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* SiteGenIT Branding Enhancement */
+#branding h1:before {
+    content: '🚀 ';
+    font-size: 1.8rem;
+    margin-right: 10px;
+}
+
+#branding h1:after {
+    content: ' - Digital Excellence';
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    display: block;
+    margin-top: 5px;
 }
 
 /* Force Dark Theme - Override any system preferences */

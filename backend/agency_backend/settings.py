@@ -190,10 +190,10 @@ if 'PORT' in os.environ:
     ALLOWED_HOSTS.append('0.0.0.0')
     ALLOWED_HOSTS.append('*')  # Allow all hosts in Railway deployment
 
-# Admin customization
-ADMIN_SITE_HEADER = 'Digital Agency CMS'
-ADMIN_SITE_TITLE = 'Agency Admin'
-ADMIN_INDEX_TITLE = 'Welcome to Digital Agency Content Management'
+# Admin customization - SiteGenIT Branding
+ADMIN_SITE_HEADER = 'SiteGenIT Content Management System'
+ADMIN_SITE_TITLE = 'SiteGenIT Admin'
+ADMIN_INDEX_TITLE = 'Welcome to SiteGenIT Digital Agency Dashboard'
 
 # Custom admin styling
 ADMIN_MEDIA_PREFIX = '/static/admin/'

@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.utils.safestring import mark_safe
-from .admin_views import admin_site
+from django.contrib.admin import AdminSite
 from .models import (
     Project, Testimonial, ContactMessage, Service, BlogPost, NewsletterSubscriber, 
     UserProfile, MeetingRequest, HelpArticle, CaseStudy,
@@ -16,6 +16,21 @@ from .models import (
     # SEO optimization models
     SEOMetaTags, ContentSEOAnalysis, SEOSettings, SitemapURL, RedirectRule, RobotsTxt
 )
+
+# Custom Admin Site Configuration
+class SiteGenITAdminSite(AdminSite):
+    site_header = 'SiteGenIT Content Management System'
+    site_title = 'SiteGenIT Admin'
+    index_title = 'Welcome to SiteGenIT Digital Agency Dashboard'
+    site_url = '/'
+    
+    def each_context(self, request):
+        context = super().each_context(request)
+        context['site_url'] = 'https://sitegenit.vercel.app'
+        return context
+
+# Create custom admin site instance
+admin_site = SiteGenITAdminSite(name='sitegenit_admin')
 
 
 class ProjectAdmin(admin.ModelAdmin):
