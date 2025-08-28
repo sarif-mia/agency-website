@@ -30,7 +30,7 @@ import os
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-render-deployment-key-change-in-production-123456789')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Add this for Railway compatibility
 ALLOWED_HOSTS = [
@@ -40,6 +40,9 @@ ALLOWED_HOSTS = [
     '.herokuapp.com',
     '.vercel.app',
     '.netlify.app',
+    '.render.com',
+    'agency-website-hu7g.onrender.com',
+    'sitegenit-backend.onrender.com',
 ]
 
 # Add this for Railway compatibility
