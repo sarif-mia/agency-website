@@ -64,12 +64,7 @@ export default defineConfig({
   
   // CSS preprocessing
   css: {
-    devSourcemap: true,
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@import "./src/styles/variables.scss";`
-      }
-    }
+    devSourcemap: true
   },
   
   // Optimize dependencies
