@@ -2,9 +2,11 @@ import { useState } from 'react';
 
 // API Configuration and Service Functions
 // This will be updated after deployment with your actual Railway URL
-const API_BASE_URL = import.meta.env.PROD 
-  ? import.meta.env.VITE_API_URL || 'http://localhost:8000/api'  // Use environment variable or fallback
-  : 'http://localhost:8000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || (
+  import.meta.env.PROD 
+    ? 'https://agency-backend-production.railway.app/api'  // Your Railway backend URL (update when available)
+    : 'http://localhost:8000/api'
+);
 
 // Helper function to handle API responses
 const handleResponse = async (response) => {
@@ -30,8 +32,15 @@ const apiCall = async (endpoint, options = {}) => {
     const response = await fetch(url, config);
     return await handleResponse(response);
   } catch (error) {
-    console.error(`API call failed for ${endpoint}:`, error);
-    throw error;
+    console.warn(`API call failed for ${endpoint}:`, error.message);
+    // Return empty data structure instead of throwing error
+    // This allows the frontend to work without backend
+    return {
+      results: [],
+      data: [],
+      message: 'Backend not available - using demo mode',
+      success: false
+    };
   }
 };
 
