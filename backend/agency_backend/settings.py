@@ -185,6 +185,7 @@ if 'PORT' in os.environ:
     local_ip = socket.gethostbyname(hostname)
     ALLOWED_HOSTS.append(local_ip)
     ALLOWED_HOSTS.append('0.0.0.0')
+    ALLOWED_HOSTS.append('*')  # Allow all hosts in Railway deployment
 
 # Admin customization
 ADMIN_SITE_HEADER = 'Digital Agency CMS'
@@ -236,6 +237,7 @@ else:
     CORS_ALLOWED_ORIGINS.extend([
         "https://your-site.netlify.app",
         "https://your-site.vercel.app",
+        "https://agency-website.up.railway.app",  # Add Railway URL
     ])
 
 CORS_ALLOW_CREDENTIALS = True
