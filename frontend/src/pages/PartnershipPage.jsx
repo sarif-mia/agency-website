@@ -254,8 +254,8 @@ const PartnershipPage = () => {
             <div className="contact-card">
               <Mail size={24} />
               <h4>Partnership Inquiry</h4>
-              <p>partnerships@sitegenit.com</p>
-              <a href="mailto:partnerships@sitegenit.com">Send Email</a>
+              <p>sitegenit@gmail.com</p>
+              <a href="mailto:sitegenit@gmail.com">Send Email</a>
             </div>
             <div className="contact-card">
               <Phone size={24} />

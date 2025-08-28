@@ -113,11 +113,11 @@ const Footer = () => {
             
             <div className="contact-info">
               <a 
-                href="mailto:hello@sitegenit.com" 
+                href="mailto:sitegenit@gmail.com" 
                 className="contact-item"
               >
                 <Mail size={16} />
-                <span>hello@sitegenit.com</span>
+                <span>sitegenit@gmail.com</span>
               </a>
               <a 
                 href="tel:+8801571447136" 

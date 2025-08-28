@@ -46,8 +46,8 @@ const AIChatbot = () => {
       "We're proud of our diverse portfolio! From modern e-commerce sites to complex web applications, we've delivered 150+ successful projects. Scroll up to see our featured work or let me know what type of project you have in mind!"
     ],
     contact: [
-      "📞 **Get in Touch:**\n\n📧 **Email:** hello@sitegenit.com\n📱 **Phone:** +880 1571 447 136\n📍 **Location:** Dhaka, Bangladesh\n\n⏰ **Business Hours:**\n• Mon-Fri: 9:00 AM - 6:00 PM\n• Saturday: 10:00 AM - 4:00 PM\n• Sunday: Closed\n\n🚀 **Quick Actions:**\n• Schedule a meeting above\n• Fill out our contact form\n• Call us directly\n\nWhat's the best way for us to connect?",
-      "Ready to start your project? You can reach us at hello@sitegenit.com or +880 1571 447 136. We typically respond within 2 hours! You can also use the Schedule Meeting button above for a free consultation."
+      "📞 **Get in Touch:**\n\n📧 **Email:** sitegenit@gmail.com\n📱 **Phone:** +880 1571 447 136\n📍 **Location:** Dhaka, Bangladesh\n\n⏰ **Business Hours:**\n• Mon-Fri: 9:00 AM - 6:00 PM\n• Saturday: 10:00 AM - 4:00 PM\n• Sunday: Closed\n\n🚀 **Quick Actions:**\n• Schedule a meeting above\n• Fill out our contact form\n• Call us directly\n\nWhat's the best way for us to connect?",
+      "Ready to start your project? You can reach us at sitegenit@gmail.com or +880 1571 447 136. We typically respond within 2 hours! You can also use the Schedule Meeting button above for a free consultation."
     ],
     process: [
       "🔄 **Our 4-Step Process:**\n\n**1. 📞 Discovery Call**\n• Free consultation (30 min)\n• Understanding your needs\n• Project scope discussion\n\n**2. 📝 Proposal & Planning**\n• Detailed project proposal\n• Timeline & milestones\n• Resource allocation\n\n**3. 🎨 Design & Development**\n• Wireframes & prototypes\n• Iterative development\n• Regular updates & feedback\n\n**4. 🚀 Launch & Support**\n• Testing & optimization\n• Go-live support\n• Ongoing maintenance\n\nReady to get started? Let's schedule your discovery call!",

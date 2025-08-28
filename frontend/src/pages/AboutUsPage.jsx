@@ -281,7 +281,7 @@ const AboutUsPage = () => {
               <Link to="/quote" className="contact-btn primary">
                 Get Started
               </Link>
-              <a href="mailto:hello@sitegenit.com" className="contact-btn secondary">
+              <a href="mailto:sitegenit@gmail.com" className="contact-btn secondary">
                 <Mail size={20} />
                 Email Us
               </a>

@@ -138,14 +138,14 @@ const PrivacyPolicyPage = () => {
                 <li>Right to data portability</li>
                 <li>Right to withdraw consent</li>
               </ul>
-              <p>To exercise these rights, please contact us at <a href="mailto:privacy@sitegenit.com">privacy@sitegenit.com</a></p>
+              <p>To exercise these rights, please contact us at <a href="mailto:sitegenit@gmail.com">sitegenit@gmail.com</a></p>
             </section>
 
             <section className="content-section">
               <h2>Contact Us</h2>
               <p>If you have any questions about this Privacy Policy or our data practices, please contact us:</p>
               <div className="contact-info">
-                <p><strong>Email:</strong> <a href="mailto:privacy@sitegenit.com">privacy@sitegenit.com</a></p>
+                <p><strong>Email:</strong> <a href="mailto:sitegenit@gmail.com">sitegenit@gmail.com</a></p>
                 <p><strong>Phone:</strong> <a href="tel:+8801571447136">+880 1571 447 136</a></p>
                 <p><strong>Address:</strong> Dhaka, Bangladesh</p>
               </div>

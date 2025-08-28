@@ -169,7 +169,7 @@ const TermsConditionsPage = () => {
               <h2>Contact Information</h2>
               <p>For any questions regarding these terms and conditions, please contact us:</p>
               <div className="contact-info">
-                <p><strong>Email:</strong> <a href="mailto:legal@sitegenit.com">legal@sitegenit.com</a></p>
+                <p><strong>Email:</strong> <a href="mailto:sitegenit@gmail.com">sitegenit@gmail.com</a></p>
                 <p><strong>Phone:</strong> <a href="tel:+8801571447136">+880 1571 447 136</a></p>
                 <p><strong>Address:</strong> Dhaka, Bangladesh</p>
               </div>
