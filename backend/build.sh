@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Build script for Render deployment
 echo "Starting build process..."
@@ -15,10 +16,10 @@ python manage.py collectstatic --noinput
 echo "Running database migrations..."
 python manage.py migrate
 
-# Populate initial data
+# Populate initial data (with error handling)
 echo "Populating initial data..."
-python manage.py populate_data
-python manage.py populate_content_data
-python manage.py populate_seo_data
+python manage.py populate_data || echo "Warning: populate_data failed, continuing..."
+python manage.py populate_content_data || echo "Warning: populate_content_data failed, continuing..."
+python manage.py populate_seo_data || echo "Warning: populate_seo_data failed, continuing..."
 
 echo "Build process completed successfully!"
