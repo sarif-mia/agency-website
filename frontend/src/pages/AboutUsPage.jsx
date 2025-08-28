@@ -28,6 +28,14 @@ const AboutUsPage = () => {
     },
     {
       id: 3,
+      name: 'Shahin Imran',
+      position: 'Lead Developer & Partner',
+      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop&crop=face',
+      bio: 'Senior full-stack developer and technical partner specializing in modern web technologies and scalable architectures. Expert in React, Node.js, and cloud deployment.',
+      expertise: ['React/Next.js', 'Node.js/Django', 'Cloud Architecture', 'Mobile Development']
+    },
+    {
+      id: 4,
       name: 'Michael Rodriguez',
       position: 'Lead Developer',
       image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face',
@@ -35,7 +43,7 @@ const AboutUsPage = () => {
       expertise: ['React/Node.js', 'Cloud Architecture', 'DevOps']
     },
     {
-      id: 4,
+      id: 5,
       name: 'Emma Thompson',
       position: 'Marketing Director',
       image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&crop=face',
@@ -129,7 +137,7 @@ const AboutUsPage = () => {
             </div>
             <div className="info-card">
               <Users size={32} />
-              <h3>25+ Team Members</h3>
+              <h3>26+ Team Members</h3>
               <p>Creative professionals dedicated to your success</p>
             </div>
           </div>

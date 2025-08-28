@@ -38,8 +38,8 @@ const AIChatbot = () => {
       "Our digital solutions cover everything from web development to branding! We specialize in creating modern, responsive websites with cutting-edge technology. Would you like to know more about a specific service?"
     ],
     pricing: [
-      "💰 **Our Pricing Philosophy:**\n\n✅ **Transparent** - No hidden costs\n✅ **Flexible** - Custom packages for every budget\n✅ **Value-driven** - Maximum ROI for your investment\n\n**Starting from:**\n• Website Design: $1,500+\n• Mobile App: $5,000+\n• Digital Marketing: $800/month\n• Custom Quote Available\n\nWant a personalized quote? Click 'Schedule Meeting' to get started!",
-      "We believe in fair, transparent pricing! Our packages start from $1,500 for websites and go up based on complexity and features. Every project is unique, so we provide custom quotes. Would you like to schedule a free consultation?"
+      "💰 **Our Pricing Philosophy:**\n\n✅ **Transparent** - No hidden costs\n✅ **Flexible** - Custom packages for every budget\n✅ **Value-driven** - Maximum ROI for your investment\n\n**Starting from:**\n• Website Design: ৳25,000+\n• Mobile App: ৳80,000+\n• Digital Marketing: ৳12,000/month\n• Custom Quote Available\n\nWant a personalized quote? Click 'Schedule Meeting' to get started!",
+      "We believe in fair, transparent pricing! Our packages start from ৳25,000 for websites and go up based on complexity and features. Every project is unique, so we provide custom quotes. Would you like to schedule a free consultation?"
     ],
     portfolio: [
       "🏆 **Our Portfolio Highlights:**\n\n✨ **150+ Projects Delivered**\n✨ **98% Client Satisfaction**\n✨ **24/7 Support Available**\n\nWe've worked with:\n• E-commerce businesses\n• SaaS companies\n• Healthcare providers\n• Educational institutions\n• Creative agencies\n\nCheck out our Portfolio section above to see our latest work! Which industry interests you?",

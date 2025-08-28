@@ -2,14 +2,14 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 const SEO = ({
-  title = "Digital Agency - Professional Web Development & Digital Marketing Services",
+  title = "SiteGenIT - Professional Web Development & Digital Marketing Services",
   description = "Leading digital agency specializing in web development, mobile apps, UI/UX design, and digital marketing. Transform your business with our expert solutions.",
   keywords = "digital agency, web development, mobile apps, UI/UX design, digital marketing, React development, Node.js, professional websites",
   image = "/assets/og-image.jpg",
   url = "",
   type = "website",
-  siteName = "Digital Agency",
-  author = "Digital Agency Team",
+  siteName = "SiteGenIT",
+  author = "SiteGenIT Team",
   robots = "index, follow",
   canonical = null,
   structuredData = null,

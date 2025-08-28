@@ -256,8 +256,8 @@ const Services = () => {
               
               <div className="service-pricing">
                 <h4>Starting From:</h4>
-                <p className="price">$2,999</p>
-                <p className="price-note">*Price varies based on project scope and requirements</p>
+                <p className="price">৳১৫,০০০</p>
+                <p className="price-note">*Price varies based on project scope and requirements. Bangladeshi pricing</p>
               </div>
               
               <div className="modal-actions">

@@ -258,7 +258,7 @@ const Header3D = () => {
             transition={{ duration: 0.3 }}
             onClick={() => scrollToSection('#')}
           >
-            <span className="logo-text gradient-text">Agency</span>
+            <span className="logo-text gradient-text">SiteGenIT</span>
           </motion.div>
 
           {/* Desktop Navigation */}
