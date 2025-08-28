@@ -3,6 +3,9 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Set base path for deployment
+  base: '/',
+  
   plugins: [react()],
   
   // SEO and Performance Optimizations
