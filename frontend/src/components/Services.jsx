@@ -601,9 +601,88 @@ const Services = () => {
           padding: 40px;
           max-width: 600px;
           width: 90%;
+          max-width: min(600px, 90vw);
           max-height: 90vh;
           overflow-y: auto;
           position: relative;
+          box-sizing: border-box;
+        }
+        
+        @media (max-width: 768px) {
+          .service-modal-content {
+            padding: 25px 20px;
+            width: 95%;
+            max-width: calc(100vw - 20px);
+            margin: 10px;
+            border-radius: 15px;
+          }
+          
+          .modal-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+          }
+          
+          .modal-header h3 {
+            font-size: 1.4rem;
+          }
+          
+          .service-detail-description {
+            font-size: 1rem;
+            margin-bottom: 25px;
+          }
+          
+          .modal-actions {
+            flex-direction: column;
+            gap: 10px;
+          }
+          
+          .modal-actions .neon-button {
+            width: 100%;
+            max-width: 250px;
+            padding: 14px 20px;
+            font-size: 0.9rem;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .service-modal-content {
+            padding: 20px 15px;
+            width: 98%;
+            max-width: calc(100vw - 10px);
+            margin: 5px;
+            border-radius: 12px;
+          }
+          
+          .modal-header h3 {
+            font-size: 1.2rem;
+          }
+          
+          .service-detail-description {
+            font-size: 0.9rem;
+            line-height: 1.5;
+          }
+          
+          .service-features-detailed h4 {
+            font-size: 1rem;
+          }
+          
+          .service-features-detailed li {
+            font-size: 0.85rem;
+            padding: 6px 0;
+          }
+          
+          .service-pricing {
+            padding: 15px;
+          }
+          
+          .price {
+            font-size: 1.6rem;
+          }
+          
+          .modal-actions .neon-button {
+            padding: 12px 18px;
+            font-size: 0.85rem;
+          }
         }
         
         .modal-header {

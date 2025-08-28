@@ -350,20 +350,32 @@ const Hero = () => {
           .hero-section {
             min-height: 85vh;
             padding-top: 70px;
+            padding-left: 0;
+            padding-right: 0;
           }
           
           .hero-content {
-            padding: 0 20px;
+            padding: 0 15px;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
           }
           
           .hero-title {
             font-size: 2.2rem;
             margin-bottom: 20px;
+            line-height: 1.2;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
           }
           
           .hero-subtitle {
             font-size: 1rem;
             margin-bottom: 30px;
+            line-height: 1.4;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
           }
           
           .hero-buttons {
@@ -371,18 +383,24 @@ const Hero = () => {
             align-items: center;
             gap: 12px;
             margin-bottom: 30px;
+            width: 100%;
           }
           
           .hero-buttons button {
             width: 100%;
-            max-width: 250px;
-            padding: 12px 20px;
+            max-width: 280px;
+            padding: 14px 20px;
             font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
           
           .hero-stats {
             gap: 20px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
           }
           
           .stat-number {
@@ -402,34 +420,56 @@ const Hero = () => {
         @media (max-width: 480px) {
           .hero-section {
             min-height: 80vh;
-            padding-top: 65px;
+            padding-top: 60px;
+            padding-left: 0;
+            padding-right: 0;
           }
           
           .hero-content {
-            padding: 0 15px;
+            padding: 0 10px;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
           }
           
           .hero-title {
             font-size: 1.8rem;
             margin-bottom: 15px;
+            line-height: 1.1;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
           }
           
           .hero-subtitle {
             font-size: 0.9rem;
             margin-bottom: 25px;
+            line-height: 1.3;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
           }
           
           .hero-buttons {
             margin-bottom: 25px;
+            width: 100%;
           }
           
           .hero-buttons button {
-            padding: 10px 18px;
+            padding: 12px 18px;
             font-size: 0.9rem;
+            max-width: 260px;
           }
           
           .hero-stats {
             gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+          
+          .stat {
+            min-width: 80px;
+            flex: 1;
+            max-width: 100px;
           }
           
           .stat-number {
@@ -438,6 +478,8 @@ const Hero = () => {
           
           .stat-label {
             font-size: 0.75rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
           }
         }
       `}</style>

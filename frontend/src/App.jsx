@@ -41,6 +41,7 @@ import ServicesPage from './pages/ServicesPage';
 
 // Import styles
 import './App.css';
+import './styles/mobile-fixes.css';
 
 // Import SEO configuration
 import { getPageSEO } from './utils/seoConfig';

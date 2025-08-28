@@ -645,6 +645,7 @@ const AIChatbot = () => {
             left: 20px;
             width: 50px;
             height: 50px;
+            z-index: 1002;
           }
 
           .chat-window {
@@ -652,7 +653,9 @@ const AIChatbot = () => {
             left: 15px;
             right: 15px;
             width: auto;
+            max-width: calc(100vw - 30px);
             height: 350px;
+            z-index: 1001;
           }
 
           .chat-window.minimized {
@@ -672,16 +675,23 @@ const AIChatbot = () => {
           }
 
           .chat-messages {
-            padding: 15px;
+            padding: 12px;
+            max-height: calc(350px - 140px);
           }
 
           .message-text {
             font-size: 0.85rem;
             padding: 10px 14px;
+            max-width: 85%;
           }
 
           .chat-input-container {
-            padding: 15px;
+            padding: 12px;
+          }
+          
+          .chat-input {
+            font-size: 0.85rem;
+            padding: 10px 14px;
           }
         }
 
@@ -691,10 +701,42 @@ const AIChatbot = () => {
             left: 15px;
             width: 45px;
             height: 45px;
+            z-index: 1002;
           }
 
           .chat-window {
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            width: auto;
+            max-width: calc(100vw - 20px);
             height: 300px;
+            z-index: 1001;
+          }
+          
+          .chat-messages {
+            padding: 10px;
+            max-height: calc(300px - 130px);
+          }
+          
+          .message-text {
+            font-size: 0.8rem;
+            padding: 8px 12px;
+            max-width: 80%;
+          }
+          
+          .chat-input-container {
+            padding: 10px;
+          }
+          
+          .chat-input {
+            font-size: 0.8rem;
+            padding: 8px 12px;
+          }
+          
+          .send-btn {
+            width: 38px;
+            height: 38px;
           }
         }
       `}</style>
