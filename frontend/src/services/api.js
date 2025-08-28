@@ -1,7 +1,10 @@
 import { useState } from 'react';
 
 // API Configuration and Service Functions
-const API_BASE_URL = 'http://localhost:8000/api';
+// Update this to your actual Railway URL after deployment
+const API_BASE_URL = import.meta.env.PROD 
+  ? 'https://your-railway-app-url.up.railway.app/api'  // Replace with your actual Railway URL
+  : 'http://localhost:8000/api';
 
 // Helper function to handle API responses
 const handleResponse = async (response) => {
