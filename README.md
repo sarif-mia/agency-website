@@ -2,6 +2,14 @@
 
 A cutting-edge, professional agency website built with React frontend and Django backend, featuring a sophisticated dark theme with vibrant neon accents and fluid animations. Experience seamless navigation, dynamic content, and modern web technologies in action.
 
+## 📅 Recent Updates
+
+### Deployment Fixes (August 2025)
+- Fixed Netlify deployment issues by removing conflicting Python dependencies
+- Resolved Railway deployment problems with updated configuration files
+- Updated Pillow version to 10.4.0 to address compatibility issues
+- Improved CORS configuration for better cross-origin support
+
 ## ✨ Features
 
 ### Frontend Features
@@ -117,7 +125,7 @@ AGENCY/
 │   │   │   ├── Process.jsx       # Work process timeline
 │   │   │   ├── Testimonials.jsx  # Client testimonials
 │   │   │   ├── CallToAction.jsx  # CTA sections
-│   │   │   ├── Footer.jsx        # Footer with navigation
+│   │   │   └── Footer.jsx        # Footer with navigation
 │   │   │   └── ContactForm.jsx   # Contact forms
 │   │   ├── pages/           # Page components
 │   │   │   ├── OurTeamPage.jsx   # Team members showcase
