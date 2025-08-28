@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -81,14 +80,13 @@ function App() {
   }, []);
 
   return (
-    <HelmetProvider>
-      <Router>
-        <ScrollToTop />
-        <div className="App">
-          <Header3D />
-          <Breadcrumbs />
-          
-          <Routes>
+    <Router>
+      <ScrollToTop />
+      <div className="App">
+        <Header3D />
+        <Breadcrumbs />
+        
+        <Routes>
             {/* Home page route */}
             <Route path="/" element={<HomePage />} />
             
@@ -126,13 +124,12 @@ function App() {
             
             {/* SEO Audit Report */}
             <Route path="/seo-audit" element={<SEOAuditReport />} />
-          </Routes>
-          
-          <Footer />
-          <AIChatbot />
-        </div>
-      </Router>
-    </HelmetProvider>
+        </Routes>
+        
+        <Footer />
+        <AIChatbot />
+      </div>
+    </Router>
   );
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 
 const SEO = ({
   title = "Digital Agency - Professional Web Development & Digital Marketing Services",
