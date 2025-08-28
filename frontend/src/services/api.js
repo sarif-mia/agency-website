@@ -4,7 +4,7 @@ import { useState } from 'react';
 // This will be updated after deployment with your actual Railway URL
 const API_BASE_URL = import.meta.env.VITE_API_URL || (
   import.meta.env.PROD 
-    ? 'https://agency-backend-production.railway.app/api'  // Your Railway backend URL (update when available)
+    ? 'https://agency-backend-production.railway.app/api'  // Your Railway backend URL (will be updated)
     : 'http://localhost:8000/api'
 );
 

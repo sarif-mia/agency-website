@@ -235,6 +235,7 @@ if DEBUG:
 else:
     # Add your production frontend URLs here
     CORS_ALLOWED_ORIGINS.extend([
+        "https://sitegenit.vercel.app",
         "https://agency-website-beryl-one.vercel.app",
         "https://agency-website-git-main-sarif-mias-projects.vercel.app",
         "https://agency-website-3acnfdeya-sarif-mias-projects.vercel.app",
