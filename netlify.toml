@@ -15,3 +15,7 @@
   command = "cd frontend && npm run dev"
   port = 8888
   targetPort = 5173
+
+# Ignore Python dependencies for frontend build
+[build.environment]
+  PYTHON_VERSION = "3.11"
