@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-zvz!dt@829#(s$3(-0!u^8td$6ak)op)e0ffj+ke6lhko&h6lc')
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-render-deployment-key-change-in-production-123456789')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
@@ -261,12 +261,13 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='sitegenit@gmail.com')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='dummy-password')
 
 # Add this for Railway compatibility
-if not EMAIL_HOST_PASSWORD or EMAIL_HOST_PASSWORD == 'your-gmail-app-password-here':
+if not EMAIL_HOST_PASSWORD or EMAIL_HOST_PASSWORD in ['your-gmail-app-password-here', 'dummy-password']:
     # Fallback to console backend if no password is set
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    print("Warning: Using console email backend. Set EMAIL_HOST_PASSWORD for email functionality.")
 
 DEFAULT_FROM_EMAIL = 'Agency Website <sitegenit@gmail.com>'
 
