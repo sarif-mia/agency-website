@@ -23,9 +23,8 @@ except ImportError:
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+# Add this for Railway compatibility
+import os
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-zvz!dt@829#(s$3(-0!u^8td$6ak)op)e0ffj+ke6lhko&h6lc')
@@ -33,14 +32,19 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-zvz!dt@829#(s$3(-0!u^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
+# Add this for Railway compatibility
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '.railway.app',
     '.herokuapp.com',
     '.vercel.app',
-    '.netlify.app'
+    '.netlify.app',
 ]
+
+# Add this for Railway compatibility
+if 'ALLOWED_HOSTS' in os.environ:
+    ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 
 # Application definition
@@ -158,10 +162,29 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Add this for Railway compatibility
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 # Static files directories
 STATICFILES_DIRS = [
     BASE_DIR / 'api' / 'static',
 ]
+
+# Add this for Railway compatibility
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# Add this for Railway compatibility
+if 'PORT' in os.environ:
+    import socket
+    hostname = socket.gethostname()
+    local_ip = socket.gethostbyname(hostname)
+    ALLOWED_HOSTS.append(local_ip)
+    ALLOWED_HOSTS.append('0.0.0.0')
 
 # Admin customization
 ADMIN_SITE_HEADER = 'Digital Agency CMS'
@@ -216,14 +239,6 @@ else:
     ])
 
 CORS_ALLOW_CREDENTIALS = True
-
-# Media files
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-# Static files for production
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Security settings for production
 if not DEBUG:
