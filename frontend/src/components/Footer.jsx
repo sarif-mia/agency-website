@@ -136,6 +136,7 @@ const Footer = () => {
   const contactInfo = [
     { icon: Mail, text: 'hello@sitegenit.com', href: 'mailto:hello@sitegenit.com' },
     { icon: Phone, text: '+880 1621-711941', href: 'tel:+8801621711941' },
+    { icon: Phone, text: '+880 1571-447136', href: 'tel:+8801571447136' },
     { icon: MapPin, text: 'Dhaka, Bangladesh', href: 'https://maps.google.com' }
   ];
   
