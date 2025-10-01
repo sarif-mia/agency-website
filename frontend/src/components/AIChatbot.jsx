@@ -331,8 +331,6 @@ const AIChatbot = () => {
           box-shadow: 0 8px 32px rgba(0, 245, 255, 0.3);
           z-index: 1001;
           transition: all 0.3s ease;
-          position: relative;
-          overflow: hidden;
         }
 
         .chat-toggle-btn:hover {

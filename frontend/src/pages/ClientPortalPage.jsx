@@ -23,9 +23,12 @@ const ClientPortalPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isLogin) {
-      alert(`🔐 Demo Login Successful!\n\nWelcome back!\n\nIn the full application, you would access:\n• Project dashboard\n• File downloads\n• Invoice history\n• Communication center\n• Project timelines\n• Support tickets`);
+      // TODO: Implement real login functionality here
+      // For now, just console log the form data
+      console.log('Login submitted:', formData);
     } else {
-      alert(`✅ Demo Registration Successful!\n\nAccount created for ${formData.name}!\n\nYou would receive:\n• Welcome email\n• Account activation link\n• Client onboarding guide\n• Direct contact information`);
+      // TODO: Implement real registration functionality here
+      console.log('Registration submitted:', formData);
     }
   };
 
