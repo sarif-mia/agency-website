@@ -1,0 +1,42 @@
+from django.contrib import admin
+from .models import (
+    Project, Testimonial, ContactMessage, Service, BlogPost, NewsletterSubscriber, 
+    UserProfile, MeetingRequest, HelpArticle, CaseStudy,
+    NavigationMenu, SubMenuItem, PageContent, SectionContent, CompanyInfo,
+    TeamMember, JobPosition, FeatureFlag, SiteSettings, DynamicSection, VisitorStatistics,
+    SEOMetaTags, ContentSEOAnalysis, SEOSettings, SitemapURL, RedirectRule, RobotsTxt
+)
+
+# Simple admin registrations without custom classes to avoid errors
+admin.site.register(Project)
+admin.site.register(Testimonial)
+admin.site.register(ContactMessage)
+admin.site.register(Service)
+admin.site.register(BlogPost)
+admin.site.register(NewsletterSubscriber)
+admin.site.register(UserProfile)
+admin.site.register(MeetingRequest)
+admin.site.register(HelpArticle)
+admin.site.register(CaseStudy)
+admin.site.register(NavigationMenu)
+admin.site.register(SubMenuItem)
+admin.site.register(PageContent)
+admin.site.register(SectionContent)
+admin.site.register(CompanyInfo)
+admin.site.register(TeamMember)
+admin.site.register(JobPosition)
+admin.site.register(FeatureFlag)
+admin.site.register(SiteSettings)
+admin.site.register(DynamicSection)
+admin.site.register(VisitorStatistics)
+admin.site.register(SEOMetaTags)
+admin.site.register(ContentSEOAnalysis)
+admin.site.register(SEOSettings)
+admin.site.register(SitemapURL)
+admin.site.register(RedirectRule)
+admin.site.register(RobotsTxt)
+
+# Configure the admin site
+admin.site.site_header = 'Digital Agency CMS Administration'
+admin.site.site_title = 'Digital Agency CMS Admin'
+admin.site.index_title = 'Welcome to Digital Agency Dashboard'

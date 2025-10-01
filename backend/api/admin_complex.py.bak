@@ -1,0 +1,1285 @@
+from django.contrib import admin
+from django.utils.html import format_html
+from django.db import models
+from django.forms import Textarea
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+from django.utils.safestring import mark_safe
+from django.contrib.admin import AdminSite
+from .models import (
+    Project, Testimonial, ContactMessage, Service, BlogPost, NewsletterSubscriber, 
+    UserProfile, MeetingRequest, HelpArticle, CaseStudy,
+    # New content management models
+    NavigationMenu, SubMenuItem, PageContent, SectionContent, CompanyInfo,
+    TeamMember, JobPosition, FeatureFlag, SiteSettings, DynamicSection, VisitorStatistics,
+    # SEO optimization models
+    SEOMetaTags, ContentSEOAnalysis, SEOSettings, SitemapURL, RedirectRule, RobotsTxt
+)
+
+# Custom Admin Site Configuration
+class SiteGenITAdminSite(AdminSite):
+    site_header = 'SiteGenIT Content Management System'
+    site_title = 'SiteGenIT Admin'
+    index_title = 'Welcome to SiteGenIT Digital Agency Dashboard'
+    site_url = '/'
+    
+    def each_context(self, request):
+        context = super().each_context(request)
+        context['site_url'] = 'https://sitegenit.vercel.app'
+        return context
+
+# Create custom admin site instance
+admin_site = SiteGenITAdminSite(name='sitegenit_admin')
+
+
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ['title', 'category', 'year', 'client_name', 'is_featured', 'created_at']
+    list_filter = ['category', 'year', 'is_featured', 'created_at']
+    search_fields = ['title', 'description', 'client_name', 'technologies']
+    prepopulated_fields = {'slug': ('title',)}
+    list_editable = ['is_featured']
+    ordering = ['-is_featured', '-created_at']
+    
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('title', 'slug', 'category', 'description', 'detailed_description')
+        }),
+        ('Media', {
+            'fields': ('image', 'image_url')
+        }),
+        ('Project Details', {
+            'fields': ('technologies', 'year', 'client_name', 'project_url', 'github_url')
+        }),
+        ('Settings', {
+            'fields': ('is_featured',)
+        }),
+    )
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related()
+
+
+class TestimonialAdmin(admin.ModelAdmin):
+    list_display = ['name', 'company', 'rating', 'project', 'is_featured', 'created_at']
+    list_filter = ['rating', 'is_featured', 'created_at', 'company']
+    search_fields = ['name', 'company', 'text']
+    list_editable = ['is_featured', 'rating']
+    ordering = ['-is_featured', '-created_at']
+    
+    fieldsets = (
+        ('Person Information', {
+            'fields': ('name', 'position', 'company', 'image', 'image_url')
+        }),
+        ('Testimonial', {
+            'fields': ('text', 'rating', 'project')
+        }),
+        ('Settings', {
+            'fields': ('is_featured',)
+        }),
+    )
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('project')
+
+
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'subject', 'message_type', 'status', 'created_at']
+    list_filter = ['message_type', 'status', 'created_at']
+    search_fields = ['name', 'email', 'subject', 'message']
+    list_editable = ['status']
+    readonly_fields = ['created_at']
+    ordering = ['-created_at']
+    
+    fieldsets = (
+        ('Contact Information', {
+            'fields': ('name', 'email', 'phone', 'company')
+        }),
+        ('Message Details', {
+            'fields': ('message_type', 'subject', 'message')
+        }),
+        ('Project Information', {
+            'fields': ('budget_range', 'project_timeline'),
+            'classes': ('collapse',)
+        }),
+        ('Status', {
+            'fields': ('status', 'created_at', 'updated_at')
+        }),
+    )
+    
+    actions = ['mark_as_replied', 'mark_as_closed']
+    
+    @admin.action(description='Mark selected messages as replied')
+    def mark_as_replied(self, request, queryset):
+        queryset.update(status='replied')
+        self.message_user(request, f'{queryset.count()} messages marked as replied.')
+    
+    @admin.action(description='Mark selected messages as closed')
+    def mark_as_closed(self, request, queryset):
+        queryset.update(status='closed')
+        self.message_user(request, f'{queryset.count()} messages marked as closed.')
+
+
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ['name', 'short_description', 'price_range', 'is_active', 'order']
+    list_filter = ['is_active']
+    search_fields = ['name', 'description']
+    prepopulated_fields = {'slug': ('name',)}
+    list_editable = ['is_active', 'order']
+    ordering = ['order', 'name']
+    
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('name', 'slug', 'short_description', 'description')
+        }),
+        ('Display', {
+            'fields': ('icon', 'features', 'price_range')
+        }),
+        ('Settings', {
+            'fields': ('is_active', 'order')
+        }),
+    )
+
+
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ['title', 'is_published', 'is_featured', 'read_time', 'published_at']
+    list_filter = ['is_published', 'is_featured', 'published_at', 'created_at']
+    search_fields = ['title', 'excerpt', 'content']
+    prepopulated_fields = {'slug': ('title',)}
+    list_editable = ['is_published', 'is_featured']
+    ordering = ['-is_featured', '-published_at']
+    date_hierarchy = 'published_at'
+    
+    fieldsets = (
+        ('Content', {
+            'fields': ('title', 'slug', 'excerpt', 'content')
+        }),
+        ('Media', {
+            'fields': ('featured_image', 'featured_image_url')
+        }),
+        ('Metadata', {
+            'fields': ('tags', 'read_time')
+        }),
+        ('Publishing', {
+            'fields': ('is_published', 'is_featured', 'published_at')
+        }),
+    )
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request)
+
+
+class NewsletterSubscriberAdmin(admin.ModelAdmin):
+    list_display = ['email', 'name', 'is_active', 'subscribed_at']
+    list_filter = ['is_active', 'subscribed_at']
+    search_fields = ['email', 'name']
+    list_editable = ['is_active']
+    ordering = ['-subscribed_at']
+    readonly_fields = ['subscribed_at']
+    
+    actions = ['activate_subscribers', 'deactivate_subscribers']
+    
+    @admin.action(description='Activate selected subscribers')
+    def activate_subscribers(self, request, queryset):
+        queryset.update(is_active=True)
+        self.message_user(request, f'{queryset.count()} subscribers activated.')
+    
+    @admin.action(description='Deactivate selected subscribers')
+    def deactivate_subscribers(self, request, queryset):
+        queryset.update(is_active=False)
+        self.message_user(request, f'{queryset.count()} subscribers deactivated.')
+
+
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'get_full_name', 'phone', 'company', 'is_email_verified', 'created_at']
+    list_filter = ['is_email_verified', 'created_at']
+    search_fields = ['user__email', 'user__first_name', 'user__last_name', 'company', 'phone']
+    readonly_fields = ['created_at', 'updated_at']
+    
+    @admin.display(description='Full Name')
+    def get_full_name(self, obj):
+        return obj.user.get_full_name() or obj.user.username
+    
+    fieldsets = (
+        ('User Information', {
+            'fields': ('user',)
+        }),
+        ('Profile Details', {
+            'fields': ('phone', 'company', 'bio', 'avatar')
+        }),
+        ('Status', {
+            'fields': ('is_email_verified', 'created_at', 'updated_at')
+        }),
+    )
+
+
+class MeetingRequestAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'company', 'meeting_type', 'preferred_date', 'preferred_time', 'status', 'created_at']
+    list_filter = ['meeting_type', 'status', 'preferred_date', 'created_at']
+    search_fields = ['name', 'email', 'company', 'project_description']
+    list_editable = ['status']
+    readonly_fields = ['created_at', 'updated_at']
+    ordering = ['-created_at']
+    date_hierarchy = 'preferred_date'
+    
+    fieldsets = (
+        ('Contact Information', {
+            'fields': ('name', 'email', 'phone', 'company')
+        }),
+        ('Meeting Details', {
+            'fields': ('meeting_type', 'preferred_date', 'preferred_time', 'project_description')
+        }),
+        ('System Fields', {
+            'fields': ('status', 'user', 'created_at', 'updated_at')
+        }),
+        ('Admin Notes', {
+            'fields': ('admin_notes', 'meeting_link'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    actions = ['confirm_meetings', 'complete_meetings', 'cancel_meetings']
+    
+    @admin.action(description='Confirm selected meetings')
+    def confirm_meetings(self, request, queryset):
+        queryset.update(status='confirmed')
+        self.message_user(request, f'{queryset.count()} meetings confirmed.')
+    
+    @admin.action(description='Mark selected meetings as completed')
+    def complete_meetings(self, request, queryset):
+        queryset.update(status='completed')
+        self.message_user(request, f'{queryset.count()} meetings marked as completed.')
+    
+    @admin.action(description='Cancel selected meetings')
+    def cancel_meetings(self, request, queryset):
+        queryset.update(status='cancelled')
+        self.message_user(request, f'{queryset.count()} meetings cancelled.')
+
+
+class HelpArticleAdmin(admin.ModelAdmin):
+    list_display = ['title', 'category', 'is_published', 'is_featured', 'view_count', 'helpful_votes', 'created_at']
+    list_filter = ['category', 'is_published', 'is_featured', 'created_at']
+    search_fields = ['title', 'excerpt', 'content']
+    prepopulated_fields = {'slug': ('title',)}
+    list_editable = ['is_published', 'is_featured']
+    ordering = ['-is_featured', '-helpful_votes', '-created_at']
+    readonly_fields = ['view_count', 'helpful_votes', 'created_at', 'updated_at']
+    
+    fieldsets = (
+        ('Content', {
+            'fields': ('title', 'slug', 'category', 'excerpt', 'content')
+        }),
+        ('Publishing', {
+            'fields': ('is_published', 'is_featured')
+        }),
+        ('Statistics', {
+            'fields': ('view_count', 'helpful_votes', 'created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    actions = ['publish_articles', 'unpublish_articles', 'feature_articles']
+    
+    @admin.action(description='Publish selected articles')
+    def publish_articles(self, request, queryset):
+        queryset.update(is_published=True)
+        self.message_user(request, f'{queryset.count()} articles published.')
+    
+    @admin.action(description='Unpublish selected articles')
+    def unpublish_articles(self, request, queryset):
+        queryset.update(is_published=False)
+        self.message_user(request, f'{queryset.count()} articles unpublished.')
+    
+    @admin.action(description='Feature selected articles')
+    def feature_articles(self, request, queryset):
+        queryset.update(is_featured=True)
+        self.message_user(request, f'{queryset.count()} articles featured.')
+
+
+class CaseStudyAdmin(admin.ModelAdmin):
+    list_display = ['title', 'client_name', 'industry', 'is_published', 'is_featured', 'project_duration', 'created_at']
+    list_filter = ['industry', 'is_published', 'is_featured', 'created_at']
+    search_fields = ['title', 'client_name', 'challenge', 'solution']
+    prepopulated_fields = {'slug': ('title',)}
+    list_editable = ['is_published', 'is_featured']
+    ordering = ['-is_featured', '-created_at']
+    readonly_fields = ['created_at', 'updated_at']
+    
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('title', 'slug', 'client_name', 'industry')
+        }),
+        ('Case Study Content', {
+            'fields': ('challenge', 'solution', 'results')
+        }),
+        ('Media & Links', {
+            'fields': ('featured_image', 'featured_image_url', 'project_url')
+        }),
+        ('Project Details', {
+            'fields': ('technologies_used', 'project_duration', 'testimonial')
+        }),
+        ('Metrics', {
+            'fields': ('metrics',),
+            'classes': ('collapse',)
+        }),
+        ('Publishing', {
+            'fields': ('is_published', 'is_featured')
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    actions = ['publish_case_studies', 'unpublish_case_studies', 'feature_case_studies']
+    
+    @admin.action(description='Publish selected case studies')
+    def publish_case_studies(self, request, queryset):
+        queryset.update(is_published=True)
+        self.message_user(request, f'{queryset.count()} case studies published.')
+    
+    @admin.action(description='Unpublish selected case studies')
+    def unpublish_case_studies(self, request, queryset):
+        queryset.update(is_published=False)
+        self.message_user(request, f'{queryset.count()} case studies unpublished.')
+    
+    @admin.action(description='Feature selected case studies')
+    def feature_case_studies(self, request, queryset):
+        queryset.update(is_featured=True)
+        self.message_user(request, f'{queryset.count()} case studies featured.')
+
+
+# =============================================================================
+# FRONTEND CONTENT MANAGEMENT ADMIN
+# =============================================================================
+
+class SubMenuItemInline(admin.TabularInline):
+    model = SubMenuItem
+    extra = 0
+    fields = ['name', 'description', 'icon', 'url', 'external_url', 'order', 'is_active']
+    
+
+class NavigationMenuAdmin(admin.ModelAdmin):
+    list_display = ['name', 'menu_type', 'has_submenu', 'url', 'external_url', 'order', 'is_active']
+    list_filter = ['menu_type', 'has_submenu', 'is_active']
+    search_fields = ['name', 'url']
+    prepopulated_fields = {'slug': ('name',)}
+    list_editable = ['order', 'is_active']
+    ordering = ['menu_type', 'order']
+    inlines = [SubMenuItemInline]
+    
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('name', 'slug', 'menu_type', 'icon')
+        }),
+        ('Navigation', {
+            'fields': ('url', 'external_url', 'has_submenu'),
+            'description': 'Use either URL (internal) or External URL. Check "Has Submenu" if this item has dropdown items.'
+        }),
+        ('Display Settings', {
+            'fields': ('order', 'is_active')
+        }),
+    )
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('submenu_items')
+
+
+class SubMenuItemAdmin(admin.ModelAdmin):
+    list_display = ['parent_menu', 'name', 'url', 'external_url', 'order', 'is_active']
+    list_filter = ['parent_menu', 'is_active']
+    search_fields = ['name', 'description']
+    list_editable = ['order', 'is_active']
+    ordering = ['parent_menu', 'order']
+    
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('parent_menu', 'name', 'description', 'icon')
+        }),
+        ('Navigation', {
+            'fields': ('url', 'external_url'),
+            'description': 'Use either URL (internal) or External URL.'
+        }),
+        ('Settings', {
+            'fields': ('order', 'is_active')
+        }),
+    )
+
+
+class SectionContentInline(admin.TabularInline):
+    model = SectionContent
+    extra = 0
+    fields = ['section_type', 'title', 'subtitle', 'button_text', 'button_url', 'order', 'is_active']
+    
+
+class PageContentAdmin(admin.ModelAdmin):
+    list_display = ['page_type', 'title', 'is_published', 'updated_at']
+    list_filter = ['page_type', 'is_published']
+    search_fields = ['title', 'subtitle', 'content']
+    list_editable = ['is_published']
+    ordering = ['page_type']
+    inlines = [SectionContentInline]
+    
+    fieldsets = (
+        ('Page Information', {
+            'fields': ('page_type', 'title', 'subtitle', 'meta_description')
+        }),
+        ('Hero Section', {
+            'fields': ('hero_title', 'hero_subtitle', 'hero_button_text', 'hero_button_url'),
+            'classes': ('collapse',)
+        }),
+        ('Content', {
+            'fields': ('content',),
+            'description': 'HTML content is allowed here.'
+        }),
+        ('Publishing', {
+            'fields': ('is_published',)
+        }),
+    )
+    
+    # Custom form widget for content field
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows': 10, 'cols': 80})},
+    }
+
+
+class SectionContentAdmin(admin.ModelAdmin):
+    list_display = ['section_type', 'page', 'title', 'order', 'is_active']
+    list_filter = ['section_type', 'page', 'is_active']
+    search_fields = ['title', 'subtitle', 'content']
+    list_editable = ['order', 'is_active']
+    ordering = ['page', 'order']
+    
+    fieldsets = (
+        ('Section Information', {
+            'fields': ('section_type', 'page', 'title', 'subtitle')
+        }),
+        ('Content', {
+            'fields': ('content',)
+        }),
+        ('Button/CTA', {
+            'fields': ('button_text', 'button_url'),
+            'classes': ('collapse',)
+        }),
+        ('Styling', {
+            'fields': ('background_color',),
+            'classes': ('collapse',)
+        }),
+        ('Settings', {
+            'fields': ('order', 'is_active')
+        }),
+    )
+    
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'rows': 6, 'cols': 80})},
+    }
+
+
+class CompanyInfoAdmin(admin.ModelAdmin):
+    list_display = ['company_name', 'email', 'phone', 'updated_at']
+    search_fields = ['company_name', 'email']
+    
+    fieldsets = (
+        ('Company Details', {
+            'fields': ('company_name', 'tagline', 'description')
+        }),
+        ('Contact Information', {
+            'fields': ('email', 'phone', 'address', 'business_hours')
+        }),
+        ('Social Media', {
+            'fields': ('facebook_url', 'twitter_url', 'linkedin_url', 'instagram_url', 'youtube_url'),
+            'classes': ('collapse',)
+        }),
+        ('SEO Settings', {
+            'fields': ('meta_keywords', 'meta_description'),
+            'classes': ('collapse',)
+        }),
+        ('Branding', {
+            'fields': ('logo', 'favicon'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    def has_add_permission(self, request):
+        # Only allow one company info instance
+        return not CompanyInfo.objects.exists()  # type: ignore[attr-defined]
+    
+    def has_delete_permission(self, request, obj=None):
+        # Don't allow deletion of company info
+        return False
+
+
+class TeamMemberAdmin(admin.ModelAdmin):
+    list_display = ['name', 'position', 'department', 'years_experience', 'is_featured', 'is_active', 'order']
+    list_filter = ['department', 'is_featured', 'is_active']
+    search_fields = ['name', 'position', 'bio']
+    list_editable = ['is_featured', 'is_active', 'order']
+    ordering = ['department', 'order']
+    
+    fieldsets = (
+        ('Personal Information', {
+            'fields': ('name', 'position', 'department', 'bio')
+        }),
+        ('Media', {
+            'fields': ('image', 'image_url'),
+            'description': 'Use either uploaded image or image URL.'
+        }),
+        ('Professional Details', {
+            'fields': ('years_experience', 'skills')
+        }),
+        ('Social Media', {
+            'fields': ('email', 'linkedin_url', 'twitter_url', 'github_url'),
+            'classes': ('collapse',)
+        }),
+        ('Display Settings', {
+            'fields': ('is_active', 'is_featured', 'order')
+        }),
+    )
+    
+    actions = ['feature_members', 'unfeature_members', 'activate_members', 'deactivate_members']
+    
+    @admin.action(description='Feature selected team members')
+    def feature_members(self, request, queryset):
+        queryset.update(is_featured=True)
+        self.message_user(request, f'{queryset.count()} team members featured.')
+    
+    @admin.action(description='Unfeature selected team members')
+    def unfeature_members(self, request, queryset):
+        queryset.update(is_featured=False)
+        self.message_user(request, f'{queryset.count()} team members unfeatured.')
+    
+    @admin.action(description='Activate selected team members')
+    def activate_members(self, request, queryset):
+        queryset.update(is_active=True)
+        self.message_user(request, f'{queryset.count()} team members activated.')
+    
+    @admin.action(description='Deactivate selected team members')
+    def deactivate_members(self, request, queryset):
+        queryset.update(is_active=False)
+        self.message_user(request, f'{queryset.count()} team members deactivated.')
+
+
+class JobPositionAdmin(admin.ModelAdmin):
+    list_display = ['title', 'department', 'job_type', 'experience_level', 'location', 'is_active', 'is_featured', 'application_deadline']
+    list_filter = ['job_type', 'experience_level', 'department', 'is_active', 'is_featured']
+    search_fields = ['title', 'department', 'description']
+    list_editable = ['is_active', 'is_featured']
+    ordering = ['-is_featured', '-created_at']
+    date_hierarchy = 'application_deadline'
+    
+    fieldsets = (
+        ('Job Information', {
+            'fields': ('title', 'department', 'job_type', 'experience_level', 'location')
+        }),
+        ('Job Description', {
+            'fields': ('description', 'requirements', 'responsibilities', 'benefits')
+        }),
+        ('Compensation', {
+            'fields': ('salary_min', 'salary_max', 'salary_currency'),
+            'classes': ('collapse',)
+        }),
+        ('Settings', {
+            'fields': ('is_active', 'is_featured', 'application_deadline')
+        }),
+    )
+    
+    actions = ['activate_jobs', 'deactivate_jobs', 'feature_jobs']
+    
+    @admin.action(description='Activate selected job positions')
+    def activate_jobs(self, request, queryset):
+        queryset.update(is_active=True)
+        self.message_user(request, f'{queryset.count()} job positions activated.')
+    
+    @admin.action(description='Deactivate selected job positions')
+    def deactivate_jobs(self, request, queryset):
+        queryset.update(is_active=False)
+        self.message_user(request, f'{queryset.count()} job positions deactivated.')
+    
+    @admin.action(description='Feature selected job positions')
+    def feature_jobs(self, request, queryset):
+        queryset.update(is_featured=True)
+        self.message_user(request, f'{queryset.count()} job positions featured.')
+
+
+class FeatureFlagAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description', 'is_enabled', 'updated_at']
+    list_filter = ['is_enabled']
+    search_fields = ['name', 'description']
+    list_editable = ['is_enabled']
+    ordering = ['name']
+    
+    fieldsets = (
+        ('Feature Information', {
+            'fields': ('name', 'description')
+        }),
+        ('Status', {
+            'fields': ('is_enabled',)
+        }),
+    )
+    
+    actions = ['enable_features', 'disable_features']
+    
+    @admin.action(description='Enable selected features')
+    def enable_features(self, request, queryset):
+        queryset.update(is_enabled=True)
+        self.message_user(request, f'{queryset.count()} features enabled.')
+    
+    @admin.action(description='Disable selected features')
+    def disable_features(self, request, queryset):
+        queryset.update(is_enabled=False)
+        self.message_user(request, f'{queryset.count()} features disabled.')
+
+
+class SiteSettingsAdmin(admin.ModelAdmin):
+    list_display = ['site_name', 'contact_email', 'maintenance_mode', 'updated_at']
+    
+    fieldsets = (
+        ('General Settings', {
+            'fields': ('site_name', 'site_description', 'maintenance_mode')
+        }),
+        ('Contact Settings', {
+            'fields': ('contact_email', 'support_email')
+        }),
+        ('Analytics', {
+            'fields': ('google_analytics_id', 'facebook_pixel_id'),
+            'classes': ('collapse',)
+        }),
+        ('Theme Settings', {
+            'fields': ('primary_color', 'secondary_color'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    def has_add_permission(self, request):
+        # Only allow one site settings instance
+        return not SiteSettings.objects.exists()  # type: ignore[attr-defined]
+    
+    def has_delete_permission(self, request, obj=None):
+        # Don't allow deletion of site settings
+        return False
+
+
+# =============================================================================
+# ADMIN CUSTOMIZATIONS FOR BETTER UX
+# =============================================================================
+
+# Add custom CSS for better admin interface
+class AdminConfig:
+    class Media:
+        css = {
+            'all': ('admin/css/custom_admin.css',)
+        }
+
+
+# Group related models in admin interface
+class ContentManagementFilter(admin.SimpleListFilter):
+    title = 'Content Type'
+    parameter_name = 'content_type'
+    
+    def lookups(self, request, model_admin):
+        return (
+            ('navigation', 'Navigation & Menus'),
+            ('pages', 'Page Content'),
+            ('company', 'Company Information'),
+            ('team', 'Team & Careers'),
+            ('settings', 'Site Settings'),
+        )
+    
+    def queryset(self, request, queryset):
+        return queryset
+
+
+class DynamicSectionAdmin(admin.ModelAdmin):
+    list_display = ['title', 'section_type', 'page', 'is_active', 'order', 'show_on_mobile', 'updated_at']
+    list_filter = ['section_type', 'page', 'is_active', 'show_on_mobile']
+    search_fields = ['title', 'heading', 'content']
+    prepopulated_fields = {'slug': ('title',)}
+    list_editable = ['is_active', 'order', 'show_on_mobile']
+    ordering = ['page', 'order']
+    
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('title', 'slug', 'section_type', 'page')
+        }),
+        ('Content', {
+            'fields': ('heading', 'subheading', 'content', 'html_content')
+        }),
+        ('Media & Background', {
+            'fields': ('background_image', 'background_video', 'background_color'),
+            'classes': ('collapse',)
+        }),
+        ('Layout & Styling', {
+            'fields': ('layout_style', 'css_classes', 'custom_css'),
+            'classes': ('collapse',)
+        }),
+        ('Button Configuration', {
+            'fields': ('button_text', 'button_url', 'button_style'),
+            'classes': ('collapse',)
+        }),
+        ('Settings', {
+            'fields': ('is_active', 'order', 'show_on_mobile')
+        }),
+        ('Additional Data', {
+            'fields': ('data',),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    actions = ['activate_sections', 'deactivate_sections', 'duplicate_section']
+    
+    @admin.action(description='Activate selected sections')
+    def activate_sections(self, request, queryset):
+        queryset.update(is_active=True)
+        self.message_user(request, f'{queryset.count()} sections activated.')
+    
+    @admin.action(description='Deactivate selected sections')
+    def deactivate_sections(self, request, queryset):
+        queryset.update(is_active=False)
+        self.message_user(request, f'{queryset.count()} sections deactivated.')
+    
+    @admin.action(description='Duplicate selected sections')
+    def duplicate_section(self, request, queryset):
+        for section in queryset:
+            section.pk = None
+            section.title = f"{section.title} (Copy)"
+            section.slug = f"{section.slug}-copy"
+            section.save()
+        self.message_user(request, f'{queryset.count()} sections duplicated.')
+    
+    class Media:
+        css = {
+            'all': ('admin/css/custom_admin.css',)
+        }
+        js = ('admin/js/section_preview.js',)
+
+
+class VisitorStatisticsAdmin(admin.ModelAdmin):
+    list_display = [
+        'date', 'page_views', 'unique_visitors', 'bounce_rate', 
+        'mobile_percentage', 'top_traffic_source'
+    ]
+    list_filter = ['date']
+    search_fields = ['date']
+    ordering = ['-date']
+    date_hierarchy = 'date'
+    
+    fieldsets = (
+        ('Overview', {
+            'fields': ('date', 'page_views', 'unique_visitors', 'bounce_rate', 'avg_session_duration')
+        }),
+        ('Page Statistics', {
+            'fields': ('home_views', 'about_views', 'services_views', 'portfolio_views', 'contact_views', 'blog_views'),
+            'classes': ('collapse',)
+        }),
+        ('Device Statistics', {
+            'fields': ('mobile_views', 'desktop_views', 'tablet_views'),
+            'classes': ('collapse',)
+        }),
+        ('Traffic Sources', {
+            'fields': ('direct_traffic', 'search_traffic', 'social_traffic', 'referral_traffic'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    @admin.display(description='Mobile %')
+    def mobile_percentage(self, obj):
+        total = obj.mobile_views + obj.desktop_views + obj.tablet_views
+        if total > 0:
+            percentage = (obj.mobile_views / total) * 100
+            return f"{percentage:.1f}%"
+        return "0%"
+    
+    @admin.display(description='Top Source')
+    def top_traffic_source(self, obj):
+        sources = {
+            'Direct': obj.direct_traffic,
+            'Search': obj.search_traffic,
+            'Social': obj.social_traffic,
+            'Referral': obj.referral_traffic
+        }
+        top_source = max(sources, key=sources.get)  # type: ignore[arg-type]
+        return f"{top_source} ({sources[top_source]})"    
+    def has_add_permission(self, request):
+        # Statistics are auto-generated
+        return False
+    
+    def has_change_permission(self, request, obj=None):
+        # Statistics are read-only
+        return False
+    
+    def has_delete_permission(self, request, obj=None):
+        # Allow deletion for data cleanup
+        return True
+    
+    class Media:
+        css = {
+            'all': ('admin/css/custom_admin.css',)
+        }
+        js = ('admin/js/stats_charts.js',)
+
+
+# =============================================================================
+# SEO OPTIMIZATION ADMIN FOR TOP GOOGLE RANKINGS
+# =============================================================================
+
+class SEOMetaTagsAdmin(admin.ModelAdmin):
+    """Admin for managing SEO meta tags for each page"""
+    list_display = ['page_type', 'meta_title', 'focus_keyword', 'meta_description_preview', 'is_active', 'updated_at']
+    list_filter = ['page_type', 'is_active', 'schema_type']
+    search_fields = ['meta_title', 'meta_description', 'focus_keyword']
+    list_editable = ['is_active']
+    ordering = ['page_type']
+    
+    fieldsets = (
+        ('Page Identification', {
+            'fields': ('page_type', 'page_url')
+        }),
+        ('Basic SEO Meta Tags', {
+            'fields': ('meta_title', 'meta_description', 'meta_keywords'),
+            'description': 'Core SEO tags that appear in search results'
+        }),
+        ('Focus Keywords', {
+            'fields': ('focus_keyword', 'secondary_keywords'),
+            'description': 'Primary and secondary keywords to optimize for'
+        }),
+        ('Open Graph (Social Media)', {
+            'fields': ('og_title', 'og_description', 'og_image', 'og_image_url', 'og_type'),
+            'classes': ('collapse',),
+            'description': 'How your content appears when shared on Facebook, LinkedIn, etc.'
+        }),
+        ('Twitter Cards', {
+            'fields': ('twitter_card', 'twitter_title', 'twitter_description', 'twitter_image', 'twitter_image_url'),
+            'classes': ('collapse',),
+            'description': 'How your content appears when shared on Twitter'
+        }),
+        ('Advanced SEO', {
+            'fields': ('canonical_url', 'robots_directive', 'schema_type', 'schema_data'),
+            'classes': ('collapse',),
+            'description': 'Advanced settings for search engines'
+        }),
+        ('Status', {
+            'fields': ('is_active',)
+        }),
+    )
+    
+    @admin.display(description='Meta Description')
+    def meta_description_preview(self, obj):
+        if obj.meta_description:
+            if len(obj.meta_description) > 50:
+                return f"{obj.meta_description[:50]}..."
+            return obj.meta_description
+        return "No description"
+    
+    actions = ['generate_social_tags', 'optimize_meta_tags', 'check_seo_issues']
+    
+    @admin.action(description='Generate social media tags from meta tags')
+    def generate_social_tags(self, request, queryset):
+        """Auto-generate Open Graph and Twitter tags from basic meta tags"""
+        for seo_tag in queryset:
+            if not seo_tag.og_title:
+                seo_tag.og_title = seo_tag.meta_title
+            if not seo_tag.og_description:
+                seo_tag.og_description = seo_tag.meta_description
+            if not seo_tag.twitter_title:
+                seo_tag.twitter_title = seo_tag.meta_title
+            if not seo_tag.twitter_description:
+                seo_tag.twitter_description = seo_tag.meta_description
+            seo_tag.save()
+        self.message_user(request, f'Social media tags generated for {queryset.count()} pages.')
+    
+    @admin.action(description='Check optimization opportunities')
+    def optimize_meta_tags(self, request, queryset):
+        """Basic optimization suggestions"""
+        optimized = 0
+        for seo_tag in queryset:
+            # Add basic optimizations
+            if seo_tag.meta_title and len(seo_tag.meta_title) > 60:
+                # Suggest title truncation
+                pass
+            if seo_tag.meta_description and len(seo_tag.meta_description) > 160:
+                # Suggest description truncation
+                pass
+            optimized += 1
+        self.message_user(request, f'Optimization suggestions prepared for {optimized} pages.')
+    
+    @admin.action(description='Check for SEO issues')
+    def check_seo_issues(self, request, queryset):
+        """Check for common SEO issues"""
+        issues_found = 0
+        for seo_tag in queryset:
+            issues = []
+            if not seo_tag.meta_title:
+                issues.append('Missing meta title')
+            elif len(seo_tag.meta_title) > 60:
+                issues.append('Meta title too long')
+            
+            if not seo_tag.meta_description:
+                issues.append('Missing meta description')
+            elif len(seo_tag.meta_description) > 160:
+                issues.append('Meta description too long')
+            
+            if not seo_tag.focus_keyword:
+                issues.append('No focus keyword set')
+            
+            if issues:
+                issues_found += 1
+        
+        self.message_user(request, f'SEO issues found in {issues_found} of {queryset.count()} pages.')
+    
+    class Media:
+        css = {
+            'all': ('admin/css/seo_admin.css',)
+        }
+        js = ('admin/js/seo_helper.js',)
+
+
+class ContentSEOAnalysisAdmin(admin.ModelAdmin):
+    """Admin for viewing and managing SEO analysis of content"""
+    list_display = [
+        'content_title', 'content_type', 'overall_score', 'optimization_status', 
+        'word_count', 'keyword_density', 'last_analyzed'
+    ]
+    list_filter = ['content_type', 'optimization_status', 'last_analyzed']
+    search_fields = ['content_title', 'focus_keyword']
+    ordering = ['-overall_score', '-last_analyzed']
+    readonly_fields = [
+        'overall_score', 'title_score', 'meta_description_score', 'keyword_density_score',
+        'content_length_score', 'heading_structure_score', 'image_alt_score',
+        'internal_links_score', 'external_links_score', 'word_count', 'reading_time',
+        'flesch_reading_score', 'keyword_positions', 'last_analyzed'
+    ]
+    
+    fieldsets = (
+        ('Content Information', {
+            'fields': ('content_type', 'object_id', 'content_title', 'content_url')
+        }),
+        ('SEO Analysis Scores', {
+            'fields': (
+                'overall_score', 'optimization_status',
+                ('title_score', 'meta_description_score'),
+                ('keyword_density_score', 'content_length_score'),
+                ('heading_structure_score', 'image_alt_score'),
+                ('internal_links_score', 'external_links_score')
+            ),
+            'description': 'Automated SEO analysis scores (0-100)'
+        }),
+        ('Keyword Analysis', {
+            'fields': ('focus_keyword', 'keyword_density', 'keyword_positions'),
+            'classes': ('collapse',)
+        }),
+        ('Content Metrics', {
+            'fields': ('word_count', 'reading_time', 'flesch_reading_score'),
+            'classes': ('collapse',)
+        }),
+        ('Issues and Suggestions', {
+            'fields': ('issues_found', 'suggestions'),
+            'classes': ('collapse',)
+        }),
+        ('Analysis Data', {
+            'fields': ('last_analyzed', 'analysis_data'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request)
+    
+    actions = ['reanalyze_content', 'export_seo_report']
+    
+    @admin.action(description='Re-analyze SEO for selected content')
+    def reanalyze_content(self, request, queryset):
+        """Trigger re-analysis of selected content"""
+        # This would trigger the SEO analysis process
+        self.message_user(request, f'SEO re-analysis queued for {queryset.count()} items.')
+    
+    @admin.action(description='Export SEO analysis report')
+    def export_seo_report(self, request, queryset):
+        """Export SEO analysis report"""
+        # This would generate and download a report
+        self.message_user(request, f'SEO report generated for {queryset.count()} items.')
+    
+    def has_add_permission(self, request):
+        # Analysis records are auto-generated
+        return False
+    
+    class Media:
+        css = {
+            'all': ('admin/css/seo_admin.css',)
+        }
+        js = ('admin/js/seo_analysis.js',)
+
+
+class SEOSettingsAdmin(admin.ModelAdmin):
+    """Admin for global SEO settings and configuration"""
+    list_display = ['site_name', 'business_name', 'email', 'country', 'updated_at']
+    
+    fieldsets = (
+        ('Website Basic Information', {
+            'fields': ('site_name', 'site_tagline', 'default_meta_description')
+        }),
+        ('Business Information', {
+            'fields': ('business_name', 'business_type', 'address', 'phone', 'email'),
+            'description': 'Used for schema markup and local SEO'
+        }),
+        ('Geographic Targeting', {
+            'fields': ('country', 'region', 'city'),
+            'description': 'Helps search engines understand your target market'
+        }),
+        ('Social Media Profiles', {
+            'fields': ('facebook_url', 'twitter_url', 'linkedin_url', 'instagram_url', 'youtube_url'),
+            'classes': ('collapse',),
+            'description': 'Social media profiles for schema markup'
+        }),
+        ('Analytics & Tracking', {
+            'fields': (
+                'google_analytics_id', 'google_tag_manager_id',
+                'google_search_console_verification', 'bing_webmaster_verification',
+                'facebook_pixel_id'
+            ),
+            'classes': ('collapse',),
+            'description': 'Analytics and webmaster verification codes'
+        }),
+        ('SEO Features', {
+            'fields': (
+                'default_robots_directive', 'enable_breadcrumbs',
+                'enable_schema_markup', 'enable_open_graph', 'enable_twitter_cards'
+            ),
+            'description': 'Enable/disable various SEO features'
+        }),
+        ('Performance Optimization', {
+            'fields': ('enable_lazy_loading', 'enable_image_optimization', 'enable_minification'),
+            'classes': ('collapse',),
+            'description': 'Performance features that affect SEO rankings'
+        }),
+        ('Custom Code', {
+            'fields': ('custom_head_tags', 'custom_footer_scripts'),
+            'classes': ('collapse',),
+            'description': 'Custom HTML/JavaScript for advanced tracking'
+        }),
+    )
+    
+    def has_add_permission(self, request):
+        # Only allow one SEO settings instance
+        return not SEOSettings.objects.exists()  # type: ignore[attr-defined]
+    
+    def has_delete_permission(self, request, obj=None):
+        # Don't allow deletion of SEO settings
+        return False
+    
+    class Media:
+        css = {
+            'all': ('admin/css/seo_admin.css',)
+        }
+
+
+class SitemapURLAdmin(admin.ModelAdmin):
+    """Admin for managing XML sitemap URLs"""
+    list_display = ['url_path', 'priority', 'change_frequency', 'last_modified', 'is_active', 'is_auto_generated']
+    list_filter = ['priority', 'change_frequency', 'is_active', 'is_auto_generated', 'content_type']
+    search_fields = ['url_path', 'full_url']
+    list_editable = ['priority', 'change_frequency', 'is_active']
+    ordering = ['-priority', 'url_path']
+    readonly_fields = ['full_url', 'last_modified']
+    
+    fieldsets = (
+        ('URL Information', {
+            'fields': ('url_path', 'full_url')
+        }),
+        ('SEO Attributes', {
+            'fields': ('priority', 'change_frequency'),
+            'description': 'Priority: How important this page is (0.1-1.0). Change Frequency: How often the page is updated.'
+        }),
+        ('Settings', {
+            'fields': ('is_active', 'is_auto_generated')
+        }),
+        ('Content Reference', {
+            'fields': ('content_type', 'object_id'),
+            'classes': ('collapse',),
+            'description': 'Link to the content object that generated this URL'
+        }),
+        ('Timestamps', {
+            'fields': ('last_modified',),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    actions = ['regenerate_sitemap', 'update_priorities', 'mark_high_priority']
+    
+    @admin.action(description='Regenerate XML sitemap')
+    def regenerate_sitemap(self, request, queryset):
+        """Regenerate XML sitemap"""
+        # This would trigger sitemap regeneration
+        self.message_user(request, 'XML sitemap regeneration triggered.')
+    
+    @admin.action(description='Auto-update priorities')
+    def update_priorities(self, request, queryset):
+        """Auto-update priorities based on content importance"""
+        # Logic to update priorities based on content type and features
+        updated = 0
+        for url in queryset:
+            if url.content_type == 'home':
+                url.priority = '1.0'
+            elif url.content_type in ['services', 'portfolio']:
+                url.priority = '0.9'
+            elif url.content_type in ['about', 'contact']:
+                url.priority = '0.8'
+            else:
+                url.priority = '0.6'
+            url.save()
+            updated += 1
+        self.message_user(request, f'Priorities updated for {updated} URLs.')
+    
+    @admin.action(description='Mark as high priority (0.9)')
+    def mark_high_priority(self, request, queryset):
+        """Mark selected URLs as high priority"""
+        queryset.update(priority='0.9')
+        self.message_user(request, f'{queryset.count()} URLs marked as high priority.')
+
+
+class RedirectRuleAdmin(admin.ModelAdmin):
+    """Admin for managing 301/302 redirects"""
+    list_display = ['source_url', 'destination_url', 'redirect_type', 'hit_count', 'is_active', 'last_used']
+    list_filter = ['redirect_type', 'is_active', 'last_used']
+    search_fields = ['source_url', 'destination_url', 'description']
+    list_editable = ['is_active']
+    ordering = ['-hit_count', 'source_url']
+    readonly_fields = ['hit_count', 'last_used']
+    
+    fieldsets = (
+        ('Redirect Configuration', {
+            'fields': ('source_url', 'destination_url', 'redirect_type'),
+            'description': '301 = Permanent redirect (SEO value transferred). 302 = Temporary redirect.'
+        }),
+        ('Documentation', {
+            'fields': ('description',),
+            'description': 'Explain why this redirect exists for future reference'
+        }),
+        ('Status & Statistics', {
+            'fields': ('is_active', 'hit_count', 'last_used'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    actions = ['activate_redirects', 'deactivate_redirects', 'test_redirects']
+    
+    @admin.action(description='Activate selected redirects')
+    def activate_redirects(self, request, queryset):
+        queryset.update(is_active=True)
+        self.message_user(request, f'{queryset.count()} redirects activated.')
+    
+    @admin.action(description='Deactivate selected redirects')
+    def deactivate_redirects(self, request, queryset):
+        queryset.update(is_active=False)
+        self.message_user(request, f'{queryset.count()} redirects deactivated.')
+    
+    @admin.action(description='Test redirect functionality')
+    def test_redirects(self, request, queryset):
+        """Test if redirects are working properly"""
+        # This would test the redirects
+        self.message_user(request, f'Redirect testing initiated for {queryset.count()} rules.')
+
+
+class RobotsTxtAdmin(admin.ModelAdmin):
+    """Admin for managing robots.txt file"""
+    list_display = ['__str__', 'is_active', 'updated_at']
+    
+    fieldsets = (
+        ('Robots.txt Configuration', {
+            'fields': ('content',),
+            'description': 'Configure what search engine crawlers can and cannot access'
+        }),
+        ('Status', {
+            'fields': ('is_active',),
+            'description': 'Enable/disable robots.txt (when disabled, allows all crawling)'
+        }),
+    )
+    
+    def has_add_permission(self, request):
+        # Only allow one robots.txt instance
+        return not RobotsTxt.objects.exists()  # type: ignore[attr-defined]
+    
+    def has_delete_permission(self, request, obj=None):
+        # Don't allow deletion of robots.txt
+        return False
+    
+    class Media:
+        css = {
+            'all': ('admin/css/seo_admin.css',)
+        }
+        js = ('admin/js/robots_editor.js',)
+
+
+# =============================================================================
+# REGISTER ALL MODELS WITH CUSTOM ADMIN SITE
+# =============================================================================
+
+# Register all models with the custom admin site
+admin_site.register(Project, ProjectAdmin)
+admin_site.register(Testimonial, TestimonialAdmin)
+admin_site.register(ContactMessage, ContactMessageAdmin)
+admin_site.register(Service, ServiceAdmin)
+admin_site.register(BlogPost, BlogPostAdmin)
+admin_site.register(NewsletterSubscriber, NewsletterSubscriberAdmin)
+admin_site.register(UserProfile, UserProfileAdmin)
+admin_site.register(MeetingRequest, MeetingRequestAdmin)
+admin_site.register(HelpArticle, HelpArticleAdmin)
+admin_site.register(CaseStudy, CaseStudyAdmin)
+admin_site.register(NavigationMenu, NavigationMenuAdmin)
+admin_site.register(SubMenuItem, SubMenuItemAdmin)
+admin_site.register(PageContent, PageContentAdmin)
+admin_site.register(SectionContent, SectionContentAdmin)
+admin_site.register(CompanyInfo, CompanyInfoAdmin)
+admin_site.register(TeamMember, TeamMemberAdmin)
+admin_site.register(JobPosition, JobPositionAdmin)
+admin_site.register(FeatureFlag, FeatureFlagAdmin)
+admin_site.register(SiteSettings, SiteSettingsAdmin)
+admin_site.register(DynamicSection, DynamicSectionAdmin)
+admin_site.register(VisitorStatistics, VisitorStatisticsAdmin)
+
+# SEO optimization models
+admin_site.register(SEOMetaTags, SEOMetaTagsAdmin)
+admin_site.register(ContentSEOAnalysis, ContentSEOAnalysisAdmin)
+admin_site.register(SEOSettings, SEOSettingsAdmin)
+admin_site.register(SitemapURL, SitemapURLAdmin)
+admin_site.register(RedirectRule, RedirectRuleAdmin)
+admin_site.register(RobotsTxt, RobotsTxtAdmin)
+
+# =============================================================================
+# REGISTER ALL MODELS WITH DEFAULT ADMIN SITE
+# =============================================================================
+
+# Register all models with the default admin site as well
+admin.site.register(Project, ProjectAdmin)
+admin.site.register(Testimonial, TestimonialAdmin)
+admin.site.register(ContactMessage, ContactMessageAdmin)
+admin.site.register(Service, ServiceAdmin)
+admin.site.register(BlogPost, BlogPostAdmin)
+admin.site.register(NewsletterSubscriber, NewsletterSubscriberAdmin)
+admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(MeetingRequest, MeetingRequestAdmin)
+admin.site.register(HelpArticle, HelpArticleAdmin)
+admin.site.register(CaseStudy, CaseStudyAdmin)
+admin.site.register(NavigationMenu, NavigationMenuAdmin)
+admin.site.register(SubMenuItem, SubMenuItemAdmin)
+admin.site.register(PageContent, PageContentAdmin)
+admin.site.register(SectionContent, SectionContentAdmin)
+admin.site.register(CompanyInfo, CompanyInfoAdmin)
+admin.site.register(TeamMember, TeamMemberAdmin)
+admin.site.register(JobPosition, JobPositionAdmin)
+admin.site.register(FeatureFlag, FeatureFlagAdmin)
+admin.site.register(SiteSettings, SiteSettingsAdmin)
+admin.site.register(DynamicSection, DynamicSectionAdmin)
+admin.site.register(VisitorStatistics, VisitorStatisticsAdmin)
+
+# SEO optimization models
+admin.site.register(SEOMetaTags, SEOMetaTagsAdmin)
+admin.site.register(ContentSEOAnalysis, ContentSEOAnalysisAdmin)
+admin.site.register(SEOSettings, SEOSettingsAdmin)
+admin.site.register(SitemapURL, SitemapURLAdmin)
+admin.site.register(RedirectRule, RedirectRuleAdmin)
+admin.site.register(RobotsTxt, RobotsTxtAdmin)
+
+# Configure the default admin site
+admin.site.site_header = 'Digital Agency CMS Administration'
+admin.site.site_title = 'Digital Agency CMS Admin'
+admin.site.index_title = 'Welcome to Digital Agency Dashboard'

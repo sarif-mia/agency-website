@@ -1,0 +1,19 @@
+version: "1"
+build:
+  commands:
+    - "./build.sh"
+run:
+  command: "gunicorn agency_backend.wsgi:application --bind 0.0.0.0:$PORT"
+env:
+  - key: PYTHON_VERSION
+    value: "3.11"
+  - key: SECRET_KEY
+    generateValue: true
+  - key: DEBUG
+    value: "False"
+  - key: EMAIL_HOST_USER
+    value: "sitegenit@gmail.com"
+  - key: MEETING_REQUEST_EMAIL
+    value: "sitegenit@gmail.com"
+  - key: ADMIN_EMAIL
+    value: "sitegenit@gmail.com"

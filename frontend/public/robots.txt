@@ -1,0 +1,73 @@
+User-agent: *
+Allow: /
+
+# Allow important pages
+Allow: /about-us
+Allow: /our-team
+Allow: /careers
+Allow: /blog
+Allow: /case-studies
+Allow: /help
+Allow: /resources
+Allow: /quote
+Allow: /all-projects
+Allow: /services
+Allow: /projects
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /client-portal/login
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /*.xml$
+
+# Block duplicate content
+Disallow: /*?*
+Disallow: /*#*
+
+# Allow CSS and JS files
+Allow: /*.css
+Allow: /*.js
+
+# Crawl delay (optional - be respectful)
+Crawl-delay: 1
+
+# Host directive
+Host: digitalagency.com
+
+# Sitemap locations
+Sitemap: https://digitalagency.com/sitemap.xml
+
+# Additional user agents
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Mobile
+Allow: /
+
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+# Mobile sitemap
+Sitemap: https://digitalagency.com/sitemap-mobile.xml
+
+# News sitemap
+Sitemap: https://digitalagency.com/sitemap-news.xml
+
+# Video sitemap
+Sitemap: https://digitalagency.com/sitemap-video.xml

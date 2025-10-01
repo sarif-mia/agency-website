@@ -1,0 +1,252 @@
+{% load static %}
+{% comment %}
+SEO Meta Tags Template for Digital Agency
+This template provides comprehensive SEO optimization for top Google rankings.
+
+Usage in your templates:
+{% include 'seo/meta_tags.html' with page_type='home' content_object=object %}
+
+Parameters:
+- page_type: Type of page (home, about, services, portfolio, etc.)
+- content_object: Optional content object for dynamic meta tags
+- custom_title: Override default title
+- custom_description: Override default description
+- custom_image: Override default social media image
+{% endcomment %}
+
+{% with seo_context=request.seo_context %}
+<!-- Primary Meta Tags -->
+<title>{{ custom_title|default:seo_context.meta_title|default:"Digital Agency - Professional Web Development Services" }}</title>
+<meta name="title" content="{{ custom_title|default:seo_context.meta_title|default:"Digital Agency - Professional Web Development Services" }}">
+<meta name="description" content="{{ custom_description|default:seo_context.meta_description|default:"Leading digital agency specializing in web development, mobile apps, UI/UX design, and digital marketing solutions." }}">
+<meta name="keywords" content="{{ seo_context.meta_keywords|default:"digital agency, web development, mobile apps, UI/UX design, digital marketing, professional services" }}">
+<meta name="author" content="{{ seo_context.site_name|default:"Digital Agency" }}">
+<meta name="robots" content="{{ seo_context.robots|default:"index, follow" }}">
+<meta name="language" content="en">
+<meta name="revisit-after" content="7 days">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ seo_context.canonical_url|default:request.build_absolute_uri }}">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="{{ seo_context.og_type|default:"website" }}">
+<meta property="og:url" content="{{ seo_context.og_url|default:request.build_absolute_uri }}">
+<meta property="og:title" content="{{ custom_title|default:seo_context.og_title|default:seo_context.meta_title|default:"Digital Agency - Professional Web Development Services" }}">
+<meta property="og:description" content="{{ custom_description|default:seo_context.og_description|default:seo_context.meta_description|default:"Leading digital agency specializing in web development and digital solutions." }}">
+<meta property="og:image" content="{{ custom_image|default:seo_context.og_image|default:request.build_absolute_uri }}{% static 'images/og-default.jpg' %}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="{{ seo_context.site_name|default:"Digital Agency" }}">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="{{ seo_context.twitter_card|default:"summary_large_image" }}">
+<meta property="twitter:url" content="{{ seo_context.og_url|default:request.build_absolute_uri }}">
+<meta property="twitter:title" content="{{ custom_title|default:seo_context.twitter_title|default:seo_context.meta_title|default:"Digital Agency - Professional Web Development" }}">
+<meta property="twitter:description" content="{{ custom_description|default:seo_context.twitter_description|default:seo_context.meta_description|default:"Expert web development, mobile apps, and digital marketing services." }}">
+<meta property="twitter:image" content="{{ custom_image|default:seo_context.twitter_image|default:request.build_absolute_uri }}{% static 'images/twitter-default.jpg' %}">
+
+<!-- Additional Meta Tags for SEO -->
+<meta name="theme-color" content="#00f5ff">
+<meta name="msapplication-TileColor" content="#00f5ff">
+<meta name="application-name" content="{{ seo_context.site_name|default:"Digital Agency" }}">
+
+<!-- Favicon and Icons -->
+<link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
+<link rel="manifest" href="{% static 'images/site.webmanifest' %}">
+
+<!-- Structured Data (JSON-LD) -->
+{% if seo_context.organization_schema %}
+<script type="application/ld+json">
+{{ seo_context.organization_schema|safe }}
+</script>
+{% endif %}
+
+{% if seo_context.schema_data %}
+<script type="application/ld+json">
+{{ seo_context.schema_data|safe }}
+</script>
+{% endif %}
+
+<!-- Page-specific Schema Markup -->
+{% if page_type == 'home' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ seo_context.site_name|default:"Digital Agency" }}",
+  "url": "{{ request.build_absolute_uri:"/" }}",
+  "description": "{{ seo_context.meta_description|default:"Professional digital agency services" }}",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "{{ request.build_absolute_uri:"/" }}search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{% elif page_type == 'services' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Web Development Services",
+  "description": "Professional web development, mobile apps, and digital marketing services",
+  "provider": {
+    "@type": "Organization",
+    "name": "{{ seo_context.site_name|default:"Digital Agency" }}",
+    "url": "{{ request.build_absolute_uri:"/" }}"
+  },
+  "serviceType": "Web Development",
+  "areaServed": "Worldwide"
+}
+</script>
+{% elif page_type == 'contact' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact Us",
+  "description": "Get in touch with our digital agency for your project needs",
+  "url": "{{ request.build_absolute_uri }}"
+}
+</script>
+{% endif %}
+
+<!-- Breadcrumb Schema -->
+{% if breadcrumbs %}
+<script type="application/ld+json">
+{{ breadcrumbs|safe }}
+</script>
+{% endif %}
+
+<!-- Performance Hints -->
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+<!-- Security Headers -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="X-XSS-Protection" content="1; mode=block">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+
+<!-- Mobile Optimization -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Google Analytics (if configured) -->
+{% if seo_context.google_analytics_id %}
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ seo_context.google_analytics_id }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ seo_context.google_analytics_id }}', {
+    page_title: '{{ seo_context.meta_title }}',
+    page_location: '{{ request.build_absolute_uri }}',
+    send_page_view: true
+  });
+</script>
+{% endif %}
+
+<!-- Google Tag Manager (if configured) -->
+{% if seo_context.google_tag_manager_id %}
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','{{ seo_context.google_tag_manager_id }}');</script>
+<!-- End Google Tag Manager -->
+{% endif %}
+
+<!-- Facebook Pixel (if configured) -->
+{% if seo_context.facebook_pixel_id %}
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '{{ seo_context.facebook_pixel_id }}');
+fbq('track', 'PageView');
+</script>
+<noscript>
+<img height="1" width="1" style="display:none"
+     src="https://www.facebook.com/tr?id={{ seo_context.facebook_pixel_id }}&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Facebook Pixel Code -->
+{% endif %}
+
+<!-- Search Console Verification -->
+{% if seo_context.google_search_console_verification %}
+<meta name="google-site-verification" content="{{ seo_context.google_search_console_verification }}">
+{% endif %}
+
+<!-- Bing Webmaster Verification -->
+{% if seo_context.bing_webmaster_verification %}
+<meta name="msvalidate.01" content="{{ seo_context.bing_webmaster_verification }}">
+{% endif %}
+
+<!-- Custom Head Tags -->
+{% if seo_context.custom_head_tags %}
+{{ seo_context.custom_head_tags|safe }}
+{% endif %}
+
+{% endwith %}
+
+{% comment %}
+Additional SEO Best Practices Applied:
+
+1. **Core Web Vitals Optimization**:
+   - DNS prefetch for external resources
+   - Preconnect for critical resources
+   - Optimized meta tags for fast rendering
+
+2. **Structured Data**:
+   - Organization schema for brand recognition
+   - WebSite schema with search functionality
+   - Service schema for service pages
+   - Breadcrumb navigation schema
+
+3. **Social Media Optimization**:
+   - Complete Open Graph tags for Facebook/LinkedIn
+   - Twitter Card tags for Twitter sharing
+   - Optimal image sizes for social platforms
+
+4. **Technical SEO**:
+   - Canonical URLs to prevent duplicate content
+   - Proper robots directives
+   - Mobile-optimized viewport
+   - Security headers for better rankings
+
+5. **Analytics Integration**:
+   - Google Analytics 4 support
+   - Google Tag Manager integration
+   - Facebook Pixel for conversion tracking
+   - Search Console verification
+
+6. **Performance Optimization**:
+   - Resource hints (dns-prefetch, preconnect)
+   - Mobile-first design considerations
+   - Optimized meta tag loading
+
+This template ensures your website follows all major SEO best practices
+for achieving top Google rankings while maintaining excellent user experience
+and technical performance.
+{% endcomment %}

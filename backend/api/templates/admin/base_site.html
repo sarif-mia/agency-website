@@ -1,0 +1,83 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/custom_admin.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{% static 'admin/js/dashboard_enhancements.js' %}" defer></script>
+{% endblock %}
+
+{% block nav-global %}
+    {{ block.super }}
+    <div class="sitegenit-admin-nav" style="background: var(--darker-bg); padding: 10px 20px; border-bottom: 1px solid var(--border-color);">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">
+                🌐 <strong>Live Site:</strong> <a href="https://sitegenit.vercel.app" target="_blank" style="color: var(--primary-color); text-decoration: none;">sitegenit.vercel.app</a>
+            </div>
+            <div style="color: var(--text-muted); font-size: 0.8rem;">
+                🛠️ Backend: <span style="color: var(--success-color);">Online</span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <div id="footer" style="background: var(--darker-bg); color: var(--text-secondary); padding: 20px; border-top: 2px solid var(--border-color); margin-top: 40px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <div>
+                <strong style="color: var(--primary-color);">🚀 SiteGenIT</strong> - Digital Agency Management System<br>
+                <small style="color: var(--text-muted);">Empowering digital excellence through innovative solutions</small>
+            </div>
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <a href="https://sitegenit.vercel.app" target="_blank" style="color: var(--primary-color); text-decoration: none; font-size: 0.9rem;">
+                    🌐 Visit Website
+                </a>
+                <a href="/api/" target="_blank" style="color: var(--secondary-color); text-decoration: none; font-size: 0.9rem;">
+                    🔌 API Docs
+                </a>
+                <span style="color: var(--text-muted); font-size: 0.8rem;">
+                    📞 Support: +880 1621-711941
+                </span>
+            </div>
+        </div>
+        <hr style="border: none; border-top: 1px solid var(--border-color); margin: 15px 0;">
+        <div style="text-align: center; font-size: 0.8rem; color: var(--text-muted);">
+            © 2025 SiteGenIT Digital Agency. Built with Django & React. 🚀
+        </div>
+    </div>
+    
+    <style>
+        /* Custom Admin Enhancements */
+        .sitegenit-admin-nav a:hover {
+            text-shadow: 0 0 5px currentColor;
+            transition: all 0.3s ease;
+        }
+        
+        #footer a:hover {
+            text-shadow: 0 0 8px currentColor;
+            transform: translateY(-1px);
+            transition: all 0.3s ease;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .sitegenit-admin-nav > div {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            #footer > div:first-child {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            #footer > div:first-child > div:last-child {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+{% endblock %}
