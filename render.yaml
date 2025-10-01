@@ -19,11 +19,10 @@ services:
         name: Access-Control-Allow-Origin
         value: https://agency-website-frontend.onrender.com
 
-  - type: web
+  - type: static
     name: agency-website-frontend
-    env: static
-    buildCommand: "cd frontend && npm install && npm run build"
-    staticPublishPath: "./frontend/dist"
+    buildCommand: cd frontend && npm install && npm run build
+    publishDir: frontend/dist
     envVars:
       - key: NODE_VERSION
         value: "18.17.0"
@@ -35,8 +34,4 @@ services:
     headers:
       - path: /*
         name: Cache-Control
-        value: no-cache
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+        value: public, max-age=0, must-revalidate
