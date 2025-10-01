@@ -19,18 +19,24 @@ services:
         name: Access-Control-Allow-Origin
         value: https://agency-website-frontend.onrender.com
 
-  - type: static
+  - type: web
     name: agency-website-frontend
-    rootDir: frontend
-    buildCommand: "npm install && npm run build"
-    publishDir: "dist"
+    env: static
+    buildCommand: "cd frontend && npm install && npm run build"
+    staticPublishPath: "./frontend/dist"
     envVars:
+      - key: NODE_VERSION
+        value: "18.17.0"
       - key: VITE_API_BASE_URL
         fromService:
           type: web
           name: agency-website-backend
           property: url
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
     routes:
       - type: rewrite
-        source: "/*"
-        destination: "/index.html"
+        source: /*
+        destination: /index.html
