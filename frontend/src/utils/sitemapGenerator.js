@@ -251,7 +251,12 @@ export const fetchDynamicRoutes = async () => {
   
   try {
     // Fetch blog posts from backend
-    const blogResponse = await fetch('http://localhost:8000/api/blog/?format=json');
+    const API_URL = import.meta.env.VITE_API_URL || (
+      import.meta.env.PROD
+        ? 'https://agency-backend.onrender.com/api'
+        : 'http://localhost:8000/api'
+    );
+    const blogResponse = await fetch(`${API_URL}/blog/?format=json`);
     if (blogResponse.ok) {
       const blogPosts = await blogResponse.json();
       blogPosts.results?.forEach(post => {
@@ -272,7 +277,7 @@ export const fetchDynamicRoutes = async () => {
     }
 
     // Fetch case studies from backend
-    const caseStudiesResponse = await fetch('http://localhost:8000/api/case-studies/?format=json');
+    const caseStudiesResponse = await fetch(`${API_URL}/case-studies/?format=json`);
     if (caseStudiesResponse.ok) {
       const caseStudies = await caseStudiesResponse.json();
       caseStudies.results?.forEach(study => {
@@ -309,7 +314,8 @@ export const fetchDynamicRoutes = async () => {
     }
 
     // Fetch services from backend
-    const servicesResponse = await fetch('http://localhost:8000/api/services/?format=json');
+    // Fetch services from backend
+const servicesResponse = await fetch(`${API_URL}/services/?format=json`);
     if (servicesResponse.ok) {
       const services = await servicesResponse.json();
       services.results?.forEach(service => {

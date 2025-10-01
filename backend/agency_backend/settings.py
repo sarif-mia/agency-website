@@ -30,7 +30,7 @@ import os
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-render-deployment-key-change-in-production-123456789')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # Temporarily enabled for debugging
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Add this for Railway compatibility
 ALLOWED_HOSTS = [

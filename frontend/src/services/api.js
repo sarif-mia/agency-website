@@ -3,12 +3,10 @@ import { useState } from 'react';
 // API Configuration and Service Functions
 // Updated with proper production backend URL
 const API_BASE_URL = import.meta.env.VITE_API_URL || (
-  import.meta.env.PROD 
-    ? 'https://sitegenit-backend.onrender.com/api'  // Updated backend URL
+  import.meta.env.PROD
+    ? 'https://agency-backend.onrender.com/api'  // Render backend URL
     : 'http://localhost:8000/api'
-);
-
-// Helper function to handle API responses
+);// Helper function to handle API responses
 const handleResponse = async (response) => {
   if (!response.ok) {
     const error = await response.json().catch(() => ({ message: 'An error occurred' }));
