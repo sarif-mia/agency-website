@@ -163,7 +163,7 @@ const AboutUsPage = () => {
               <Globe size={48} />
               <h2>Our Vision</h2>
               <p>
-                To be the leading digital agency that transforms how businesses connect with their audiences, 
+                To be the leading site gen it that transforms how businesses connect with their audiences, 
                 creating meaningful experiences that drive success in the digital age.
               </p>
             </div>

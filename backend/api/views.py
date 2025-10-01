@@ -851,7 +851,7 @@ class CompanyInfoView(generics.RetrieveAPIView):
         company_info, created = CompanyInfo.objects.get_or_create(
             id=1,
             defaults={
-                'company_name': 'Digital Agency',
+                'company_name': 'site gen it',
                 'email': 'info@agency.com',
                 'tagline': 'Your Creative Digital Partner',
                 'description': 'We create innovative digital solutions that drive business growth.'
@@ -942,7 +942,7 @@ class SiteSettingsView(generics.RetrieveAPIView):
         settings_obj, created = SiteSettings.objects.get_or_create(
             id=1,
             defaults={
-                'site_name': 'Digital Agency',
+                'site_name': 'site gen it',
                 'site_description': 'Your Creative Digital Partner',
                 'contact_email': 'contact@agency.com',
                 'support_email': 'support@agency.com',

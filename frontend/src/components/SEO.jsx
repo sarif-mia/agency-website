@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet';
 
 const SEO = ({
   title = "SiteGenIT - Professional Web Development & Digital Marketing Services",
-  description = "Leading digital agency specializing in web development, mobile apps, UI/UX design, and digital marketing. Transform your business with our expert solutions.",
-  keywords = "digital agency, web development, mobile apps, UI/UX design, digital marketing, React development, Node.js, professional websites",
+  description = "Leading site gen it specializing in web development, mobile apps, UI/UX design, and digital marketing. Transform your business with our expert solutions.",
+  keywords = "site gen it, web development, mobile apps, UI/UX design, digital marketing, React development, Node.js, professional websites",
   image = "/assets/og-image.jpg",
   url = "",
   type = "website",
@@ -13,7 +13,7 @@ const SEO = ({
   robots = "index, follow",
   canonical = null,
   structuredData = null,
-  twitterHandle = "@digitalagency",
+  twitterHandle = "@sitegenit",
   fbAppId = "",
   lang = "en",
   breadcrumbs = null,
@@ -38,10 +38,10 @@ const SEO = ({
       "availableLanguage": ["English"]
     },
     "sameAs": [
-      "https://www.facebook.com/digitalagency",
-      "https://www.twitter.com/digitalagency",
-      "https://www.linkedin.com/company/digitalagency",
-      "https://www.instagram.com/digitalagency"
+      "https://www.facebook.com/sitegenit",
+      "https://www.twitter.com/sitegenit",
+      "https://www.linkedin.com/company/sitegenit",
+      "https://www.instagram.com/sitegenit"
     ],
     "address": {
       "@type": "PostalAddress",
@@ -130,7 +130,7 @@ const SEO = ({
       <meta name="twitter:image:alt" content={title} />
       
       {/* Additional Twitter Card enhancements */}
-      <meta name="twitter:domain" content="digitalagency.com" />
+      <meta name="twitter:domain" content="sitegenit.com" />
       <meta name="twitter:url" content={fullUrl} />
       
       {/* Additional SEO Meta Tags */}

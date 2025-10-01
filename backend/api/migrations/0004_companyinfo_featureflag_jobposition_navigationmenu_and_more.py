@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             name='CompanyInfo',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('company_name', models.CharField(default='Digital Agency', max_length=200)),
+                ('company_name', models.CharField(default='site gen it', max_length=200)),
                 ('tagline', models.CharField(blank=True, max_length=200)),
                 ('description', models.TextField(blank=True)),
                 ('email', models.EmailField(default='info@agency.com', max_length=254)),
@@ -132,7 +132,7 @@ class Migration(migrations.Migration):
             name='SiteSettings',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('site_name', models.CharField(default='Digital Agency', max_length=200)),
+                ('site_name', models.CharField(default='site gen it', max_length=200)),
                 ('site_description', models.TextField(blank=True)),
                 ('maintenance_mode', models.BooleanField(default=False)),
                 ('contact_email', models.EmailField(default='contact@agency.com', max_length=254)),

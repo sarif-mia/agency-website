@@ -32,6 +32,6 @@ admin.site.register(Service, ServiceAdmin)
 admin.site.register(UserProfile)
 
 # Configure the admin site
-admin.site.site_header = 'Digital Agency CMS Administration'
-admin.site.site_title = 'Digital Agency CMS Admin'
-admin.site.index_title = 'Welcome to Digital Agency Dashboard'
+admin.site.site_header = 'site gen it CMS Administration'
+admin.site.site_title = 'site gen it CMS Admin'
+admin.site.index_title = 'Welcome to site gen it Dashboard'

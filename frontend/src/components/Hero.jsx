@@ -52,7 +52,7 @@ const Hero = () => {
     <section className="hero-section">
       {/* Hidden H1 for SEO purposes */}
       <h1 style={{ position: 'absolute', left: '-9999px', top: 'auto', width: '1px', height: '1px', overflow: 'hidden' }}>
-        Digital Agency - Professional Web Development & Digital Marketing Services
+        site gen it - Professional Web Development & Digital Marketing Services
       </h1>
       
       <div className="particles-bg">

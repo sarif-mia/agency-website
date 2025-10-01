@@ -25,12 +25,12 @@ class Command(BaseCommand):
     def create_seo_settings(self):
         seo_settings, created = SEOSettings.objects.get_or_create(
             defaults={
-                'site_name': 'Digital Agency',
+                'site_name': 'site gen it',
                 'site_tagline': 'Professional Web Development & Digital Marketing Services',
-                'default_meta_description': 'Leading digital agency specializing in web development, mobile apps, UI/UX design, and digital marketing.',
-                'business_name': 'Digital Agency Ltd.',
+                'default_meta_description': 'Leading site gen it specializing in web development, mobile apps, UI/UX design, and digital marketing.',
+                'business_name': 'site gen it Ltd.',
                 'business_type': 'Web Development Agency',
-                'email': 'info@digitalagency.com',
+                'email': 'info@sitegenit.com',
                 'country': 'United States',
                 'region': 'California',
                 'city': 'San Francisco',
@@ -48,16 +48,16 @@ class Command(BaseCommand):
         meta_tags_data = [
             {
                 'page_type': 'home',
-                'meta_title': 'Digital Agency - Professional Web Development Services',
-                'meta_description': 'Leading digital agency specializing in web development, mobile apps, UI/UX design, and digital marketing.',
-                'focus_keyword': 'digital agency',
+                'meta_title': 'site gen it - Professional Web Development Services',
+                'meta_description': 'Leading site gen it specializing in web development, mobile apps, UI/UX design, and digital marketing.',
+                'focus_keyword': 'site gen it',
                 'robots_directive': 'index, follow',
             },
             {
                 'page_type': 'about',
-                'meta_title': 'About Us - Expert Digital Agency Team',
+                'meta_title': 'About Us - Expert site gen it Team',
                 'meta_description': 'Meet our expert team of developers, designers, and digital marketers.',
-                'focus_keyword': 'about digital agency',
+                'focus_keyword': 'about site gen it',
                 'robots_directive': 'index, follow',
             },
             {
@@ -78,7 +78,7 @@ class Command(BaseCommand):
                 'page_type': 'contact',
                 'meta_title': 'Contact Us - Get Your Free Consultation',
                 'meta_description': 'Contact our expert team for a free consultation on your digital project.',
-                'focus_keyword': 'contact digital agency',
+                'focus_keyword': 'contact site gen it',
                 'robots_directive': 'index, follow',
             }
         ]

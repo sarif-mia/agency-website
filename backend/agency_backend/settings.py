@@ -36,13 +36,6 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '.railway.app',
-    '.herokuapp.com',
-    '.vercel.app',
-    '.netlify.app',
-    '.render.com',
-    'agency-website-hu7g.onrender.com',
-    'sitegenit-backend.onrender.com',
 ]
 
 # Add this for Railway compatibility
@@ -193,7 +186,7 @@ if 'PORT' in os.environ:
 # Admin customization - SiteGenIT Branding
 ADMIN_SITE_HEADER = 'SiteGenIT Content Management System'
 ADMIN_SITE_TITLE = 'SiteGenIT Admin'
-ADMIN_INDEX_TITLE = 'Welcome to SiteGenIT Digital Agency Dashboard'
+ADMIN_INDEX_TITLE = 'Welcome to SiteGenIT site gen it Dashboard'
 
 # Custom admin styling
 ADMIN_MEDIA_PREFIX = '/static/admin/'
@@ -239,12 +232,9 @@ else:
     # Add your production frontend URLs here
     CORS_ALLOWED_ORIGINS.extend([
         "https://agency-website-frontend.onrender.com",
-        "https://sitegenit.vercel.app",
         "https://agency-website-beryl-one.vercel.app",
         "https://agency-website-git-main-sarif-mias-projects.vercel.app",
         "https://agency-website-3acnfdeya-sarif-mias-projects.vercel.app",
-        "https://your-site.netlify.app",
-        "https://agency-website.up.railway.app",  # Add Railway URL
     ])
 
 CORS_ALLOW_CREDENTIALS = True

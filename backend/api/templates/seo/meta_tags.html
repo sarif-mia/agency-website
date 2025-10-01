@@ -1,6 +1,6 @@
 {% load static %}
 {% comment %}
-SEO Meta Tags Template for Digital Agency
+SEO Meta Tags Template for site gen it
 This template provides comprehensive SEO optimization for top Google rankings.
 
 Usage in your templates:
@@ -16,11 +16,11 @@ Parameters:
 
 {% with seo_context=request.seo_context %}
 <!-- Primary Meta Tags -->
-<title>{{ custom_title|default:seo_context.meta_title|default:"Digital Agency - Professional Web Development Services" }}</title>
-<meta name="title" content="{{ custom_title|default:seo_context.meta_title|default:"Digital Agency - Professional Web Development Services" }}">
-<meta name="description" content="{{ custom_description|default:seo_context.meta_description|default:"Leading digital agency specializing in web development, mobile apps, UI/UX design, and digital marketing solutions." }}">
-<meta name="keywords" content="{{ seo_context.meta_keywords|default:"digital agency, web development, mobile apps, UI/UX design, digital marketing, professional services" }}">
-<meta name="author" content="{{ seo_context.site_name|default:"Digital Agency" }}">
+<title>{{ custom_title|default:seo_context.meta_title|default:"site gen it - Professional Web Development Services" }}</title>
+<meta name="title" content="{{ custom_title|default:seo_context.meta_title|default:"site gen it - Professional Web Development Services" }}">
+<meta name="description" content="{{ custom_description|default:seo_context.meta_description|default:"Leading site gen it specializing in web development, mobile apps, UI/UX design, and digital marketing solutions." }}">
+<meta name="keywords" content="{{ seo_context.meta_keywords|default:"site gen it, web development, mobile apps, UI/UX design, digital marketing, professional services" }}">
+<meta name="author" content="{{ seo_context.site_name|default:"site gen it" }}">
 <meta name="robots" content="{{ seo_context.robots|default:"index, follow" }}">
 <meta name="language" content="en">
 <meta name="revisit-after" content="7 days">
@@ -31,25 +31,25 @@ Parameters:
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="{{ seo_context.og_type|default:"website" }}">
 <meta property="og:url" content="{{ seo_context.og_url|default:request.build_absolute_uri }}">
-<meta property="og:title" content="{{ custom_title|default:seo_context.og_title|default:seo_context.meta_title|default:"Digital Agency - Professional Web Development Services" }}">
-<meta property="og:description" content="{{ custom_description|default:seo_context.og_description|default:seo_context.meta_description|default:"Leading digital agency specializing in web development and digital solutions." }}">
+<meta property="og:title" content="{{ custom_title|default:seo_context.og_title|default:seo_context.meta_title|default:"site gen it - Professional Web Development Services" }}">
+<meta property="og:description" content="{{ custom_description|default:seo_context.og_description|default:seo_context.meta_description|default:"Leading site gen it specializing in web development and digital solutions." }}">
 <meta property="og:image" content="{{ custom_image|default:seo_context.og_image|default:request.build_absolute_uri }}{% static 'images/og-default.jpg' %}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:site_name" content="{{ seo_context.site_name|default:"Digital Agency" }}">
+<meta property="og:site_name" content="{{ seo_context.site_name|default:"site gen it" }}">
 <meta property="og:locale" content="en_US">
 
 <!-- Twitter -->
 <meta property="twitter:card" content="{{ seo_context.twitter_card|default:"summary_large_image" }}">
 <meta property="twitter:url" content="{{ seo_context.og_url|default:request.build_absolute_uri }}">
-<meta property="twitter:title" content="{{ custom_title|default:seo_context.twitter_title|default:seo_context.meta_title|default:"Digital Agency - Professional Web Development" }}">
+<meta property="twitter:title" content="{{ custom_title|default:seo_context.twitter_title|default:seo_context.meta_title|default:"site gen it - Professional Web Development" }}">
 <meta property="twitter:description" content="{{ custom_description|default:seo_context.twitter_description|default:seo_context.meta_description|default:"Expert web development, mobile apps, and digital marketing services." }}">
 <meta property="twitter:image" content="{{ custom_image|default:seo_context.twitter_image|default:request.build_absolute_uri }}{% static 'images/twitter-default.jpg' %}">
 
 <!-- Additional Meta Tags for SEO -->
 <meta name="theme-color" content="#00f5ff">
 <meta name="msapplication-TileColor" content="#00f5ff">
-<meta name="application-name" content="{{ seo_context.site_name|default:"Digital Agency" }}">
+<meta name="application-name" content="{{ seo_context.site_name|default:"site gen it" }}">
 
 <!-- Favicon and Icons -->
 <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
@@ -77,9 +77,9 @@ Parameters:
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "{{ seo_context.site_name|default:"Digital Agency" }}",
+  "name": "{{ seo_context.site_name|default:"site gen it" }}",
   "url": "{{ request.build_absolute_uri:"/" }}",
-  "description": "{{ seo_context.meta_description|default:"Professional digital agency services" }}",
+  "description": "{{ seo_context.meta_description|default:"Professional site gen it services" }}",
   "potentialAction": {
     "@type": "SearchAction",
     "target": {
@@ -99,7 +99,7 @@ Parameters:
   "description": "Professional web development, mobile apps, and digital marketing services",
   "provider": {
     "@type": "Organization",
-    "name": "{{ seo_context.site_name|default:"Digital Agency" }}",
+    "name": "{{ seo_context.site_name|default:"site gen it" }}",
     "url": "{{ request.build_absolute_uri:"/" }}"
   },
   "serviceType": "Web Development",
@@ -112,7 +112,7 @@ Parameters:
   "@context": "https://schema.org",
   "@type": "ContactPage",
   "name": "Contact Us",
-  "description": "Get in touch with our digital agency for your project needs",
+  "description": "Get in touch with our site gen it for your project needs",
   "url": "{{ request.build_absolute_uri }}"
 }
 </script>

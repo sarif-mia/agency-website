@@ -13,9 +13,9 @@ def create_seo_data():
     # Create SEO Settings
     seo_settings, created = SEOSettings.objects.get_or_create(
         defaults={
-            'site_name': 'Digital Agency',
-            'business_name': 'Digital Agency Ltd.',
-            'email': 'info@digitalagency.com',
+            'site_name': 'site gen it',
+            'business_name': 'site gen it Ltd.',
+            'email': 'info@sitegenit.com',
             'enable_schema_markup': True,
             'enable_open_graph': True,
         }
@@ -26,9 +26,9 @@ def create_seo_data():
     meta_tags_data = [
         {
             'page_type': 'home',
-            'meta_title': 'Digital Agency - Professional Web Development Services',
-            'meta_description': 'Leading digital agency specializing in web development and digital solutions.',
-            'focus_keyword': 'digital agency',
+            'meta_title': 'site gen it - Professional Web Development Services',
+            'meta_description': 'Leading site gen it specializing in web development and digital solutions.',
+            'focus_keyword': 'site gen it',
         },
         {
             'page_type': 'services',

@@ -438,7 +438,7 @@ class SectionContent(models.Model):
 
 class CompanyInfo(models.Model):
     """Company information and contact details"""
-    company_name = models.CharField(max_length=200, default="Digital Agency")
+    company_name = models.CharField(max_length=200, default="site gen it")
     tagline = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
     
@@ -608,7 +608,7 @@ class FeatureFlag(models.Model):
 class SiteSettings(models.Model):
     """Global site settings"""
     # General Settings
-    site_name = models.CharField(max_length=200, default="Digital Agency")
+    site_name = models.CharField(max_length=200, default="site gen it")
     site_description = models.TextField(blank=True)
     maintenance_mode = models.BooleanField(default=False)
     
@@ -904,7 +904,7 @@ class ContentSEOAnalysis(models.Model):
 class SEOSettings(models.Model):
     """Global SEO settings and configuration"""
     # Website basic info
-    site_name = models.CharField(max_length=200, default="Digital Agency")
+    site_name = models.CharField(max_length=200, default="site gen it")
     site_tagline = models.CharField(max_length=300, blank=True)
     default_meta_description = models.CharField(max_length=160, help_text="Default meta description")
     

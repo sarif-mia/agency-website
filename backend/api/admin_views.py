@@ -17,9 +17,9 @@ import json
 
 
 class CustomAdminSite(AdminSite):
-    site_header = 'Digital Agency Content Management'
+    site_header = 'site gen it Content Management'
     site_title = 'Agency CMS'
-    index_title = 'Welcome to Digital Agency Content Management System'
+    index_title = 'Welcome to site gen it Content Management System'
     
     def index(self, request, extra_context=None):
         """

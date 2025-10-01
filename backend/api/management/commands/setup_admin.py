@@ -16,8 +16,8 @@ class Command(BaseCommand):
         parser.add_argument(
             '--email',
             type=str,
-            default='admin@digitalagency.com',
-            help='Admin email (default: admin@digitalagency.com)',
+            default='admin@sitegenit.com',
+            help='Admin email (default: admin@sitegenit.com)',
         )
         parser.add_argument(
             '--password',
@@ -31,7 +31,7 @@ class Command(BaseCommand):
         email = options['email']
         password = options['password']
 
-        self.stdout.write('Setting up Digital Agency Admin Interface...')
+        self.stdout.write('Setting up site gen it Admin Interface...')
 
         # Create superuser
         try:
@@ -60,7 +60,7 @@ class Command(BaseCommand):
 
         # Display admin access information
         self.stdout.write('')
-        self.stdout.write(self.style.SUCCESS('🎉 Digital Agency Admin Setup Complete!'))
+        self.stdout.write(self.style.SUCCESS('🎉 site gen it Admin Setup Complete!'))
         self.stdout.write('')
         self.stdout.write('📊 Admin Dashboard Information:')
         self.stdout.write(f'   URL: http://localhost:8000/admin/')
@@ -103,4 +103,4 @@ class Command(BaseCommand):
         self.stdout.write(self.style.WARNING('⚠️  Security Note:'))
         self.stdout.write('   Please change the default password after first login!')
         self.stdout.write('')
-        self.stdout.write(self.style.SUCCESS('Ready to manage your Digital Agency! 🚀'))
+        self.stdout.write(self.style.SUCCESS('Ready to manage your site gen it! 🚀'))

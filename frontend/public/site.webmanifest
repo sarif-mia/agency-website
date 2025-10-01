@@ -1,7 +1,7 @@
 {
-  "name": "Digital Agency - Professional Web Development & Digital Marketing Services",
-  "short_name": "Digital Agency",
-  "description": "Leading digital agency specializing in web development, mobile apps, UI/UX design, and digital marketing.",
+  "name": "site gen it - Professional Web Development & Digital Marketing Services",
+  "short_name": "site gen it",
+  "description": "Leading site gen it specializing in web development, mobile apps, UI/UX design, and digital marketing.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0a0a",
@@ -45,14 +45,14 @@
       "sizes": "1280x800",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Digital Agency Desktop View"
+      "label": "site gen it Desktop View"
     },
     {
       "src": "/screenshots/mobile.png",
       "sizes": "390x844",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Digital Agency Mobile View"
+      "label": "site gen it Mobile View"
     }
   ],
   "shortcuts": [

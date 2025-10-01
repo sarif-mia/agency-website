@@ -83,7 +83,7 @@ class Migration(migrations.Migration):
             name='SEOSettings',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('site_name', models.CharField(default='Digital Agency', max_length=200)),
+                ('site_name', models.CharField(default='site gen it', max_length=200)),
                 ('site_tagline', models.CharField(blank=True, max_length=300)),
                 ('default_meta_description', models.CharField(help_text='Default meta description', max_length=160)),
                 ('business_name', models.CharField(max_length=200)),

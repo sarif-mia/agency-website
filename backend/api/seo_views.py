@@ -209,10 +209,10 @@ def seo_meta_context(request, page_type=None, content_object=None):
         
         # Default meta tags
         meta_context = {
-            'site_name': seo_settings.site_name if seo_settings else 'Digital Agency',
-            'meta_title': 'Professional Digital Agency - Web Development & Design Services',
-            'meta_description': 'Leading digital agency specializing in web development, mobile apps, UI/UX design, and digital marketing. Transform your business with our expert solutions.',
-            'meta_keywords': 'web development, digital agency, mobile apps, UI/UX design, digital marketing',
+            'site_name': seo_settings.site_name if seo_settings else 'site gen it',
+            'meta_title': 'Professional site gen it - Web Development & Design Services',
+            'meta_description': 'Leading site gen it specializing in web development, mobile apps, UI/UX design, and digital marketing. Transform your business with our expert solutions.',
+            'meta_keywords': 'web development, site gen it, mobile apps, UI/UX design, digital marketing',
             'canonical_url': current_url,
             'og_title': '',
             'og_description': '',
@@ -330,9 +330,9 @@ def seo_meta_context(request, page_type=None, content_object=None):
     except Exception:
         # Return minimal meta context on error
         return {
-            'site_name': 'Digital Agency',
-            'meta_title': 'Digital Agency - Professional Web Development Services',
-            'meta_description': 'Professional digital agency offering web development, design, and marketing services.',
+            'site_name': 'site gen it',
+            'meta_title': 'site gen it - Professional Web Development Services',
+            'meta_description': 'Professional site gen it offering web development, design, and marketing services.',
             'canonical_url': request.build_absolute_uri(),
             'robots': 'index, follow',
         }

@@ -34,10 +34,10 @@ Allow: /*.js
 Crawl-delay: 1
 
 # Host directive
-Host: digitalagency.com
+Host: sitegenit.com
 
 # Sitemap locations
-Sitemap: https://digitalagency.com/sitemap.xml
+Sitemap: https://sitegenit.com/sitemap.xml
 
 # Additional user agents
 User-agent: Googlebot
@@ -64,10 +64,10 @@ User-agent: Googlebot-News
 Allow: /
 
 # Mobile sitemap
-Sitemap: https://digitalagency.com/sitemap-mobile.xml
+Sitemap: https://sitegenit.com/sitemap-mobile.xml
 
 # News sitemap
-Sitemap: https://digitalagency.com/sitemap-news.xml
+Sitemap: https://sitegenit.com/sitemap-news.xml
 
 # Video sitemap
-Sitemap: https://digitalagency.com/sitemap-video.xml
+Sitemap: https://sitegenit.com/sitemap-video.xml

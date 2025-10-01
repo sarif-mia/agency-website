@@ -8,20 +8,20 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://digitalagency.com/</loc>
+    <loc>https://sitegenit.com/</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://digitalagency.com/assets/og-image.jpg</image:loc>
-      <image:title>Digital Agency - Professional Web Development Services</image:title>
-      <image:caption>Leading digital agency homepage</image:caption>
+      <image:loc>https://sitegenit.com/assets/og-image.jpg</image:loc>
+      <image:title>site gen it - Professional Web Development Services</image:title>
+      <image:caption>Leading site gen it homepage</image:caption>
     </image:image>
   </url>
 
   <!-- About Us -->
   <url>
-    <loc>https://digitalagency.com/about-us</loc>
+    <loc>https://sitegenit.com/about-us</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -29,7 +29,7 @@
 
   <!-- Services -->
   <url>
-    <loc>https://digitalagency.com/services</loc>
+    <loc>https://sitegenit.com/services</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -37,7 +37,7 @@
 
   <!-- Portfolio/Projects -->
   <url>
-    <loc>https://digitalagency.com/all-projects</loc>
+    <loc>https://sitegenit.com/all-projects</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -45,7 +45,7 @@
 
   <!-- Our Team -->
   <url>
-    <loc>https://digitalagency.com/our-team</loc>
+    <loc>https://sitegenit.com/our-team</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -53,7 +53,7 @@
 
   <!-- Careers -->
   <url>
-    <loc>https://digitalagency.com/careers</loc>
+    <loc>https://sitegenit.com/careers</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -61,7 +61,7 @@
 
   <!-- Blog -->
   <url>
-    <loc>https://digitalagency.com/blog</loc>
+    <loc>https://sitegenit.com/blog</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -69,7 +69,7 @@
 
   <!-- Case Studies -->
   <url>
-    <loc>https://digitalagency.com/case-studies</loc>
+    <loc>https://sitegenit.com/case-studies</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -77,7 +77,7 @@
 
   <!-- Help Center -->
   <url>
-    <loc>https://digitalagency.com/help</loc>
+    <loc>https://sitegenit.com/help</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -85,7 +85,7 @@
 
   <!-- Resources -->
   <url>
-    <loc>https://digitalagency.com/resources</loc>
+    <loc>https://sitegenit.com/resources</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -93,7 +93,7 @@
 
   <!-- Get Quote -->
   <url>
-    <loc>https://digitalagency.com/quote</loc>
+    <loc>https://sitegenit.com/quote</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -101,7 +101,7 @@
 
   <!-- Portfolio Download -->
   <url>
-    <loc>https://digitalagency.com/portfolio-download</loc>
+    <loc>https://sitegenit.com/portfolio-download</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -109,7 +109,7 @@
 
   <!-- Partnership -->
   <url>
-    <loc>https://digitalagency.com/partnership</loc>
+    <loc>https://sitegenit.com/partnership</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -117,14 +117,14 @@
 
   <!-- Legal Pages -->
   <url>
-    <loc>https://digitalagency.com/privacy-policy</loc>
+    <loc>https://sitegenit.com/privacy-policy</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://digitalagency.com/terms-conditions</loc>
+    <loc>https://sitegenit.com/terms-conditions</loc>
     <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

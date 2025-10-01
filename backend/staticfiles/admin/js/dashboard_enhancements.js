@@ -49,7 +49,7 @@ function addQuickStats() {
                     <div style=\"font-size: 2rem; color: var(--secondary-color); font-weight: 800;\">\ud83c\udf10</div>
                     <div style=\"color: var(--text-primary); font-weight: 600; margin: 5px 0;\">Live Website</div>
                     <div style=\"color: var(--text-muted); font-size: 0.9rem;\">
-                        <a href=\"https://sitegenit.vercel.app\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">sitegenit.vercel.app</a>
+                        <a href=\"https://sitegenit.com\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">sitegenit.com</a>
                     </div>
                 </div>
                 <div class=\"stat-item\" style=\"text-align: center; padding: 15px; background: var(--darker-bg); border-radius: 10px;\">
@@ -164,7 +164,7 @@ setTimeout(() => {
         console.log('  • Ctrl+H: Quick access to dashboard');
         console.log('  • Ctrl+M: View contact messages');
         console.log('  • Ctrl+P: Manage projects');
-        console.log('  • \ud83c\udf10 Live site: https://sitegenit.vercel.app');
+        console.log('  • \ud83c\udf10 Live site: https://sitegenit.com');
         localStorage.setItem('sitegenit_admin_tips_shown', 'true');
     }
 }, 1000);

@@ -58,30 +58,30 @@ class Command(BaseCommand):
 
     def create_company_info(self):
         company_info = CompanyInfo.objects.create(
-            company_name="Digital Agency",
+            company_name="site gen it",
             tagline="Your Creative Digital Partner",
-            description="We are a cutting-edge digital agency specializing in creating exceptional digital experiences. Our team of experts combines creativity with technology to deliver innovative solutions that drive business growth and exceed client expectations.",
-            email="info@digitalagency.com",
+            description="We are a cutting-edge site gen it specializing in creating exceptional digital experiences. Our team of experts combines creativity with technology to deliver innovative solutions that drive business growth and exceed client expectations.",
+            email="info@sitegenit.com",
             phone="+1 (555) 123-4567",
             address="123 Innovation Street, Tech City, TC 12345",
             business_hours="Monday - Friday: 9:00 AM - 6:00 PM\nSaturday: 10:00 AM - 4:00 PM\nSunday: Closed",
-            facebook_url="https://facebook.com/digitalagency",
-            twitter_url="https://twitter.com/digitalagency",
-            linkedin_url="https://linkedin.com/company/digitalagency",
-            instagram_url="https://instagram.com/digitalagency",
-            youtube_url="https://youtube.com/digitalagency",
-            meta_keywords="digital agency, web development, mobile apps, branding, marketing",
-            meta_description="Professional digital agency offering web development, mobile apps, branding, and digital marketing services."
+            facebook_url="https://facebook.com/sitegenit",
+            twitter_url="https://twitter.com/sitegenit",
+            linkedin_url="https://linkedin.com/company/sitegenit",
+            instagram_url="https://instagram.com/sitegenit",
+            youtube_url="https://youtube.com/sitegenit",
+            meta_keywords="site gen it, web development, mobile apps, branding, marketing",
+            meta_description="Professional site gen it offering web development, mobile apps, branding, and digital marketing services."
         )
         self.stdout.write(f'Created company info: {company_info.company_name}')
 
     def create_site_settings(self):
         site_settings = SiteSettings.objects.create(
-            site_name="Digital Agency",
+            site_name="site gen it",
             site_description="Your Creative Digital Partner - Creating exceptional digital experiences",
             maintenance_mode=False,
-            contact_email="contact@digitalagency.com",
-            support_email="support@digitalagency.com",
+            contact_email="contact@sitegenit.com",
+            support_email="support@sitegenit.com",
             google_analytics_id="G-XXXXXXXXXX",
             facebook_pixel_id="",
             primary_color="#00f5ff",
@@ -193,20 +193,20 @@ class Command(BaseCommand):
         pages_data = [
             {
                 "page_type": "home",
-                "title": "Digital Agency - Your Creative Partner",
+                "title": "site gen it - Your Creative Partner",
                 "subtitle": "Transform your ideas into extraordinary digital experiences",
-                "meta_description": "Professional digital agency offering web development, mobile apps, and digital marketing services.",
+                "meta_description": "Professional site gen it offering web development, mobile apps, and digital marketing services.",
                 "hero_title": "We Create Digital Experiences",
                 "hero_subtitle": "Transform your ideas into extraordinary digital experiences with our cutting-edge solutions.",
                 "hero_button_text": "Start Your Project",
                 "hero_button_url": "/quote",
-                "content": "<p>Welcome to our digital agency where creativity meets technology.</p>"
+                "content": "<p>Welcome to our site gen it where creativity meets technology.</p>"
             },
             {
                 "page_type": "about",
-                "title": "About Digital Agency",
+                "title": "About site gen it",
                 "subtitle": "Your trusted partner in digital transformation",
-                "meta_description": "Learn about our digital agency, our team, and our commitment to delivering exceptional results.",
+                "meta_description": "Learn about our site gen it, our team, and our commitment to delivering exceptional results.",
                 "content": "<p>We are a team of passionate digital experts committed to delivering exceptional results.</p>"
             },
             {
@@ -225,9 +225,9 @@ class Command(BaseCommand):
             },
             {
                 "page_type": "careers",
-                "title": "Careers at Digital Agency",
+                "title": "Careers at site gen it",
                 "subtitle": "Join our team and shape the future of digital innovation",
-                "meta_description": "Explore career opportunities at Digital Agency and join our team of creative professionals.",
+                "meta_description": "Explore career opportunities at site gen it and join our team of creative professionals.",
                 "hero_title": "Join Our Team",
                 "hero_subtitle": "Be part of something amazing and help us create the future of digital experiences.",
                 "hero_button_text": "View Open Positions",
@@ -238,7 +238,7 @@ class Command(BaseCommand):
                 "page_type": "contact",
                 "title": "Contact Us",
                 "subtitle": "Get in touch with our team",
-                "meta_description": "Contact Digital Agency for your next project. We're here to help bring your ideas to life.",
+                "meta_description": "Contact site gen it for your next project. We're here to help bring your ideas to life.",
                 "content": "<p>Ready to start your project? Get in touch with us today.</p>"
             }
         ]
@@ -254,11 +254,11 @@ class Command(BaseCommand):
                 "name": "Sarah Johnson",
                 "position": "CEO & Founder",
                 "department": "leadership",
-                "bio": "Sarah founded Digital Agency with a vision to bridge the gap between creative design and cutting-edge technology. With over 10 years of experience in digital strategy, she leads our team with passion and innovation.",
+                "bio": "Sarah founded site gen it with a vision to bridge the gap between creative design and cutting-edge technology. With over 10 years of experience in digital strategy, she leads our team with passion and innovation.",
                 "image_url": "https://images.unsplash.com/photo-1494790108755-2616b9bfc8bd?w=300&h=300&fit=crop&crop=face",
                 "years_experience": 10,
                 "skills": ["Strategic Planning", "Team Leadership", "Business Development", "Digital Strategy"],
-                "email": "sarah@digitalagency.com",
+                "email": "sarah@sitegenit.com",
                 "linkedin_url": "https://linkedin.com/in/sarahjohnson",
                 "is_featured": True,
                 "order": 1
@@ -271,7 +271,7 @@ class Command(BaseCommand):
                 "image_url": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face",
                 "years_experience": 12,
                 "skills": ["System Architecture", "Cloud Computing", "DevOps", "Technology Strategy"],
-                "email": "michael@digitalagency.com",
+                "email": "michael@sitegenit.com",
                 "linkedin_url": "https://linkedin.com/in/michaelchen",
                 "github_url": "https://github.com/michaelchen",
                 "is_featured": True,
@@ -285,7 +285,7 @@ class Command(BaseCommand):
                 "image_url": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=300&fit=crop&crop=face",
                 "years_experience": 8,
                 "skills": ["UI/UX Design", "Brand Identity", "Prototyping", "Design Systems"],
-                "email": "emily@digitalagency.com",
+                "email": "emily@sitegenit.com",
                 "linkedin_url": "https://linkedin.com/in/emilyrodriguez",
                 "is_featured": True,
                 "order": 3
@@ -298,7 +298,7 @@ class Command(BaseCommand):
                 "image_url": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face",
                 "years_experience": 9,
                 "skills": ["React", "Node.js", "Python", "Database Design", "API Development"],
-                "email": "david@digitalagency.com",
+                "email": "david@sitegenit.com",
                 "linkedin_url": "https://linkedin.com/in/davidthompson",
                 "github_url": "https://github.com/davidthompson",
                 "is_featured": True,
@@ -312,7 +312,7 @@ class Command(BaseCommand):
                 "image_url": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&h=300&fit=crop&crop=face",
                 "years_experience": 7,
                 "skills": ["Digital Marketing", "SEO", "Content Strategy", "Analytics"],
-                "email": "lisa@digitalagency.com",
+                "email": "lisa@sitegenit.com",
                 "linkedin_url": "https://linkedin.com/in/lisawang",
                 "order": 5
             },
@@ -324,7 +324,7 @@ class Command(BaseCommand):
                 "image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face",
                 "years_experience": 6,
                 "skills": ["React Native", "Flutter", "iOS", "Android", "Mobile UX"],
-                "email": "james@digitalagency.com",
+                "email": "james@sitegenit.com",
                 "github_url": "https://github.com/jamesmiller",
                 "order": 6
             }

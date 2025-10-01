@@ -1,4 +1,4 @@
-// Service Worker for Digital Agency Website
+// Service Worker for site gen it Website
 // Provides caching strategies for better performance and SEO
 
 const CACHE_NAME = 'digital-agency-v1';

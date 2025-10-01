@@ -1,17 +1,17 @@
 // SEO Configuration and Data for all pages
 
 export const siteConfig = {
-  siteName: "Digital Agency",
-  siteUrl: "https://digitalagency.com",
-  defaultTitle: "Digital Agency - Professional Web Development & Digital Marketing Services",
-  defaultDescription: "Leading digital agency specializing in web development, mobile apps, UI/UX design, and digital marketing. Transform your business with our expert solutions.",
-  defaultKeywords: "digital agency, web development, mobile apps, UI/UX design, digital marketing, React development, Node.js, professional websites",
+  siteName: "site gen it",
+  siteUrl: "https://sitegenit.com",
+  defaultTitle: "site gen it - Professional Web Development & Digital Marketing Services",
+  defaultDescription: "Leading site gen it specializing in web development, mobile apps, UI/UX design, and digital marketing. Transform your business with our expert solutions.",
+  defaultKeywords: "site gen it, web development, mobile apps, UI/UX design, digital marketing, React development, Node.js, professional websites",
   defaultImage: "/assets/og-image.jpg",
-  twitterHandle: "@digitalagency",
+  twitterHandle: "@sitegenit",
   fbAppId: "",
-  author: "Digital Agency Team",
+  author: "site gen it Team",
   organization: {
-    name: "Digital Agency",
+    name: "site gen it",
     logo: "/assets/logo.png",
     address: {
       street: "123 Business Street",
@@ -21,21 +21,21 @@ export const siteConfig = {
       country: "US"
     },
     phone: "+1-555-123-4567",
-    email: "info@digitalagency.com",
+    email: "info@sitegenit.com",
     socialMedia: {
-      facebook: "https://www.facebook.com/digitalagency",
-      twitter: "https://www.twitter.com/digitalagency",
-      linkedin: "https://www.linkedin.com/company/digitalagency",
-      instagram: "https://www.instagram.com/digitalagency"
+      facebook: "https://www.facebook.com/sitegenit",
+      twitter: "https://www.twitter.com/sitegenit",
+      linkedin: "https://www.linkedin.com/company/sitegenit",
+      instagram: "https://www.instagram.com/sitegenit"
     }
   }
 };
 
 export const pagesSEOData = {
   home: {
-    title: "Digital Agency - Web Development & Marketing Services",
-    description: "Leading digital agency specializing in web development, mobile apps, UI/UX design, and digital marketing. Transform your business with our expert solutions.",
-    keywords: "digital agency, web development, mobile apps, UI/UX design, digital marketing, React development, Node.js, professional websites, web design agency, digital solutions",
+    title: "site gen it - Web Development & Marketing Services",
+    description: "Leading site gen it specializing in web development, mobile apps, UI/UX design, and digital marketing. Transform your business with our expert solutions.",
+    keywords: "site gen it, web development, mobile apps, UI/UX design, digital marketing, React development, Node.js, professional websites, web design agency, digital solutions",
     url: "/",
     breadcrumbs: [
       { name: "Home", url: "/" }
@@ -43,22 +43,22 @@ export const pagesSEOData = {
     structuredData: {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "Digital Agency",
-      "url": "https://digitalagency.com",
+      "name": "site gen it",
+      "url": "https://sitegenit.com",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://digitalagency.com/search?q={search_term_string}",
+        "target": "https://sitegenit.com/search?q={search_term_string}",
         "query-input": "required name=search_term_string"
       },
       "sameAs": Object.values(siteConfig.organization.socialMedia),
-      "description": "Leading digital agency specializing in web development, mobile apps, UI/UX design, and digital marketing."
+      "description": "Leading site gen it specializing in web development, mobile apps, UI/UX design, and digital marketing."
     }
   },
   
   about: {
-    title: "About Us - Expert Digital Agency Team | Digital Agency",
+    title: "About Us - Expert site gen it Team | site gen it",
     description: "Meet our expert team of developers, designers, and digital marketers. Learn about our mission to deliver exceptional digital solutions for businesses worldwide.",
-    keywords: "about digital agency, expert team, web development team, digital marketing experts, company story, agency history",
+    keywords: "about site gen it, expert team, web development team, digital marketing experts, company story, agency history",
     url: "/about-us",
     breadcrumbs: [
       { name: "Home", url: "/" },
@@ -67,13 +67,13 @@ export const pagesSEOData = {
     structuredData: {
       "@context": "https://schema.org",
       "@type": "AboutPage",
-      "name": "About Digital Agency",
+      "name": "About site gen it",
       "description": "Meet our expert team of developers, designers, and digital marketers. Learn about our mission to deliver exceptional digital solutions for businesses worldwide.",
-      "url": "https://digitalagency.com/about-us",
+      "url": "https://sitegenit.com/about-us",
       "mainEntity": {
         "@type": "Organization",
         "name": siteConfig.organization.name,
-        "description": "Expert digital agency providing web development and digital marketing services",
+        "description": "Expert site gen it providing web development and digital marketing services",
         "foundingDate": "2020",
         "employee": [],
         "address": siteConfig.organization.address
@@ -82,7 +82,7 @@ export const pagesSEOData = {
   },
   
   services: {
-    title: "Our Services - Web Development & Digital Marketing | Digital Agency",
+    title: "Our Services - Web Development & Digital Marketing | site gen it",
     description: "Comprehensive digital services including web development, mobile app development, UI/UX design, and digital marketing solutions for your business growth.",
     keywords: "web development services, mobile app development, UI/UX design, digital marketing services, React development, SEO services, content marketing",
     url: "/services",
@@ -97,7 +97,7 @@ export const pagesSEOData = {
       "provider": {
         "@type": "Organization",
         "name": siteConfig.organization.name,
-        "url": "https://digitalagency.com",
+        "url": "https://sitegenit.com",
         "address": siteConfig.organization.address
       },
       "areaServed": "Worldwide",
@@ -106,9 +106,9 @@ export const pagesSEOData = {
   },
   
   portfolio: {
-    title: "Our Portfolio - Best Web Development Projects | Digital Agency",
+    title: "Our Portfolio - Best Web Development Projects | site gen it",
     description: "Explore our portfolio of successful web development and digital marketing projects. See how we've helped businesses achieve their digital goals.",
-    keywords: "web development portfolio, digital agency projects, React projects, mobile app portfolio, UI/UX design examples, successful projects",
+    keywords: "web development portfolio, site gen it projects, React projects, mobile app portfolio, UI/UX design examples, successful projects",
     url: "/all-projects",
     breadcrumbs: [
       { name: "Home", url: "/" },
@@ -117,16 +117,16 @@ export const pagesSEOData = {
     structuredData: {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "name": "Digital Agency Portfolio",
+      "name": "site gen it Portfolio",
       "description": "Collection of our best web development and digital marketing projects",
-      "url": "https://digitalagency.com/all-projects"
+      "url": "https://sitegenit.com/all-projects"
     }
   },
   
   team: {
-    title: "Our Team - Meet the Digital Experts | Digital Agency",
+    title: "Our Team - Meet the Digital Experts | site gen it",
     description: "Meet our talented team of web developers, designers, and digital marketing experts dedicated to delivering exceptional results for your business.",
-    keywords: "digital agency team, web developers, UI/UX designers, digital marketing experts, creative team, technology professionals",
+    keywords: "site gen it team, web developers, UI/UX designers, digital marketing experts, creative team, technology professionals",
     url: "/our-team",
     breadcrumbs: [
       { name: "Home", url: "/" },
@@ -142,9 +142,9 @@ export const pagesSEOData = {
   },
   
   careers: {
-    title: "Careers - Join Our Digital Agency Team | Digital Agency",
-    description: "Join our growing team of digital experts. Explore career opportunities in web development, design, and digital marketing at Digital Agency.",
-    keywords: "digital agency careers, web developer jobs, UI/UX designer jobs, digital marketing careers, tech jobs, remote work opportunities",
+    title: "Careers - Join Our site gen it Team | site gen it",
+    description: "Join our growing team of digital experts. Explore career opportunities in web development, design, and digital marketing at site gen it.",
+    keywords: "site gen it careers, web developer jobs, UI/UX designer jobs, digital marketing careers, tech jobs, remote work opportunities",
     url: "/careers",
     breadcrumbs: [
       { name: "Home", url: "/" },
@@ -158,15 +158,15 @@ export const pagesSEOData = {
         "name": siteConfig.organization.name,
         "sameAs": Object.values(siteConfig.organization.socialMedia)
       },
-      "description": "Join our growing team of digital experts. Explore career opportunities in web development, design, and digital marketing at Digital Agency.",
+      "description": "Join our growing team of digital experts. Explore career opportunities in web development, design, and digital marketing at site gen it.",
       "employmentType": "FULL_TIME",
       "jobLocationType": "TELECOMMUTE"
     }
   },
   
   blog: {
-    title: "Blog - Digital Marketing & Web Development Insights | Digital Agency",
-    description: "Stay updated with the latest trends in web development, digital marketing, and technology. Expert insights and tips from our digital agency team.",
+    title: "Blog - Digital Marketing & Web Development Insights | site gen it",
+    description: "Stay updated with the latest trends in web development, digital marketing, and technology. Expert insights and tips from our site gen it team.",
     keywords: "digital marketing blog, web development blog, technology insights, React tutorials, SEO tips, content marketing, digital strategy",
     url: "/blog",
     breadcrumbs: [
@@ -176,17 +176,17 @@ export const pagesSEOData = {
     structuredData: {
       "@context": "https://schema.org",
       "@type": "Blog",
-      "name": "Digital Agency Blog",
+      "name": "site gen it Blog",
       "description": "Expert insights on web development and digital marketing",
-      "url": "https://digitalagency.com/blog",
+      "url": "https://sitegenit.com/blog",
       "blogPost": []
     }
   },
   
   caseStudies: {
-    title: "Case Studies - Success Stories | Digital Agency",
+    title: "Case Studies - Success Stories | site gen it",
     description: "Discover how we've helped businesses succeed with our digital solutions. Read detailed case studies of our web development and marketing projects.",
-    keywords: "digital agency case studies, web development success stories, digital marketing results, business transformation, ROI examples",
+    keywords: "site gen it case studies, web development success stories, digital marketing results, business transformation, ROI examples",
     url: "/case-studies",
     breadcrumbs: [
       { name: "Home", url: "/" },
@@ -195,16 +195,16 @@ export const pagesSEOData = {
     structuredData: {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "name": "Digital Agency Case Studies",
+      "name": "site gen it Case Studies",
       "description": "Success stories and detailed case studies of our digital projects",
-      "url": "https://digitalagency.com/case-studies"
+      "url": "https://sitegenit.com/case-studies"
     }
   },
   
   contact: {
-    title: "Contact Us - Get Your Free Consultation | Digital Agency",
+    title: "Contact Us - Get Your Free Consultation | site gen it",
     description: "Ready to transform your digital presence? Contact our expert team for a free consultation on your web development or digital marketing project.",
-    keywords: "contact digital agency, free consultation, web development quote, digital marketing consultation, project inquiry, business inquiry",
+    keywords: "contact site gen it, free consultation, web development quote, digital marketing consultation, project inquiry, business inquiry",
     url: "/quote",
     breadcrumbs: [
       { name: "Home", url: "/" },
@@ -213,9 +213,9 @@ export const pagesSEOData = {
     structuredData: {
       "@context": "https://schema.org",
       "@type": "ContactPage",
-      "name": "Contact Digital Agency",
+      "name": "Contact site gen it",
       "description": "Ready to transform your digital presence? Contact our expert team for a free consultation on your web development or digital marketing project.",
-      "url": "https://digitalagency.com/quote",
+      "url": "https://sitegenit.com/quote",
       "mainEntity": {
         "@type": "Organization",
         "name": siteConfig.organization.name,
@@ -232,9 +232,9 @@ export const pagesSEOData = {
   },
   
   help: {
-    title: "Help Center - Digital Agency Support | Digital Agency",
+    title: "Help Center - site gen it Support | site gen it",
     description: "Find answers to common questions about our web development and digital marketing services. Access our comprehensive help center.",
-    keywords: "digital agency help, web development support, digital marketing FAQ, technical support, customer service",
+    keywords: "site gen it help, web development support, digital marketing FAQ, technical support, customer service",
     url: "/help",
     breadcrumbs: [
       { name: "Home", url: "/" },
@@ -243,16 +243,16 @@ export const pagesSEOData = {
     structuredData: {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "name": "Digital Agency Help Center",
+      "name": "site gen it Help Center",
       "description": "Find answers to common questions about our web development and digital marketing services. Access our comprehensive help center.",
-      "url": "https://digitalagency.com/help",
+      "url": "https://sitegenit.com/help",
       "mainEntity": []
     }
   },
   
   resources: {
-    title: "Free Resources - Digital Marketing Tools & Templates | Digital Agency",
-    description: "Access free digital marketing resources, web development tools, and templates to boost your online presence. Expert resources from Digital Agency.",
+    title: "Free Resources - Digital Marketing Tools & Templates | site gen it",
+    description: "Access free digital marketing resources, web development tools, and templates to boost your online presence. Expert resources from site gen it.",
     keywords: "free digital marketing resources, web development tools, marketing templates, SEO tools, content templates, business resources",
     url: "/resources",
     breadcrumbs: [
@@ -264,14 +264,14 @@ export const pagesSEOData = {
       "@type": "WebPage",
       "name": "Free Digital Resources",
       "description": "Collection of free digital marketing and web development resources",
-      "url": "https://digitalagency.com/resources"
+      "url": "https://sitegenit.com/resources"
     }
   },
   
   privacy: {
-    title: "Privacy Policy | Digital Agency",
-    description: "Learn how Digital Agency protects your privacy and handles your personal information. Our comprehensive privacy policy and data protection practices.",
-    keywords: "privacy policy, data protection, GDPR compliance, digital agency privacy, personal information handling",
+    title: "Privacy Policy | site gen it",
+    description: "Learn how site gen it protects your privacy and handles your personal information. Our comprehensive privacy policy and data protection practices.",
+    keywords: "privacy policy, data protection, GDPR compliance, site gen it privacy, personal information handling",
     url: "/privacy-policy",
     breadcrumbs: [
       { name: "Home", url: "/" },
@@ -282,15 +282,15 @@ export const pagesSEOData = {
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "Privacy Policy",
-      "description": "Learn how Digital Agency protects your privacy and handles your personal information. Our comprehensive privacy policy and data protection practices.",
-      "url": "https://digitalagency.com/privacy-policy"
+      "description": "Learn how site gen it protects your privacy and handles your personal information. Our comprehensive privacy policy and data protection practices.",
+      "url": "https://sitegenit.com/privacy-policy"
     }
   },
   
   terms: {
-    title: "Terms & Conditions | Digital Agency",
-    description: "Read our terms and conditions for using Digital Agency services. Understand our service agreements and legal policies.",
-    keywords: "terms and conditions, service agreement, legal terms, digital agency terms, user agreement",
+    title: "Terms & Conditions | site gen it",
+    description: "Read our terms and conditions for using site gen it services. Understand our service agreements and legal policies.",
+    keywords: "terms and conditions, service agreement, legal terms, site gen it terms, user agreement",
     url: "/terms-conditions",
     breadcrumbs: [
       { name: "Home", url: "/" },
@@ -301,8 +301,8 @@ export const pagesSEOData = {
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "Terms & Conditions",
-      "description": "Read our terms and conditions for using Digital Agency services. Understand our service agreements and legal policies.",
-      "url": "https://digitalagency.com/terms-conditions"
+      "description": "Read our terms and conditions for using site gen it services. Understand our service agreements and legal policies.",
+      "url": "https://sitegenit.com/terms-conditions"
     }
   }
 };

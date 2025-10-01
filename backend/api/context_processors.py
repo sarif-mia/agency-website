@@ -62,9 +62,9 @@ def seo_context(request):
         # Return minimal context on error
         return {
             'seo_context': {
-                'site_name': 'Digital Agency',
-                'meta_title': 'Digital Agency - Professional Web Development Services',
-                'meta_description': 'Professional digital agency offering web development and digital solutions.',
+                'site_name': 'site gen it',
+                'meta_title': 'site gen it - Professional Web Development Services',
+                'meta_description': 'Professional site gen it offering web development and digital solutions.',
                 'canonical_url': request.build_absolute_uri(),
                 'robots': 'index, follow',
             },

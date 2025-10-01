@@ -145,7 +145,7 @@ export const generateSitemapXML = (additionalPages = []) => {
     const changefreq = changeFrequencyMap[key] || changeFrequencyMap.default;
     
     xml += `  <url>\n`;
-    xml += `    <loc>https://digitalagency.com${page.url}</loc>\n`;
+    xml += `    <loc>https://sitegenit.com${page.url}</loc>\n`;
     xml += `    <lastmod>${currentDate}</lastmod>\n`;
     xml += `    <changefreq>${changefreq}</changefreq>\n`;
     xml += `    <priority>${priority.toFixed(1)}</priority>\n`;
@@ -153,7 +153,7 @@ export const generateSitemapXML = (additionalPages = []) => {
     // Add image if available
     if (page.image) {
       xml += `    <image:image>\n`;
-      xml += `      <image:loc>https://digitalagency.com${page.image}</image:loc>\n`;
+      xml += `      <image:loc>https://sitegenit.com${page.image}</image:loc>\n`;
       xml += `      <image:title>${page.title}</image:title>\n`;
       xml += `    </image:image>\n`;
     }
@@ -164,7 +164,7 @@ export const generateSitemapXML = (additionalPages = []) => {
   // Add additional pages (like blog posts, case studies, etc.)
   additionalPages.forEach(page => {
     xml += `  <url>\n`;
-    xml += `    <loc>https://digitalagency.com${page.url}</loc>\n`;
+    xml += `    <loc>https://sitegenit.com${page.url}</loc>\n`;
     xml += `    <lastmod>${page.lastModified || currentDate}</lastmod>\n`;
     xml += `    <changefreq>${page.changeFrequency || 'monthly'}</changefreq>\n`;
     xml += `    <priority>${(page.priority || 0.5).toFixed(1)}</priority>\n`;
@@ -224,7 +224,7 @@ Allow: /*.js
 Crawl-delay: 1
 
 # Sitemap location
-Sitemap: https://digitalagency.com/sitemap.xml
+Sitemap: https://sitegenit.com/sitemap.xml
 
 # Additional user agents
 User-agent: Googlebot
@@ -236,10 +236,10 @@ Allow: /
 Crawl-delay: 1
 
 # Mobile sitemap
-Sitemap: https://digitalagency.com/sitemap-mobile.xml
+Sitemap: https://sitegenit.com/sitemap-mobile.xml
 
 # News sitemap
-Sitemap: https://digitalagency.com/sitemap-news.xml`;
+Sitemap: https://sitegenit.com/sitemap-news.xml`;
 };
 
 // Export the page data for use in dynamic sitemap generation
