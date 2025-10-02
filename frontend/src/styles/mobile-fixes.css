@@ -1,5 +1,13 @@
 /* Mobile Responsiveness Fixes */
 
+/* Make all containers full width */
+.container {
+  max-width: 100% !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  box-sizing: border-box !important;
+}
+
 /* Prevent horizontal overflow on all elements */
 * {
   box-sizing: border-box;

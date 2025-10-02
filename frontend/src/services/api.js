@@ -4,9 +4,9 @@ import { useState } from 'react';
 // Updated with proper production backend URL
 const API_BASE_URL = import.meta.env.VITE_API_URL || (
   import.meta.env.PROD
-    ? 'https://agency-backend.onrender.com/api'  // Render backend URL
+    ? 'http://localhost:8000/api'  // Docker backend URL
     : 'http://localhost:8000/api'
-);// Helper function to handle API responses
+);
 const handleResponse = async (response) => {
   if (!response.ok) {
     const error = await response.json().catch(() => ({ message: 'An error occurred' }));

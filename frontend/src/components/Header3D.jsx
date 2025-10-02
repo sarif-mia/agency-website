@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Menu, 
@@ -16,6 +16,7 @@ import {
 import api from '../services/api';
 
 const Header3D = () => {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isMeetingModalOpen, setIsMeetingModalOpen] = useState(false);
@@ -48,9 +49,9 @@ const Header3D = () => {
   // Navigation items
   const navItems = [
     { id: 'home', label: 'HOME', href: '/' },
-    { id: 'about', label: 'ABOUT', href: '/about-us' },
-    { id: 'services', label: 'SERVICES', href: '/services' },
-    { id: 'portfolio', label: 'PORTFOLIO', href: '/all-projects' },
+    { id: 'about', label: 'ABOUT', href: '#about' },
+    { id: 'services', label: 'SERVICES', href: '#services' },
+    { id: 'portfolio', label: 'PORTFOLIO', href: '#portfolio' },
     { id: 'blog', label: 'BLOG', href: '/blog' },
     { id: 'contact', label: 'CONTACT', href: '/quote' }
   ];
@@ -66,9 +67,9 @@ const Header3D = () => {
 
   // Smooth scroll to section or navigate to route
   const handleNavigation = (item) => {
-    if (item.isRoute) {
-      // This will be handled by React Router Link component
-      return;
+    if (item.href.startsWith('/')) {
+      // Navigate to route
+      navigate(item.href);
     } else {
       // Handle scroll navigation
       scrollToSection(item.href);
@@ -112,7 +113,11 @@ const Header3D = () => {
     if (item.isRoute || item.href.startsWith('/')) {
       return (
         <motion.div {...motionProps}>
-          <Link to={item.href} onClick={() => setIsMenuOpen(false)}>
+          <Link
+            to={item.href}
+            onClick={() => setIsMenuOpen(false)}
+            style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}
+          >
             {content}
           </Link>
         </motion.div>
@@ -249,7 +254,53 @@ const Header3D = () => {
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
             onClick={() => scrollToSection('#')}
+            style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
           >
+            <div style={{ position: 'relative', width: '30px', height: '30px' }}>
+              <span style={{
+                position: 'absolute',
+                width: '10px',
+                height: '10px',
+                borderRadius: '6px',
+                background: 'linear-gradient(135deg, #00f5ff, #0066ff)',
+                boxShadow: '0 0 10px rgba(0,245,255,0.6)',
+                top: 0,
+                left: 0,
+                transition: 'all 0.3s ease'
+              }} />
+              <span style={{
+                position: 'absolute',
+                width: '10px',
+                height: '10px',
+                borderRadius: '6px',
+                background: 'linear-gradient(135deg, #0066ff, #9966ff)',
+                boxShadow: '0 0 10px rgba(153,102,255,0.6)',
+                top: '8px',
+                left: '12px',
+                animation: 'float 4s ease-in-out infinite'
+              }} />
+              <span style={{
+                position: 'absolute',
+                width: '10px',
+                height: '10px',
+                borderRadius: '6px',
+                background: 'linear-gradient(135deg, #9966ff, #ff0080)',
+                boxShadow: '0 0 10px rgba(255,0,128,0.6)',
+                bottom: 0,
+                left: '4px',
+                animation: 'rotate 5s linear infinite'
+              }} />
+              <style>{`
+                @keyframes float {
+                  0%, 100% { transform: translateY(0); }
+                  50% { transform: translateY(-3px); }
+                }
+                @keyframes rotate {
+                  0% { transform: rotate(0deg); }
+                  100% { transform: rotate(360deg); }
+                }
+              `}</style>
+            </div>
             <span className="logo-text gradient-text">SiteGenIT</span>
           </motion.div>
 

@@ -85,7 +85,6 @@ function App() {
       <ScrollToTop />
       <div className="App">
         <Header3D />
-        <Breadcrumbs />
         
         <Routes>
             {/* Home page route */}
