@@ -10,6 +10,125 @@ const HelpArticlePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Sample help articles with full content
+  const sampleArticles = {
+    'getting-started-guide': {
+      id: 1,
+      title: 'Getting Started with Our Services',
+      slug: 'getting-started-guide',
+      category: 'getting-started',
+      excerpt: 'Learn how to get started with our digital services and make the most of your experience.',
+      content: `
+        <h2>Welcome to Our Digital Services</h2>
+        <p>Thank you for choosing our agency for your digital needs. This guide will help you get started and make the most of our services.</p>
+
+        <h3>Step 1: Account Setup</h3>
+        <p>After signing up, you'll receive a welcome email with your login credentials. Make sure to:</p>
+        <ul>
+          <li>Verify your email address</li>
+          <li>Set up two-factor authentication</li>
+          <li>Complete your company profile</li>
+          <li>Add team members if needed</li>
+        </ul>
+
+        <h3>Step 2: Project Planning</h3>
+        <p>Before starting any project, we recommend:</p>
+        <ul>
+          <li>Clearly defining your goals and objectives</li>
+          <li>Gathering all necessary assets and content</li>
+          <li>Setting realistic timelines</li>
+          <li>Establishing communication preferences</li>
+        </ul>
+
+        <h3>Step 3: Initial Consultation</h3>
+        <p>Schedule your kickoff meeting where we'll:</p>
+        <ul>
+          <li>Discuss your project requirements in detail</li>
+          <li>Review timelines and deliverables</li>
+          <li>Answer any questions you may have</li>
+          <li>Set up project milestones</li>
+        </ul>
+
+        <h3>Communication Guidelines</h3>
+        <p>To ensure smooth collaboration:</p>
+        <ul>
+          <li>Use our project management tools for updates</li>
+          <li>Schedule regular check-in meetings</li>
+          <li>Provide feedback promptly</li>
+          <li>Keep all project-related files organized</li>
+        </ul>
+
+        <h2>Need Help?</h2>
+        <p>If you have any questions during the getting started process, don't hesitate to contact our support team. We're here to help you succeed.</p>
+      `,
+      is_featured: true,
+      view_count: 1250,
+      helpful_votes: 89,
+      created_at: '2024-01-15T10:00:00Z'
+    },
+    'creating-project-request': {
+      id: 2,
+      title: 'How to Create a Project Request',
+      slug: 'creating-project-request',
+      category: 'getting-started',
+      excerpt: 'Step-by-step guide on how to submit a project request and what information we need.',
+      content: `
+        <h2>Creating Your Project Request</h2>
+        <p>A well-structured project request helps us understand your needs and provide accurate estimates. Follow these steps to create an effective project request.</p>
+
+        <h3>Project Information</h3>
+        <p>Provide detailed information about your project:</p>
+        <ul>
+          <li><strong>Project Title:</strong> A clear, descriptive name</li>
+          <li><strong>Project Type:</strong> Website, mobile app, branding, etc.</li>
+          <li><strong>Industry:</strong> Your business sector</li>
+          <li><strong>Target Audience:</strong> Who will use your product/service</li>
+        </ul>
+
+        <h3>Requirements & Specifications</h3>
+        <p>Be specific about what you need:</p>
+        <ul>
+          <li>Key features and functionality</li>
+          <li>Design preferences or existing brand guidelines</li>
+          <li>Technical requirements or constraints</li>
+          <li>Integration needs (third-party services, APIs, etc.)</li>
+          <li>Content requirements</li>
+        </ul>
+
+        <h3>Timeline & Budget</h3>
+        <p>Set realistic expectations:</p>
+        <ul>
+          <li>Preferred timeline for completion</li>
+          <li>Budget range (if known)</li>
+          <li>Key milestones or deadlines</li>
+          <li>Launch date requirements</li>
+        </ul>
+
+        <h3>Reference Materials</h3>
+        <p>Help us understand your vision:</p>
+        <ul>
+          <li>Competitor websites or apps</li>
+          <li>Inspiration or mood boards</li>
+          <li>Existing brand assets</li>
+          <li>Previous work examples</li>
+        </ul>
+
+        <h3>Next Steps</h3>
+        <p>After submitting your request:</p>
+        <ol>
+          <li>We'll review your requirements within 24 hours</li>
+          <li>Schedule a discovery call to discuss details</li>
+          <li>Receive a detailed proposal with timeline and pricing</li>
+          <li>Begin project planning once approved</li>
+        </ol>
+      `,
+      is_featured: false,
+      view_count: 890,
+      helpful_votes: 67,
+      created_at: '2024-01-10T10:00:00Z'
+    }
+  };
+
   useEffect(() => {
     fetchHelpArticle();
   }, [slug]);
@@ -18,9 +137,26 @@ const HelpArticlePage = () => {
     try {
       setLoading(true);
       const response = await api.help.getBySlug(slug);
-      setArticle(response);
+      if (response) {
+        setArticle(response);
+      } else {
+        // Use sample data if API returns empty
+        const sampleArticle = sampleArticles[slug];
+        if (sampleArticle) {
+          setArticle(sampleArticle);
+        } else {
+          setError('Article not found');
+        }
+      }
     } catch (err) {
-      setError(err.message);
+      console.error('Error fetching help article:', err);
+      // Use sample data as fallback
+      const sampleArticle = sampleArticles[slug];
+      if (sampleArticle) {
+        setArticle(sampleArticle);
+      } else {
+        setError('Article not found');
+      }
     } finally {
       setLoading(false);
     }

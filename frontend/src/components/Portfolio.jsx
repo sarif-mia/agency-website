@@ -4,41 +4,47 @@ import { ExternalLink, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
 
-const Portfolio = () => {
+const Portfolio = ({ projects: propProjects, loading: propLoading }) => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-  const filters = ['All', 'Web', 'Mobile', 'Branding', 'Marketing', 'Design'];
-  
-  // Fetch projects from API
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        setLoading(true);
-        // Use sample data first for demo
-        setProjects(sampleProjects);
-        
-        // Try to fetch from API
-        const response = await api.projects.getAll();
-        if (response && response.length > 0) {
-          setProjects(response.results || response);
-        }
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching projects:', err);
-        // Keep using sample data if API fails
-        setProjects(sampleProjects);
-        setError(null); // Don't show error, just use demo data
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchProjects();
-  }, []);
-  
+  const filters = ['All', 'Web', 'Mobile', 'Branding', 'Marketing', 'Design'];
+
+  // Use prop data if provided, otherwise fetch
+  useEffect(() => {
+    if (propProjects !== undefined) {
+      setProjects(propProjects.length > 0 ? propProjects : sampleProjects);
+      setLoading(propLoading || false);
+    } else {
+      // Fetch projects from API if no props provided
+      const fetchProjects = async () => {
+        try {
+          setLoading(true);
+          // Use sample data first for demo
+          setProjects(sampleProjects);
+
+          // Try to fetch from API
+          const response = await api.projects.getAll();
+          if (response && response.length > 0) {
+            setProjects(response.results || response);
+          }
+          setError(null);
+        } catch (err) {
+          console.error('Error fetching projects:', err);
+          // Keep using sample data if API fails
+          setProjects(sampleProjects);
+          setError(null); // Don't show error, just use demo data
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchProjects();
+    }
+  }, [propProjects, propLoading]);
+
   // Sample projects as fallback
   const sampleProjects = [
     {
@@ -96,32 +102,32 @@ const Portfolio = () => {
       year: '2023'
     }
   ];
-  
+
   // Handle project view
   const handleViewProject = (project) => {
     // Navigate to All Projects page which has detailed project views
     window.location.href = '/all-projects';
   };
-  
+
   // Handle external link
   const handleExternalLink = (project) => {
     // Open the agency website as demo
     window.open(window.location.origin, '_blank');
   };
-  
+
   // Handle view all projects
   const handleViewAllProjects = () => {
     // This function is no longer needed since we're using Link component
     // But keeping it for backward compatibility if called elsewhere
   };
-  
+
   // Filter projects based on active filter
-  const filteredProjects = activeFilter === 'All' 
-    ? projects 
+  const filteredProjects = activeFilter === 'All'
+    ? projects
     : projects.filter(project => {
-        const category = project.category || 'web';
-        return category.toLowerCase() === activeFilter.toLowerCase();
-      });
+      const category = project.category || 'web';
+      return category.toLowerCase() === activeFilter.toLowerCase();
+    });
 
   if (loading) {
     return (
@@ -210,11 +216,11 @@ const Portfolio = () => {
                   <div className="project-category">{project.category}</div>
                   <div className="project-year">{project.year}</div>
                 </div>
-                
+
                 <div className="project-info">
                   <h3 className="project-title">{project.title}</h3>
                   <p className="project-description">{project.description}</p>
-                  
+
                   <div className="project-technologies">
                     {project.technologies.map((tech, index) => (
                       <span key={index} className="tech-tag">
@@ -223,7 +229,7 @@ const Portfolio = () => {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="project-glow"></div>
               </motion.div>
             ))}
@@ -242,7 +248,7 @@ const Portfolio = () => {
           </Link>
         </motion.div>
       </div>
-      
+
       <style jsx>{`
         .portfolio-section {
           background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #0a0a0a 50%, #2e1a1a 75%, #0a0a0a 100%);

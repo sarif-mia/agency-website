@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
-const Testimonials = () => {
+const Testimonials = ({ testimonials: propTestimonials, loading: propLoading }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [testimonials, setTestimonials] = useState([]);
@@ -12,7 +12,7 @@ const Testimonials = () => {
   const [error, setError] = useState(null);
   const [isDesktop, setIsDesktop] = useState(false);
   const navigate = useNavigate();
-  
+
   // Handle CTA button
   const handleGetStarted = () => {
     // Navigate directly to contact section
@@ -24,7 +24,7 @@ const Testimonials = () => {
       navigate('/quote');
     }
   };
-  
+
   // Handle window resize
   useEffect(() => {
     const handleResize = () => {
@@ -33,34 +33,40 @@ const Testimonials = () => {
       // Reset current index when switching between desktop and mobile
       setCurrentIndex(0);
     };
-    
+
     handleResize(); // Initial check
     window.addEventListener('resize', handleResize);
-    
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  
-  // Fetch testimonials from API
-  useEffect(() => {
-    const fetchTestimonials = async () => {
-      try {
-        setLoading(true);
-        const response = await api.testimonials.getAll();
-        setTestimonials(response.results || response);
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching testimonials:', err);
-        setError('Failed to load testimonials');
-        // Fallback to sample data if API fails
-        setTestimonials(sampleTestimonials);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchTestimonials();
-  }, []);
-  
+  // Use prop data if provided, otherwise fetch
+  useEffect(() => {
+    if (propTestimonials !== undefined) {
+      setTestimonials(propTestimonials.length > 0 ? propTestimonials : sampleTestimonials);
+      setLoading(propLoading || false);
+    } else {
+      // Fetch testimonials from API if no props provided
+      const fetchTestimonials = async () => {
+        try {
+          setLoading(true);
+          const response = await api.testimonials.getAll();
+          setTestimonials(response.results || response);
+          setError(null);
+        } catch (err) {
+          console.error('Error fetching testimonials:', err);
+          setError('Failed to load testimonials');
+          // Fallback to sample data if API fails
+          setTestimonials(sampleTestimonials);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchTestimonials();
+    }
+  }, [propTestimonials, propLoading]);
+
   // Sample testimonials as fallback
   const sampleTestimonials = [
     {
@@ -118,8 +124,8 @@ const Testimonials = () => {
   const nextSlide = () => {
     if (testimonials.length > 0) {
       // For desktop: move by 2, for mobile: move by 1
-      const maxIndex = isDesktop ? 
-        Math.ceil(testimonials.length / 2) - 1 : 
+      const maxIndex = isDesktop ?
+        Math.ceil(testimonials.length / 2) - 1 :
         testimonials.length - 1;
       setCurrentIndex((prev) => (prev + 1) > maxIndex ? 0 : prev + 1);
     }
@@ -127,8 +133,8 @@ const Testimonials = () => {
 
   const prevSlide = () => {
     if (testimonials.length > 0) {
-      const maxIndex = isDesktop ? 
-        Math.ceil(testimonials.length / 2) - 1 : 
+      const maxIndex = isDesktop ?
+        Math.ceil(testimonials.length / 2) - 1 :
         testimonials.length - 1;
       setCurrentIndex((prev) => (prev - 1) < 0 ? maxIndex : prev - 1);
     }
@@ -192,7 +198,7 @@ const Testimonials = () => {
           </p>
         </motion.div>
 
-        <div 
+        <div
           className="testimonials-container"
           onMouseEnter={() => setIsAutoPlaying(false)}
           onMouseLeave={() => setIsAutoPlaying(true)}
@@ -237,8 +243,8 @@ const Testimonials = () => {
 
                           <div className="testimonial-author">
                             <div className="author-image">
-                              <img 
-                                src={testimonial.image_url || testimonial.image} 
+                              <img
+                                src={testimonial.image_url || testimonial.image}
                                 alt={testimonial.name}
                                 onError={(e) => {
                                   e.target.src = 'https://images.unsplash.com/photo-1494790108755-2616b9bfc8bd?w=200&h=200&fit=crop&crop=face';
@@ -246,7 +252,7 @@ const Testimonials = () => {
                               />
                               <div className="image-glow"></div>
                             </div>
-                            
+
                             <div className="author-info">
                               <h4 className="author-name">{testimonial.name}</h4>
                               <p className="author-position">{testimonial.position}</p>
@@ -291,8 +297,8 @@ const Testimonials = () => {
 
                       <div className="testimonial-author">
                         <div className="author-image">
-                          <img 
-                            src={testimonials[currentIndex].image_url || testimonials[currentIndex].image} 
+                          <img
+                            src={testimonials[currentIndex].image_url || testimonials[currentIndex].image}
                             alt={testimonials[currentIndex].name}
                             onError={(e) => {
                               e.target.src = 'https://images.unsplash.com/photo-1494790108755-2616b9bfc8bd?w=200&h=200&fit=crop&crop=face';
@@ -300,7 +306,7 @@ const Testimonials = () => {
                           />
                           <div className="image-glow"></div>
                         </div>
-                        
+
                         <div className="author-info">
                           <h4 className="author-name">{testimonials[currentIndex].name}</h4>
                           <p className="author-position">{testimonials[currentIndex].position}</p>
@@ -332,8 +338,8 @@ const Testimonials = () => {
         </div>
 
         <div className="testimonials-indicators">
-          {Array.from({ 
-            length: isDesktop ? Math.ceil(testimonials.length / 2) : testimonials.length 
+          {Array.from({
+            length: isDesktop ? Math.ceil(testimonials.length / 2) : testimonials.length
           }, (_, index) => (
             <motion.button
               key={index}
@@ -358,7 +364,7 @@ const Testimonials = () => {
           </button>
         </motion.div>
       </div>
-      
+
       <style jsx>{`
         .testimonials-section {
           background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #0a0a0a 50%, #2e1a1a 75%, #0a0a0a 100%);

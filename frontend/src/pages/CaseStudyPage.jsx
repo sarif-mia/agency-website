@@ -10,6 +10,106 @@ const CaseStudyPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Sample case studies with full content
+  const sampleCaseStudies = {
+    'ecommerce-platform-transformation': {
+      id: 1,
+      title: 'E-Commerce Platform Transformation',
+      slug: 'ecommerce-platform-transformation',
+      client_name: 'TechMart Solutions',
+      industry: 'ecommerce',
+      challenge: `TechMart Solutions was struggling with an outdated e-commerce platform that couldn't handle their growing customer base. The legacy system had several critical issues:
+
+• Slow page load times averaging 8+ seconds
+• Frequent crashes during peak shopping hours
+• Limited mobile responsiveness
+• Inadequate inventory management
+• Poor user experience leading to high cart abandonment rates
+
+The existing platform was built on outdated technology and couldn't scale with their business growth.`,
+      solution: `We conducted a comprehensive platform overhaul using modern technologies and best practices:
+
+• Migrated to React-based frontend with server-side rendering
+• Implemented Node.js microservices architecture
+• Integrated advanced AI-powered recommendation engine
+• Built real-time inventory tracking system
+• Optimized database with MongoDB for better performance
+• Implemented AWS cloud infrastructure with auto-scaling
+• Added comprehensive analytics and reporting dashboard
+
+The new platform was designed with scalability, performance, and user experience as top priorities.`,
+      results: `The transformation yielded remarkable results:
+
+• Page load times reduced from 8+ seconds to under 2 seconds
+• Platform uptime increased to 99.9%
+• Mobile conversion rate improved by 300%
+• Cart abandonment rate decreased by 45%
+• Customer satisfaction score rose from 3.2 to 4.8 out of 5
+• Revenue increased by 250% within the first year
+
+The new platform successfully handles 10x more traffic and provides a seamless shopping experience across all devices.`,
+      featured_image_url: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop',
+      technologies_used: ['React', 'Node.js', 'MongoDB', 'Stripe', 'AWS'],
+      project_duration: '4 months',
+      project_url: 'https://techmart-demo.com',
+      is_featured: true,
+      metrics: {
+        conversion_increase: '300%',
+        load_time_improvement: '50%',
+        mobile_growth: '200%'
+      }
+    },
+    'healthcare-management-system': {
+      id: 2,
+      title: 'Healthcare Management System',
+      slug: 'healthcare-management-system',
+      client_name: 'MedCare Plus',
+      industry: 'healthcare',
+      challenge: `MedCare Plus was using disparate systems for patient management, appointment scheduling, and medical records. This led to several operational inefficiencies:
+
+• Manual appointment scheduling causing double-bookings
+• Lost patient records and miscommunication
+• Inefficient billing and insurance processing
+• Lack of real-time patient data access
+• Compliance issues with HIPAA regulations
+• Poor patient experience with long wait times
+
+The fragmented system was causing frustration for both staff and patients, leading to decreased satisfaction and potential compliance risks.`,
+      solution: `We developed a comprehensive healthcare management platform:
+
+• Built secure patient portal with real-time appointment booking
+• Implemented HIPAA-compliant data encryption and access controls
+• Created integrated electronic health records (EHR) system
+• Developed mobile app for both patients and healthcare providers
+• Integrated telemedicine capabilities with video consultation
+• Automated billing and insurance claim processing
+• Added analytics dashboard for operational insights
+
+The platform was built with security, usability, and scalability as core principles.`,
+      results: `The implementation delivered significant improvements:
+
+• Administrative time reduced by 60% through automation
+• Patient wait times decreased from 45 minutes to 15 minutes
+• Patient satisfaction score reached 95%
+• HIPAA compliance fully achieved and maintained
+• Appointment no-show rate reduced by 30%
+• Revenue cycle improved with faster insurance processing
+• Staff productivity increased by 40%
+
+The system now serves over 50,000 patients and continues to scale with their growing needs.`,
+      featured_image_url: 'https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=600&h=400&fit=crop',
+      technologies_used: ['Django', 'React', 'PostgreSQL', 'Docker'],
+      project_duration: '6 months',
+      project_url: 'https://medcare-demo.com',
+      is_featured: true,
+      metrics: {
+        admin_time_reduction: '60%',
+        patient_satisfaction: '95%',
+        compliance: 'HIPAA'
+      }
+    }
+  };
+
   useEffect(() => {
     fetchCaseStudy();
   }, [slug]);
@@ -18,9 +118,26 @@ const CaseStudyPage = () => {
     try {
       setLoading(true);
       const response = await api.caseStudies.getBySlug(slug);
-      setCaseStudy(response);
+      if (response) {
+        setCaseStudy(response);
+      } else {
+        // Use sample data if API returns empty
+        const sampleCaseStudy = sampleCaseStudies[slug];
+        if (sampleCaseStudy) {
+          setCaseStudy(sampleCaseStudy);
+        } else {
+          setError('Case study not found');
+        }
+      }
     } catch (err) {
-      setError(err.message);
+      console.error('Error fetching case study:', err);
+      // Use sample data as fallback
+      const sampleCaseStudy = sampleCaseStudies[slug];
+      if (sampleCaseStudy) {
+        setCaseStudy(sampleCaseStudy);
+      } else {
+        setError('Case study not found');
+      }
     } finally {
       setLoading(false);
     }
@@ -86,7 +203,7 @@ const CaseStudyPage = () => {
             <section className="results-section">
               <h2><span className="section-number">03</span>Results & Impact</h2>
               <div className="content-text" dangerouslySetInnerHTML={{ __html: caseStudy.results.replace(/\n/g, '<br>') }} />
-              
+
               {caseStudy.metrics && Object.keys(caseStudy.metrics).length > 0 && (
                 <div className="metrics-grid">
                   {Object.entries(caseStudy.metrics).map(([key, value], index) => (

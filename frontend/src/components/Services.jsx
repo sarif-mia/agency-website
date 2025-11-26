@@ -3,19 +3,19 @@ import { motion } from 'framer-motion';
 import { Code, Palette, Smartphone, Globe, Zap, Rocket } from 'lucide-react';
 import api from '../services/api';
 
-const Services = () => {
+const Services = ({ services: propServices, loading: propLoading }) => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
   const [showServiceModal, setShowServiceModal] = useState(false);
-  
+
   // Handle service details
   const handleLearnMore = (service) => {
     setSelectedService(service);
     setShowServiceModal(true);
   };
-  
+
   // Icon mapping
   const iconMap = {
     Code: Code,
@@ -25,28 +25,34 @@ const Services = () => {
     Zap: Zap,
     Rocket: Rocket
   };
-  
-  // Fetch services from API
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        setLoading(true);
-        const response = await api.services.getAll();
-        setServices(response.results || response);
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching services:', err);
-        setError('Failed to load services');
-        // Fallback to sample data if API fails
-        setServices(sampleServices);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchServices();
-  }, []);
-  
+  // Use prop data if provided, otherwise fetch
+  useEffect(() => {
+    if (propServices !== undefined) {
+      setServices(propServices);
+      setLoading(propLoading || false);
+    } else {
+      // Fetch services from API if no props provided
+      const fetchServices = async () => {
+        try {
+          setLoading(true);
+          const response = await api.services.getAll();
+          setServices(response.results || response);
+          setError(null);
+        } catch (err) {
+          console.error('Error fetching services:', err);
+          setError('Failed to load services');
+          // Fallback to sample data if API fails
+          setServices(sampleServices);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchServices();
+    }
+  }, [propServices, propLoading]);
+
   // Sample services as fallback
   const sampleServices = [
     {
@@ -170,7 +176,7 @@ const Services = () => {
                 key={service.id || index}
                 className="service-card"
                 variants={cardVariants}
-                whileHover={{ 
+                whileHover={{
                   y: -10,
                   transition: { duration: 0.3 }
                 }}
@@ -179,10 +185,10 @@ const Services = () => {
                   <IconComponent size={40} />
                   <div className="icon-glow"></div>
                 </div>
-                
+
                 <h3 className="service-title">{service.name}</h3>
                 <p className="service-description">{service.short_description || service.description}</p>
-                
+
                 <ul className="service-features">
                   {(service.features || []).map((feature, idx) => (
                     <li key={idx} className="feature-item">
@@ -191,7 +197,7 @@ const Services = () => {
                     </li>
                   ))}
                 </ul>
-                
+
                 <motion.button
                   className="service-cta"
                   onClick={() => handleLearnMore(service)}
@@ -200,14 +206,14 @@ const Services = () => {
                 >
                   Learn More
                 </motion.button>
-                
+
                 <div className="card-glow"></div>
               </motion.div>
             );
           })}
         </motion.div>
       </div>
-      
+
       {/* Service Details Modal */}
       {showServiceModal && selectedService && (
         <motion.div
@@ -244,7 +250,7 @@ const Services = () => {
               <p className="service-detail-description">
                 {selectedService.description || selectedService.short_description}
               </p>
-              
+
               <div className="service-features-detailed">
                 <h4>What's Included:</h4>
                 <ul>
@@ -253,15 +259,15 @@ const Services = () => {
                   ))}
                 </ul>
               </div>
-              
+
               <div className="service-pricing">
                 <h4>Starting From:</h4>
                 <p className="price">৳১৫,০০০</p>
                 <p className="price-note">*Price varies based on project scope and requirements. Bangladeshi pricing</p>
               </div>
-              
+
               <div className="modal-actions">
-                <button 
+                <button
                   className="neon-button primary"
                   onClick={() => {
                     setShowServiceModal(false);
@@ -270,7 +276,7 @@ const Services = () => {
                 >
                   Get Started
                 </button>
-                <button 
+                <button
                   className="neon-button secondary"
                   onClick={() => {
                     setShowServiceModal(false);
@@ -284,7 +290,7 @@ const Services = () => {
           </motion.div>
         </motion.div>
       )}
-      
+
       <style jsx>{`
         .services-section {
           background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);

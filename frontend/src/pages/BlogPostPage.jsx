@@ -10,6 +10,104 @@ const BlogPostPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Sample blog posts with full content
+  const samplePosts = {
+    'future-web-development-2024': {
+      id: 1,
+      title: 'The Future of Web Development: Trends to Watch in 2024',
+      slug: 'future-web-development-2024',
+      excerpt: 'Explore the latest trends shaping the web development landscape, from AI integration to advanced frameworks and performance optimization techniques.',
+      content: `
+        <h2>The Evolution of Web Development</h2>
+        <p>The web development landscape is constantly evolving, driven by technological advancements and changing user expectations. As we move through 2024, several key trends are emerging that will shape how we build and interact with web applications.</p>
+
+        <h3>1. AI-Powered Development Tools</h3>
+        <p>Artificial Intelligence is revolutionizing the development process. From code completion tools like GitHub Copilot to AI-assisted debugging and automated testing, developers are seeing significant productivity gains. These tools are becoming more sophisticated, understanding context and providing increasingly accurate suggestions.</p>
+
+        <h3>2. Advanced Frontend Frameworks</h3>
+        <p>React, Vue.js, and Angular continue to evolve with new features and performance improvements. The focus is shifting towards:</p>
+        <ul>
+          <li>Server-side rendering and static site generation</li>
+          <li>Micro-frontends architecture</li>
+          <li>Component-driven development</li>
+          <li>TypeScript integration</li>
+        </ul>
+
+        <h3>3. Performance Optimization</h3>
+        <p>Web performance remains crucial for user experience and SEO. Key areas of focus include:</p>
+        <ul>
+          <li>Core Web Vitals optimization</li>
+          <li>Advanced caching strategies</li>
+          <li>Image optimization and WebP adoption</li>
+          <li>Code splitting and lazy loading</li>
+        </ul>
+
+        <h3>4. Progressive Web Apps (PWAs)</h3>
+        <p>PWAs continue to gain traction, offering native app-like experiences in the browser. With improved service worker APIs and better browser support, PWAs are becoming a viable alternative to traditional mobile apps.</p>
+
+        <h2>Looking Ahead</h2>
+        <p>The future of web development is exciting, with emerging technologies like WebAssembly, Web Components, and AI integration paving the way for more powerful and intuitive web applications. Staying updated with these trends will be crucial for developers looking to remain competitive in the field.</p>
+      `,
+      featured_image_url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
+      tags: ['Web Development', 'Trends', 'Technology'],
+      is_featured: true,
+      is_published: true,
+      read_time: 5,
+      published_at: '2024-01-15T10:00:00Z',
+      created_at: '2024-01-15T10:00:00Z'
+    },
+    'react-performance-best-practices': {
+      id: 2,
+      title: 'Mastering React Performance: Best Practices and Tips',
+      slug: 'react-performance-best-practices',
+      excerpt: 'Learn how to optimize your React applications for better performance, faster load times, and improved user experience.',
+      content: `
+        <h2>Understanding React Performance</h2>
+        <p>React applications can sometimes suffer from performance issues as they grow in complexity. Understanding how React works under the hood and implementing best practices can significantly improve your app's performance.</p>
+
+        <h3>1. Component Optimization</h3>
+        <p>The key to React performance lies in minimizing unnecessary re-renders:</p>
+        <ul>
+          <li>Use <code>React.memo()</code> for functional components</li>
+          <li>Implement <code>shouldComponentUpdate</code> in class components</li>
+          <li>Use callback hooks properly with <code>useCallback</code></li>
+          <li>Memoize expensive calculations with <code>useMemo</code></li>
+        </ul>
+
+        <h3>2. Code Splitting and Lazy Loading</h3>
+        <p>Reduce your initial bundle size by splitting code:</p>
+        <ul>
+          <li>Use dynamic imports with <code>React.lazy()</code></li>
+          <li>Implement route-based code splitting</li>
+          <li>Lazy load images and heavy components</li>
+          <li>Use webpack chunk splitting</li>
+        </ul>
+
+        <h3>3. State Management Optimization</h3>
+        <p>Efficient state management is crucial:</p>
+        <ul>
+          <li>Avoid deep nesting in state objects</li>
+          <li>Use context selectively and split contexts</li>
+          <li>Consider using Redux or Zustand for complex state</li>
+          <li>Implement proper state normalization</li>
+        </ul>
+
+        <h3>4. Virtual Scrolling for Large Lists</h3>
+        <p>When dealing with large datasets, virtual scrolling can dramatically improve performance by only rendering visible items.</p>
+
+        <h2>Performance Monitoring</h2>
+        <p>Use tools like React DevTools Profiler, Lighthouse, and browser performance tools to identify and fix performance bottlenecks. Regular performance audits should be part of your development workflow.</p>
+      `,
+      featured_image_url: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&h=400&fit=crop',
+      tags: ['React', 'Performance', 'JavaScript'],
+      is_featured: false,
+      is_published: true,
+      read_time: 7,
+      published_at: '2024-01-10T10:00:00Z',
+      created_at: '2024-01-10T10:00:00Z'
+    }
+  };
+
   useEffect(() => {
     fetchBlogPost();
   }, [slug]);
@@ -18,9 +116,26 @@ const BlogPostPage = () => {
     try {
       setLoading(true);
       const response = await api.blog.getBySlug(slug);
-      setPost(response);
+      if (response) {
+        setPost(response);
+      } else {
+        // Use sample data if API returns empty
+        const samplePost = samplePosts[slug];
+        if (samplePost) {
+          setPost(samplePost);
+        } else {
+          setError('Article not found');
+        }
+      }
     } catch (err) {
-      setError(err.message);
+      console.error('Error fetching blog post:', err);
+      // Use sample data as fallback
+      const samplePost = samplePosts[slug];
+      if (samplePost) {
+        setPost(samplePost);
+      } else {
+        setError('Article not found');
+      }
     } finally {
       setLoading(false);
     }
@@ -147,7 +262,7 @@ const BlogPostPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div 
+          <div
             className="content-body"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
