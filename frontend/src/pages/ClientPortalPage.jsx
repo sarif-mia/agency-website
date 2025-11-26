@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Lock, User, Mail, Key, Eye, EyeOff } from 'lucide-react';
+import { ArrowLeft, Lock, User, Mail, Key, Eye, EyeOff, CheckCircle, AlertCircle } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const ClientPortalPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -12,23 +13,58 @@ const ClientPortalPage = () => {
     name: '',
     company: ''
   });
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const { login, register, loading } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/dashboard';
 
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    // Clear messages when user starts typing
+    if (successMessage) setSuccessMessage('');
+    if (errorMessage) setErrorMessage('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isLogin) {
-      // TODO: Implement real login functionality here
-      // For now, just console log the form data
-      console.log('Login submitted:', formData);
-    } else {
-      // TODO: Implement real registration functionality here
-      console.log('Registration submitted:', formData);
+    setErrorMessage('');
+    setSuccessMessage('');
+
+    try {
+      if (isLogin) {
+        const result = await login(formData.email, formData.password);
+        if (result.success) {
+          setSuccessMessage('Login successful! Redirecting...');
+          setTimeout(() => {
+            navigate(from, { replace: true });
+          }, 1500);
+        } else {
+          setErrorMessage(result.error);
+        }
+      } else {
+        const result = await register(formData.name, formData.email, formData.password, formData.company);
+        if (result.success) {
+          setSuccessMessage('Registration successful! You can now log in.');
+          setIsLogin(true);
+          setFormData({
+            email: formData.email,
+            password: '',
+            name: '',
+            company: ''
+          });
+        } else {
+          setErrorMessage(result.error);
+        }
+      }
+    } catch (error) {
+      setErrorMessage('An unexpected error occurred. Please try again.');
     }
   };
 
@@ -161,10 +197,35 @@ const ClientPortalPage = () => {
                 </div>
               )}
 
-              <button type="submit" className="submit-btn">
-                {isLogin ? 'Sign In to Portal' : 'Create Account'}
+              <button type="submit" className="submit-btn" disabled={loading}>
+                {loading ? 'Processing...' : (isLogin ? 'Sign In to Portal' : 'Create Account')}
               </button>
             </form>
+
+            {/* Success/Error Messages */}
+            {successMessage && (
+              <motion.div
+                className="message success-message"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+              >
+                <CheckCircle size={20} />
+                <span>{successMessage}</span>
+              </motion.div>
+            )}
+
+            {errorMessage && (
+              <motion.div
+                className="message error-message"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+              >
+                <AlertCircle size={20} />
+                <span>{errorMessage}</span>
+              </motion.div>
+            )}
 
             <div className="portal-features">
               <h4>What you'll get access to:</h4>
@@ -502,6 +563,45 @@ const ClientPortalPage = () => {
           color: #00f5ff;
         }
 
+        .message {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 12px 16px;
+          border-radius: 8px;
+          margin-top: 20px;
+          font-weight: 500;
+          animation: slideIn 0.3s ease-out;
+        }
+
+        .success-message {
+          background: rgba(34, 197, 94, 0.1);
+          border: 1px solid rgba(34, 197, 94, 0.3);
+          color: #22c55e;
+        }
+
+        .error-message {
+          background: rgba(239, 68, 68, 0.1);
+          border: 1px solid rgba(239, 68, 68, 0.3);
+          color: #ef4444;
+        }
+
+        .submit-btn:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
         @media (max-width: 768px) {
           .client-portal-page {
             padding: 80px 0 60px;
@@ -523,6 +623,11 @@ const ClientPortalPage = () => {
             flex-direction: column;
             gap: 15px;
             align-items: flex-start;
+          }
+
+          .message {
+            font-size: 0.9rem;
+            padding: 10px 14px;
           }
         }
       `}</style>

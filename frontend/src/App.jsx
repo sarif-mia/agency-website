@@ -32,7 +32,11 @@ import FreeResourcesPage from './pages/FreeResourcesPage';
 import GetQuotePage from './pages/GetQuotePage';
 import PortfolioDownloadPage from './pages/PortfolioDownloadPage';
 import ClientPortalPage from './pages/ClientPortalPage';
+import ClientDashboardPage from './pages/ClientDashboardPage';
 import PartnershipPage from './pages/PartnershipPage';
+
+// Import Protected Route
+import ProtectedRoute from './components/ProtectedRoute';
 import AboutUsPage from './pages/AboutUsPage';
 import AllProjectsPage from './pages/AllProjectsPage';
 import OurTeamPage from './pages/OurTeamPage';
@@ -48,6 +52,9 @@ import { getPageSEO } from './utils/seoConfig';
 
 // Import API
 import api from './services/api';
+
+// Import Auth Context
+import { AuthProvider } from './context/AuthContext';
 
 // Home component for the main landing page
 const HomePage = () => {
@@ -121,57 +128,64 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="App">
-        <Header3D />
+    <AuthProvider>
+      <Router>
+        <ScrollToTop />
+        <div className="App">
+          <Header3D />
 
-        <Routes>
-          {/* Home page route */}
-          <Route path="/" element={<HomePage />} />
+          <Routes>
+            {/* Home page route */}
+            <Route path="/" element={<HomePage />} />
 
-          {/* Blog routes */}
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/blog/:slug" element={<BlogPostPage />} />
+            {/* Blog routes */}
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:slug" element={<BlogPostPage />} />
 
-          {/* Help Center routes */}
-          <Route path="/help" element={<HelpCenterPage />} />
-          <Route path="/help/:slug" element={<HelpArticlePage />} />
+            {/* Help Center routes */}
+            <Route path="/help" element={<HelpCenterPage />} />
+            <Route path="/help/:slug" element={<HelpArticlePage />} />
 
-          {/* Case Studies routes */}
-          <Route path="/case-studies" element={<CaseStudiesPage />} />
-          <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
+            {/* Case Studies routes */}
+            <Route path="/case-studies" element={<CaseStudiesPage />} />
+            <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
 
-          {/* Legal pages */}
-          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-          <Route path="/terms-conditions" element={<TermsConditionsPage />} />
+            {/* Legal pages */}
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="/terms-conditions" element={<TermsConditionsPage />} />
 
-          {/* Quick Links pages */}
-          <Route path="/resources" element={<FreeResourcesPage />} />
-          <Route path="/quote" element={<GetQuotePage />} />
-          <Route path="/portfolio-download" element={<PortfolioDownloadPage />} />
-          <Route path="/client-portal" element={<ClientPortalPage />} />
-          <Route path="/partnership" element={<PartnershipPage />} />
+            {/* Quick Links pages */}
+            <Route path="/resources" element={<FreeResourcesPage />} />
+            <Route path="/quote" element={<GetQuotePage />} />
+            <Route path="/portfolio-download" element={<PortfolioDownloadPage />} />
+            <Route path="/client-portal" element={<ClientPortalPage />} />
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <ClientDashboardPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/partnership" element={<PartnershipPage />} />
 
-          {/* Additional pages */}
-          <Route path="/about-us" element={<AboutUsPage />} />
-          <Route path="/all-projects" element={<AllProjectsPage />} />
-          <Route path="/our-team" element={<OurTeamPage />} />
-          <Route path="/careers" element={<CareersPage />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/testimonials" element={<Testimonials />} />
+            {/* Additional pages */}
+            <Route path="/about-us" element={<AboutUsPage />} />
+            <Route path="/all-projects" element={<AllProjectsPage />} />
+            <Route path="/our-team" element={<OurTeamPage />} />
+            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/testimonials" element={<Testimonials />} />
 
-          {/* Services page */}
-          <Route path="/services" element={<ServicesPage />} />
+            {/* Services page */}
+            <Route path="/services" element={<ServicesPage />} />
 
-          {/* SEO Audit Report */}
-          <Route path="/seo-audit" element={<SEOAuditReport />} />
-        </Routes>
+            {/* SEO Audit Report */}
+            <Route path="/seo-audit" element={<SEOAuditReport />} />
+          </Routes>
 
-        <Footer />
-        <AIChatbot />
-      </div>
-    </Router>
+          <Footer />
+          <AIChatbot />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
