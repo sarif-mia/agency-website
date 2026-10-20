@@ -1,16 +1,20 @@
 from rest_framework import generics, status, filters
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import login
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q, Count, Avg
+from django.db import IntegrityError
 from django.utils import timezone
 from datetime import datetime, timedelta
 from django.core.mail import send_mail
 from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from django.template.loader import render_to_string
 
 from .models import (
@@ -188,6 +192,8 @@ class ContactMessageCreateView(generics.CreateAPIView):
     """Create a new contact message"""
     queryset = ContactMessage.objects.all()
     serializer_class = ContactMessageSerializer
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'forms'
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -506,13 +512,55 @@ class SearchView(APIView):
 
 
 # Authentication Views
+@method_decorator(never_cache, name='dispatch')
+class CurrentUserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response({'user': {
+            'id': user.id, 'email': user.email,
+            'first_name': user.first_name, 'last_name': user.last_name,
+        }})
+
+
+@method_decorator(never_cache, name='dispatch')
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        Token.objects.filter(user=request.user).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@method_decorator(never_cache, name='dispatch')
+class ClientOverviewView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        # Use the authenticated relationship; an unverified matching email is not ownership.
+        meetings = MeetingRequest.objects.filter(user=request.user)
+        return Response({
+            'meetings': MeetingRequestSerializer(meetings[:50], many=True).data,
+            'meeting_count': meetings.count(),
+            'pending_count': meetings.filter(status='pending').count(),
+        })
+
+
+@method_decorator(never_cache, name='dispatch')
 class UserRegistrationView(APIView):
     """User registration endpoint"""
+    authentication_classes = []
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'auth'
     
     def post(self, request):
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.save()
+            try:
+                user = serializer.save()
+            except IntegrityError:
+                return Response({'success': False, 'message': 'An account with these details already exists.'}, status=status.HTTP_400_BAD_REQUEST)
             token, created = Token.objects.get_or_create(user=user)
             
             # Send email notification
@@ -583,8 +631,12 @@ The Team
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
+@method_decorator(never_cache, name='dispatch')
 class UserLoginView(APIView):
     """User login endpoint"""
+    authentication_classes = []
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'auth'
     
     def post(self, request):
         serializer = UserLoginSerializer(data=request.data)
@@ -614,12 +666,14 @@ class MeetingRequestCreateView(generics.CreateAPIView):
     """Create a new meeting request"""
     queryset = MeetingRequest.objects.all()
     serializer_class = MeetingRequestSerializer
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'forms'
     
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             # Save the meeting request
-            meeting_request = serializer.save()
+            meeting_request = serializer.save(user=request.user if request.user.is_authenticated else None)
             
             # Send email notification
             try:
@@ -902,6 +956,9 @@ class JobPositionListView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['department', 'job_type', 'experience_level', 'is_featured']
     search_fields = ['title', 'description']
+
+    def get_queryset(self):
+        return super().get_queryset().filter(Q(application_deadline__isnull=True) | Q(application_deadline__gte=timezone.now().date()))
 
 
 class JobPositionDetailView(generics.RetrieveAPIView):

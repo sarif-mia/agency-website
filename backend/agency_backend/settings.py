@@ -26,6 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-render-deployment-key-change-in-production-123456789')
+if os.environ.get('VERCEL') and not config('SECRET_KEY', default=''):
+    from django.core.exceptions import ImproperlyConfigured
+    raise ImproperlyConfigured('Set SECRET_KEY in the deployment environment.')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
@@ -107,10 +110,11 @@ WSGI_APPLICATION = 'agency_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# Production database (Railway/Heroku PostgreSQL)
-if 'DATABASE_URL' in os.environ and dj_database_url:
+# Read .env as well as injected deployment variables.
+database_url = config('DATABASE_URL', default='')
+if database_url and dj_database_url:
     DATABASES = {
-        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+        'default': dj_database_url.parse(database_url)
     }
 else:
     # Development database
@@ -192,7 +196,6 @@ if 'PORT' in os.environ:
     local_ip = socket.gethostbyname(hostname)
     ALLOWED_HOSTS.append(local_ip)
     ALLOWED_HOSTS.append('0.0.0.0')
-    ALLOWED_HOSTS.append('*')  # Allow all hosts in Railway deployment
 
 # Admin customization - SiteGenIT Branding
 ADMIN_SITE_HEADER = 'SiteGenIT Content Management System'
@@ -228,6 +231,17 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20
 }
 
+REST_FRAMEWORK['DEFAULT_THROTTLE_CLASSES'] = [
+    'rest_framework.throttling.AnonRateThrottle',
+    'rest_framework.throttling.UserRateThrottle',
+]
+REST_FRAMEWORK['DEFAULT_THROTTLE_RATES'] = {
+    'anon': '120/minute', 'user': '300/minute', 'auth': '20/minute', 'forms': '10/minute',
+}
+
+# Bound SMTP latency so a notification cannot keep a saved form request hanging.
+EMAIL_TIMEOUT = 8
+
 # CORS Configuration
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
@@ -260,21 +274,21 @@ if not DEBUG:
 
 # Email Configuration
 # Production settings - use SMTP backend
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='sitegenit@gmail.com')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='dummy-password')
 
 # Add this for Railway compatibility
 if not EMAIL_HOST_PASSWORD or EMAIL_HOST_PASSWORD in ['your-gmail-app-password-here', 'dummy-password']:
-    # Fallback to console backend if no password is set
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    # Keep personal message content out of production logs when SMTP is not configured.
+    EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
     import logging
-    logging.getLogger(__name__).warning("Using console email backend. Set EMAIL_HOST_PASSWORD for email functionality.")
+    logging.getLogger(__name__).warning("Email delivery is disabled. Configure SMTP credentials to enable notifications.")
 
-DEFAULT_FROM_EMAIL = 'Agency Website <sitegenit@gmail.com>'
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default=f'SiteGenIT <{EMAIL_HOST_USER}>')
 
 # Meeting Request Email Settings
 MEETING_REQUEST_EMAIL = config('MEETING_REQUEST_EMAIL', default='sitegenit@gmail.com')

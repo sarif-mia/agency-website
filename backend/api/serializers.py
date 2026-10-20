@@ -1,6 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError as DjangoValidationError
+from django.db import transaction
 from .models import (
     Project, Testimonial, ContactMessage, Service, BlogPost, NewsletterSubscriber, 
     UserProfile, MeetingRequest, HelpArticle, CaseStudy,
@@ -169,25 +172,35 @@ class StatsSerializer(serializers.Serializer):
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
     confirm_password = serializers.CharField(write_only=True)
-    first_name = serializers.CharField(required=True)
-    last_name = serializers.CharField(required=True)
+    first_name = serializers.CharField(required=True, max_length=150)
+    last_name = serializers.CharField(required=False, allow_blank=True, default='', max_length=150)
+    company = serializers.CharField(required=False, allow_blank=True, default='', max_length=100)
     
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name', 'password', 'confirm_password']
+        fields = ['email', 'first_name', 'last_name', 'company', 'password', 'confirm_password']
     
     def validate_email(self, value):
-        if User.objects.filter(email=value).exists():
+        value = value.strip().lower()
+        if len(value) > 150:
+            raise serializers.ValidationError('Email must be 150 characters or fewer.')
+        if User.objects.filter(email__iexact=value).exists() or User.objects.filter(username__iexact=value).exists():
             raise serializers.ValidationError("A user with this email already exists.")
         return value
     
     def validate(self, data):
         if data['password'] != data['confirm_password']:
             raise serializers.ValidationError("Passwords do not match.")
+        try:
+            validate_password(data['password'], User(email=data['email'], username=data['email'], first_name=data['first_name'], last_name=data['last_name']))
+        except DjangoValidationError as error:
+            raise serializers.ValidationError({'password': error.messages})
         return data
     
+    @transaction.atomic
     def create(self, validated_data):
         validated_data.pop('confirm_password')
+        company = validated_data.pop('company', '')
         user = User.objects.create_user(
             username=validated_data['email'],
             email=validated_data['email'],
@@ -196,7 +209,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         # Create user profile
-        UserProfile.objects.create(user=user)
+        UserProfile.objects.create(user=user, company=company)
         return user
 
 
@@ -210,14 +223,14 @@ class UserLoginSerializer(serializers.Serializer):
         
         if email and password:
             try:
-                user = User.objects.get(email=email)
+                user = User.objects.get(email__iexact=email.strip())
                 user = authenticate(username=user.username, password=password)
                 if not user:
                     raise serializers.ValidationError('Invalid email or password.')
                 if not user.is_active:
                     raise serializers.ValidationError('User account is disabled.')
                 data['user'] = user
-            except User.DoesNotExist:
+            except (User.DoesNotExist, User.MultipleObjectsReturned):
                 raise serializers.ValidationError('Invalid email or password.')
         else:
             raise serializers.ValidationError('Email and password are required.')
@@ -237,6 +250,14 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 # Meeting Request Serializers
 class MeetingRequestSerializer(serializers.ModelSerializer):
+    def validate(self, data):
+        from django.utils import timezone
+        from zoneinfo import ZoneInfo
+        now = timezone.localtime(timezone.now(), ZoneInfo('Asia/Dhaka'))
+        if data.get('preferred_date') == now.date() and data.get('preferred_time', '') <= now.strftime('%H:%M'):
+            raise serializers.ValidationError({'preferred_time': 'Please choose a future meeting time (Bangladesh time).'} )
+        return data
+
     class Meta:
         model = MeetingRequest
         fields = [
@@ -247,8 +268,9 @@ class MeetingRequestSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'status', 'created_at']
     
     def validate_preferred_date(self, value):
-        from datetime import date
-        if value < date.today():
+        from django.utils import timezone
+        from zoneinfo import ZoneInfo
+        if value < timezone.localdate(timezone=ZoneInfo('Asia/Dhaka')):
             raise serializers.ValidationError("Meeting date cannot be in the past.")
         return value
     

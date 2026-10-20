@@ -43,6 +43,9 @@ urlpatterns = [
     # Authentication endpoints
     path('auth/register/', views.UserRegistrationView.as_view(), name='user_register'),
     path('auth/login/', views.UserLoginView.as_view(), name='user_login'),
+    path('auth/me/', views.CurrentUserView.as_view(), name='current_user'),
+    path('auth/logout/', views.LogoutView.as_view(), name='user_logout'),
+    path('client/overview/', views.ClientOverviewView.as_view(), name='client_overview'),
     
     # Meeting endpoints
     path('meetings/', views.MeetingRequestListView.as_view(), name='meeting_list'),

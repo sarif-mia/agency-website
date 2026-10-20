@@ -1,27 +1,49 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 // Use Vite's development proxy and same-origin API routing in production.
-export const API_BASE_URL = (import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '');
+export const API_BASE_URL = (import.meta.env.VITE_API_URL || "/api").replace(
+  /\/$/,
+  "",
+);
 
 const handleResponse = async (response) => {
   if (response.status === 204) return null;
   const data = await response.json().catch(() => null);
   if (!response.ok) {
     const details = data?.errors || data;
-    const message = data?.message || data?.detail ||
-      (details && Object.values(details).flat().join(' ')) ||
+    const message =
+      data?.detail ||
+      (details &&
+        Object.values(details)
+          .flat()
+          .filter((value) => typeof value === "string")
+          .join(" ")) ||
+      data?.message ||
       `Request failed (${response.status})`;
-    throw new Error(message);
+    const error = new Error(message);
+    error.status = response.status;
+    if (response.status === 401)
+      window.dispatchEvent(new Event("auth:expired"));
+    throw error;
   }
+  if (!data)
+    throw new Error(
+      "The server returned an unexpected response. Please try again.",
+    );
   return data;
 };
 
 const apiCall = async (endpoint, options = {}) => {
-  const token = localStorage.getItem('authToken');
+  const token =
+    endpoint.startsWith("/auth/login/") ||
+    endpoint.startsWith("/auth/register/")
+      ? null
+      : localStorage.getItem("authToken");
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
+    signal: options.signal || AbortSignal.timeout(20000),
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...(token ? { Authorization: `Token ${token}` } : {}),
       ...options.headers,
     },
@@ -39,7 +61,7 @@ export const projectsAPI = {
 
   // Get featured projects
   getFeatured: async () => {
-    return apiCall('/projects/featured/');
+    return apiCall("/projects/featured/");
   },
 
   // Get project by slug
@@ -49,7 +71,7 @@ export const projectsAPI = {
 
   // Get project categories
   getCategories: async () => {
-    return apiCall('/projects/categories/');
+    return apiCall("/projects/categories/");
   },
 };
 
@@ -57,12 +79,12 @@ export const projectsAPI = {
 export const testimonialsAPI = {
   // Get all testimonials
   getAll: async () => {
-    return apiCall('/testimonials/');
+    return apiCall("/testimonials/");
   },
 
   // Get featured testimonials
   getFeatured: async () => {
-    return apiCall('/testimonials/featured/');
+    return apiCall("/testimonials/featured/");
   },
 };
 
@@ -70,7 +92,7 @@ export const testimonialsAPI = {
 export const servicesAPI = {
   // Get all services
   getAll: async () => {
-    return apiCall('/services/');
+    return apiCall("/services/");
   },
 
   // Get service by slug
@@ -127,7 +149,7 @@ export const caseStudiesAPI = {
 
   // Get featured case studies
   getFeatured: async () => {
-    return apiCall('/case-studies/featured/');
+    return apiCall("/case-studies/featured/");
   },
 
   // Get case studies by industry
@@ -140,16 +162,16 @@ export const caseStudiesAPI = {
 export const contactAPI = {
   // Send contact message
   sendMessage: async (messageData) => {
-    return apiCall('/contact/', {
-      method: 'POST',
+    return apiCall("/contact/", {
+      method: "POST",
       body: JSON.stringify(messageData),
     });
   },
 
   // Send quick contact
   sendQuickContact: async (contactData) => {
-    return apiCall('/contact/quick/', {
-      method: 'POST',
+    return apiCall("/contact/quick/", {
+      method: "POST",
       body: JSON.stringify(contactData),
     });
   },
@@ -158,9 +180,9 @@ export const contactAPI = {
 // Newsletter API
 export const newsletterAPI = {
   // Subscribe to newsletter
-  subscribe: async (email, name = '') => {
-    return apiCall('/newsletter/subscribe/', {
-      method: 'POST',
+  subscribe: async (email, name = "") => {
+    return apiCall("/newsletter/subscribe/", {
+      method: "POST",
       body: JSON.stringify({ email, name }),
     });
   },
@@ -170,7 +192,7 @@ export const newsletterAPI = {
 export const statsAPI = {
   // Get website statistics
   getStats: async () => {
-    return apiCall('/stats/');
+    return apiCall("/stats/");
   },
 };
 
@@ -187,24 +209,27 @@ export const searchAPI = {
 export const healthAPI = {
   // Check API health
   check: async () => {
-    return apiCall('/health/');
+    return apiCall("/health/");
   },
 };
 
 // Authentication API
 export const authAPI = {
+  me: () => apiCall("/auth/me/"),
+  logout: () => apiCall("/auth/logout/", { method: "POST" }),
+  overview: () => apiCall("/client/overview/"),
   // User registration
   register: async (userData) => {
-    return apiCall('/auth/register/', {
-      method: 'POST',
+    return apiCall("/auth/register/", {
+      method: "POST",
       body: JSON.stringify(userData),
     });
   },
 
   // User login
   login: async (credentials) => {
-    return apiCall('/auth/login/', {
-      method: 'POST',
+    return apiCall("/auth/login/", {
+      method: "POST",
       body: JSON.stringify(credentials),
     });
   },
@@ -214,15 +239,15 @@ export const authAPI = {
 export const meetingAPI = {
   // Schedule a meeting
   scheduleRequest: async (meetingData) => {
-    return apiCall('/meetings/request/', {
-      method: 'POST',
+    return apiCall("/meetings/request/", {
+      method: "POST",
       body: JSON.stringify(meetingData),
     });
   },
 
   // Get meeting requests (admin)
   getRequests: async () => {
-    return apiCall('/meetings/');
+    return apiCall("/meetings/");
   },
 };
 
@@ -234,7 +259,7 @@ export const useAPI = () => {
   const callAPI = async (apiFunction, ...args) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const result = await apiFunction(...args);
       setLoading(false);

@@ -1,0 +1,11 @@
+{
+  "name": "sitegenit-studio",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix frontend",
+    "dev:api": "DEBUG=True backend/.venv/bin/python backend/manage.py runserver 127.0.0.1:8000",
+    "build": "npm run build --prefix frontend",
+    "lint": "npm run lint --prefix frontend",
+    "test:api": "DEBUG=False backend/.venv/bin/python backend/manage.py test api --noinput"
+  }
+}

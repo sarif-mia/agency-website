@@ -22,6 +22,7 @@ from django.views.generic import TemplateView
 from api.views import home_view
 # from api.admin import admin_site  # Temporarily commented out
 from api import seo_views
+from api import public_seo
 
 urlpatterns = [
     path('', home_view, name='home'),
@@ -30,8 +31,8 @@ urlpatterns = [
     path('docs/', TemplateView.as_view(template_name='api_documentation.html'), name='api_docs'),
     
     # SEO files at root level for search engines
-    path('sitemap.xml', seo_views.sitemap_xml, name='sitemap_xml'),
-    path('robots.txt', seo_views.robots_txt, name='robots_txt'),
+    path('sitemap.xml', public_seo.sitemap, name='sitemap_xml'),
+    path('robots.txt', public_seo.robots, name='robots_txt'),
 ]
 
 # Serve media files during development

@@ -1,179 +1,115 @@
-import React from 'react';
-
-const Footer = () => {
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowUpRight, ArrowRight, Globe2 } from "lucide-react";
+import Brand from "./studio/Brand";
+import api from "../services/api";
+export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("");
+  const [busy, setBusy] = useState(false);
+  async function subscribe(e) {
+    e.preventDefault();
+    setBusy(true);
+    setStatus("");
+    try {
+      await api.newsletter.subscribe(email);
+      setStatus("You’re on the list. Thank you!");
+      setEmail("");
+    } catch (error) {
+      setStatus(error.message);
+    } finally {
+      setBusy(false);
+    }
+  }
   return (
-    <footer style={{
-      backgroundColor: '#0a0a0a',
-      borderRadius: '20px',
-      padding: '40px 60px',
-      color: '#fff',
-      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-      maxWidth: '1200px',
-      margin: '40px auto',
-      boxSizing: 'border-box'
-    }}>
-      {/* Newsletter Subscription Bar */}
-      <div style={{
-        backgroundColor: '#121212',
-        borderRadius: '12px',
-        padding: '20px 30px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: '40px',
-        boxShadow: '0 4px 20px rgba(255, 87, 34, 0.3)'
-      }}>
-        <div style={{ fontSize: '1.2rem', fontWeight: '600' }}>
-          Join to get free updates <span style={{ color: '#ff5722' }}>every week.</span>
-        </div>
-        <form style={{ display: 'flex', gap: '10px' }} onSubmit={e => e.preventDefault()}>
-          <input
-            type="email"
-            placeholder="Email address"
-            required
-            style={{
-              padding: '10px 15px',
-              borderRadius: '8px',
-              border: 'none',
-              outline: 'none',
-              fontSize: '1rem',
-              width: '250px',
-              backgroundColor: '#222',
-              color: '#fff'
-            }}
-          />
-          <button type="submit" style={{
-            backgroundColor: '#ff5722',
-            border: 'none',
-            borderRadius: '8px',
-            color: '#fff',
-            fontWeight: '700',
-            padding: '10px 25px',
-            cursor: 'pointer',
-            fontSize: '1rem',
-            transition: 'background-color 0.3s ease'
-          }}
-          onMouseOver={e => e.currentTarget.style.backgroundColor = '#e64a19'}
-          onMouseOut={e => e.currentTarget.style.backgroundColor = '#ff5722'}
+    <footer className="studio-footer">
+      <div className="shell">
+        <div className="footer-top">
+          <div>
+            <span className="eyebrow light">
+              GOOD THINGS START WITH A CONVERSATION
+            </span>
+            <h2>
+              Have a good idea?
+              <br />
+              Let’s make it <em>great.</em>
+            </h2>
+          </div>
+          <Link
+            to="/quote"
+            className="footer-circle"
+            aria-label="Start a project"
           >
-            Join Now
-          </button>
-        </form>
-      </div>
-
-      {/* Footer Links Section */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        gap: '40px',
-        flexWrap: 'wrap'
-      }}>
-        {/* Brand Info */}
-        <div style={{ flex: '1 1 250px', minWidth: '250px', display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <div style={{ position: 'relative', width: '40px', height: '40px' }}>
-            <span style={{
-              position: 'absolute',
-              width: '14px',
-              height: '14px',
-              borderRadius: '6px',
-              background: 'linear-gradient(135deg, #00f5ff, #0066ff)',
-              boxShadow: '0 0 15px rgba(0,245,255,0.6)',
-              top: 0,
-              left: 0,
-              transition: 'all 0.3s ease'
-            }} />
-            <span style={{
-              position: 'absolute',
-              width: '14px',
-              height: '14px',
-              borderRadius: '6px',
-              background: 'linear-gradient(135deg, #0066ff, #9966ff)',
-              boxShadow: '0 0 15px rgba(153,102,255,0.6)',
-              top: '12px',
-              left: '18px',
-              animation: 'float 4s ease-in-out infinite'
-            }} />
-            <span style={{
-              position: 'absolute',
-              width: '14px',
-              height: '14px',
-              borderRadius: '6px',
-              background: 'linear-gradient(135deg, #9966ff, #ff0080)',
-              boxShadow: '0 0 15px rgba(255,0,128,0.6)',
-              bottom: 0,
-              left: '6px',
-              animation: 'rotate 5s linear infinite'
-            }} />
-            <style>{`
-              @keyframes float {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-3px); }
-              }
-              @keyframes rotate {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-              }
-            `}</style>
+            <ArrowUpRight size={50} />
+          </Link>
+        </div>
+        <div className="footer-grid">
+          <div className="footer-about">
+            <Brand />
+            <p>
+              Independent thinking.
+              <br />
+              Thoughtful design. Meaningful digital.
+            </p>
+            <span className="global-note">
+              <Globe2 size={15} /> Based in Bangladesh. Working worldwide.
+            </span>
           </div>
           <div>
-            <h2 style={{ color: '#00f5ff', margin: 0, fontWeight: '700', fontSize: '1.5rem' }}>SiteGenIT</h2>
-            <p style={{ margin: 0, color: '#ccc', fontSize: '0.9rem' }}>Crafting modern web solutions & communities.</p>
+            <h3>Explore</h3>
+            <Link to="/all-projects">Our work</Link>
+            <Link to="/services">What we do</Link>
+            <Link to="/about-us">The studio</Link>
+            <Link to="/blog">Insights</Link>
+          </div>
+          <div>
+            <h3>Let’s connect</h3>
+            <Link to="/quote">
+              Start a project <ArrowUpRight size={14} />
+            </Link>
+            <Link to="/partnership">Become a partner</Link>
+            <Link to="/careers">Careers</Link>
+            <Link to="/client-portal">Client portal</Link>
+          </div>
+          <div className="footer-newsletter">
+            <h3>A little inspiration. Occasionally.</h3>
+            <p>Design thinking and useful digital ideas.</p>
+            <form onSubmit={subscribe}>
+              <label className="sr-only" htmlFor="newsletter-email">
+                Email address
+              </label>
+              <input
+                id="newsletter-email"
+                type="email"
+                placeholder="Your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={busy}
+              />
+              <button disabled={busy} aria-label="Subscribe to newsletter">
+                <ArrowRight size={20} />
+              </button>
+            </form>
+            <p role="status">{status}</p>
+            <small>
+              By subscribing, you agree to our{" "}
+              <Link to="/privacy-policy">privacy policy</Link>.
+            </small>
           </div>
         </div>
-
-        {/* Product Links */}
-        <div style={{ flex: '1 1 150px', minWidth: '150px' }}>
-          <h3 style={{ color: '#fff', marginBottom: '15px' }}>Product</h3>
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0, color: '#ccc' }}>
-            <li style={{ marginBottom: '10px', cursor: 'pointer' }}>
-              <a href="/services" style={{ color: '#ccc', textDecoration: 'none' }}>Features</a>
-            </li>
-            <li style={{ marginBottom: '10px', cursor: 'pointer' }}>
-              <a href="/services" style={{ color: '#ccc', textDecoration: 'none' }}>Pricing</a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Company Links */}
-        <div style={{ flex: '1 1 150px', minWidth: '150px' }}>
-          <h3 style={{ color: '#fff', marginBottom: '15px' }}>Company</h3>
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0, color: '#ccc' }}>
-            <li style={{ marginBottom: '10px', cursor: 'pointer' }}>
-              <a href="/about-us" style={{ color: '#ccc', textDecoration: 'none' }}>About Us</a>
-            </li>
-            <li style={{ marginBottom: '10px', cursor: 'pointer' }}>
-              <a href="/quote" style={{ color: '#ccc', textDecoration: 'none' }}>Contact</a>
-            </li>
-            <li style={{ marginBottom: '10px', cursor: 'pointer' }}>
-              <a href="/blog" style={{ color: '#ccc', textDecoration: 'none' }}>Blog</a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Pages Links */}
-        <div style={{ flex: '1 1 150px', minWidth: '150px' }}>
-          <h3 style={{ color: '#fff', marginBottom: '15px' }}>Pages</h3>
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0, color: '#ccc' }}>
-            <li style={{ marginBottom: '10px', cursor: 'pointer' }}>
-              <a href="/terms-conditions" style={{ color: '#ccc', textDecoration: 'none' }}>Terms & Conditions</a>
-            </li>
-            <li style={{ marginBottom: '10px', cursor: 'pointer' }}>
-              <a href="/privacy-policy" style={{ color: '#ccc', textDecoration: 'none' }}>Privacy Policy</a>
-            </li>
-            <li style={{ marginBottom: '10px', cursor: 'pointer' }}>
-              <a href="/resources" style={{ color: '#ccc', textDecoration: 'none' }}>Free Resources</a>
-            </li>
-            <li style={{ marginBottom: '10px', cursor: 'pointer' }}>
-              <a href="/portfolio-download" style={{ color: '#ccc', textDecoration: 'none' }}>Portfolio Download</a>
-            </li>
-            <li style={{ marginBottom: '10px', cursor: 'pointer' }}>
-              <a href="/client-portal" style={{ color: '#ccc', textDecoration: 'none' }}>Client Portal</a>
-            </li>
-          </ul>
+        <div className="footer-bottom">
+          <span>
+            © {new Date().getFullYear()} SiteGenIT. Made with intention.
+          </span>
+          <div>
+            <Link to="/privacy-policy">Privacy</Link>
+            <Link to="/terms-conditions">Terms</Link>
+            <Link to="/help">Help center</Link>
+          </div>
+          <a href="#top">Back to top ↑</a>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

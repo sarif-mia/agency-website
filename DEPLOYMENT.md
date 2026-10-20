@@ -19,7 +19,7 @@ Replace sample clients, team profiles, projects, and articles before promoting
 the site as an agency's official portfolio.
 
 Email delivery requires `EMAIL_HOST_USER` and `EMAIL_HOST_PASSWORD` (a Gmail app
-password). Without these, email is logged rather than delivered; submissions
+password). Without these, email delivery is disabled; submissions
 are still saved in PostgreSQL. Set `MEETING_REQUEST_EMAIL` and `ADMIN_EMAIL`
 to the intended notification recipients.
 
@@ -30,3 +30,15 @@ Existing URL-based content images do not require uploads.
 Create an administrator with Django's `createsuperuser` command using the
 production database configuration. Avoid the sample `setup_admin` command's
 default password.
+
+## Redesign and account behavior
+
+The client dashboard displays real meeting requests owned by the signed-in user.
+It does not display fabricated project progress or messages. Login sessions are
+verified on reload, and logout revokes the token on the server. Do not cache
+private API responses in a service worker.
+
+The frontend uses a shared responsive design system, native React metadata,
+route-based loading, accessible labels, and explicit content error/retry states.
+The `/sitemap.xml` and `/robots.txt` endpoints use the request origin, so they
+remain correct on the production domain.

@@ -1,89 +1,87 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 // https://vite.dev/config/
 export default defineConfig({
   // Set base path for deployment
-  base: '/',
-  
+  base: "/",
+
   plugins: [react()],
-  
+
   // SEO and Performance Optimizations
   build: {
     // Code splitting for better loading performance
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom'],
-          router: ['react-router-dom'],
-          animations: ['framer-motion', 'aos'],
-          icons: ['lucide-react']
-        }
-      }
+          router: ["react-router-dom"],
+          icons: ["lucide-react"],
+        },
+      },
     },
-    
+
     // Optimize chunk size for better SEO
     chunkSizeWarningLimit: 1000,
-    
+
     // Enable source maps for production debugging
     sourcemap: false,
-    
+
     // Minify for better performance
-    minify: 'terser',
+    minify: "terser",
     terserOptions: {
       compress: {
         drop_console: true,
-        drop_debugger: true
-      }
-    }
+        drop_debugger: true,
+      },
+    },
   },
-  
+
   // Server configuration for development
   server: {
     port: 3000,
     host: true,
-    
+
     // Proxy API calls to backend during development
     proxy: {
-      '/media': {
-        target: process.env.API_PROXY_TARGET || 'http://127.0.0.1:8000',
-        changeOrigin: true
-      },
-      '/api': {
-        target: process.env.API_PROXY_TARGET || 'http://127.0.0.1:8000',
+      "/sitemap.xml": {
+        target: process.env.API_PROXY_TARGET || "http://127.0.0.1:8000",
         changeOrigin: true,
-        secure: false
-      }
-    }
+      },
+      "/robots.txt": {
+        target: process.env.API_PROXY_TARGET || "http://127.0.0.1:8000",
+        changeOrigin: true,
+      },
+      "/media": {
+        target: process.env.API_PROXY_TARGET || "http://127.0.0.1:8000",
+        changeOrigin: true,
+      },
+      "/api": {
+        target: process.env.API_PROXY_TARGET || "http://127.0.0.1:8000",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
-  
+
   // Preview server configuration
   preview: {
     port: 4173,
-    host: true
+    host: true,
   },
-  
+
   // Define global constants
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
-    __BUILD_DATE__: JSON.stringify(new Date().toISOString())
+    __BUILD_DATE__: JSON.stringify(new Date().toISOString()),
   },
-  
+
   // CSS preprocessing
   css: {
-    devSourcemap: true
+    devSourcemap: true,
   },
-  
+
   // Optimize dependencies
   optimizeDeps: {
-    include: [
-      'react',
-      'react-dom',
-      'react-router-dom',
-      'framer-motion',
-      'aos',
-      'lucide-react',
-      'react-helmet'
-    ]
-  }
-})
+    include: ["react", "react-dom", "react-router-dom", "lucide-react"],
+  },
+});

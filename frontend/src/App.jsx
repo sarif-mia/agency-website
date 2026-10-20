@@ -1,123 +1,145 @@
-import { useEffect } from 'react';
-import HomePage from './pages/HomePage';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-
-// Import components
-import Header3D from './components/Header3D';
-import Portfolio from './components/Portfolio';
-import Testimonials from './components/Testimonials';
-import Footer from './components/Footer';
-import AIChatbot from './components/AIChatbot';
-import SEOAuditReport from './components/SEOAuditReport';
-import ScrollToTop from './components/ScrollToTop';
-
-// Import page components
-import BlogPage from './pages/BlogPage';
-import BlogPostPage from './pages/BlogPostPage';
-import HelpCenterPage from './pages/HelpCenterPage';
-import HelpArticlePage from './pages/HelpArticlePage';
-import CaseStudiesPage from './pages/CaseStudiesPage';
-import CaseStudyPage from './pages/CaseStudyPage';
-import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
-import TermsConditionsPage from './pages/TermsConditionsPage';
-import FreeResourcesPage from './pages/FreeResourcesPage';
-import GetQuotePage from './pages/GetQuotePage';
-import PortfolioDownloadPage from './pages/PortfolioDownloadPage';
-import ClientPortalPage from './pages/ClientPortalPage';
-import ClientDashboardPage from './pages/ClientDashboardPage';
-import PartnershipPage from './pages/PartnershipPage';
-
-// Import Protected Route
-import ProtectedRoute from './components/ProtectedRoute';
-import AboutUsPage from './pages/AboutUsPage';
-import AllProjectsPage from './pages/AllProjectsPage';
-import OurTeamPage from './pages/OurTeamPage';
-import CareersPage from './pages/CareersPage';
-import ServicesPage from './pages/ServicesPage';
-
-// Import styles
-import './App.css';
-import './styles/mobile-fixes.css';
-
-// Import SEO configuration
-
-// Import API
-
-// Import Auth Context
-import { AuthProvider } from './context/AuthContext';
-
-
-function App() {
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-      easing: 'ease-out-cubic',
-    });
-  }, []);
-
+import { Component, Suspense, lazy } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import Header from "./components/Header3D";
+import Footer from "./components/Footer";
+import QuickLinks from "./components/AIChatbot";
+import ScrollToTop from "./components/ScrollToTop";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./context/AuthContext";
+import "./App.css";
+const page = (name) =>
+  lazy(() =>
+    import("./pages/StudioPages").then((module) => ({ default: module[name] })),
+  );
+const Services = page("ServicesPage"),
+  Projects = page("ProjectsPage"),
+  About = page("AboutPage"),
+  Team = page("TeamPage"),
+  ContentList = page("ContentListPage"),
+  Detail = page("DetailPage"),
+  Careers = page("CareersPage"),
+  Resources = page("ResourcesPage"),
+  Legal = page("LegalPage"),
+  NotFound = page("NotFoundPage");
+const Portal = lazy(() => import("./pages/ClientPortalPage"));
+const Dashboard = lazy(() => import("./pages/ClientDashboardPage"));
+const Contact = lazy(() => import("./pages/ContactPage"));
+class ErrorBoundary extends Component {
+  state = { error: false };
+  static getDerivedStateFromError() {
+    return { error: true };
+  }
+  render() {
+    return this.state.error ? (
+      <div className="shell not-found">
+        <h1>Something needs a fresh start.</h1>
+        <p>Please reload the page to try again.</p>
+        <button
+          className="button button-dark"
+          onClick={() => window.location.reload()}
+        >
+          Reload page ↗
+        </button>
+      </div>
+    ) : (
+      this.props.children
+    );
+  }
+}
+export default function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <ScrollToTop />
-        <div className="App">
-          <Header3D />
-
-          <Routes>
-            {/* Home page route */}
-            <Route path="/" element={<HomePage />} />
-
-            {/* Blog routes */}
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:slug" element={<BlogPostPage />} />
-
-            {/* Help Center routes */}
-            <Route path="/help" element={<HelpCenterPage />} />
-            <Route path="/help/:slug" element={<HelpArticlePage />} />
-
-            {/* Case Studies routes */}
-            <Route path="/case-studies" element={<CaseStudiesPage />} />
-            <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
-
-            {/* Legal pages */}
-            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-            <Route path="/terms-conditions" element={<TermsConditionsPage />} />
-
-            {/* Quick Links pages */}
-            <Route path="/resources" element={<FreeResourcesPage />} />
-            <Route path="/quote" element={<GetQuotePage />} />
-            <Route path="/portfolio-download" element={<PortfolioDownloadPage />} />
-            <Route path="/client-portal" element={<ClientPortalPage />} />
-            <Route path="/dashboard" element={
-              <ProtectedRoute>
-                <ClientDashboardPage />
-              </ProtectedRoute>
-            } />
-            <Route path="/partnership" element={<PartnershipPage />} />
-
-            {/* Additional pages */}
-            <Route path="/about-us" element={<AboutUsPage />} />
-            <Route path="/all-projects" element={<AllProjectsPage />} />
-            <Route path="/our-team" element={<OurTeamPage />} />
-            <Route path="/careers" element={<CareersPage />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/testimonials" element={<Testimonials />} />
-
-            {/* Services page */}
-            <Route path="/services" element={<ServicesPage />} />
-
-            {/* SEO Audit Report */}
-            <Route path="/seo-audit" element={<SEOAuditReport />} />
-          </Routes>
-
-          <Footer />
-          <AIChatbot />
-        </div>
-      </Router>
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <BrowserRouter>
+          <ScrollToTop />
+          <div className="App" id="top">
+            <a className="skip-link" href="#main-content">
+              Skip to content
+            </a>
+            <Header />
+            <main id="main-content" tabIndex={-1}>
+              <Suspense
+                fallback={
+                  <div className="page-loading" role="status">
+                    <span className="spinner" />
+                    Loading…
+                  </div>
+                }
+              >
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/services" element={<Services />} />
+                  <Route path="/about-us" element={<About />} />
+                  <Route path="/our-team" element={<Team />} />
+                  <Route path="/all-projects" element={<Projects />} />
+                  <Route
+                    path="/portfolio"
+                    element={<Navigate to="/all-projects" replace />}
+                  />
+                  <Route
+                    path="/work/:slug"
+                    element={<Detail kind="projects" />}
+                  />
+                  <Route path="/blog" element={<ContentList kind="blog" />} />
+                  <Route path="/blog/:slug" element={<Detail kind="blog" />} />
+                  <Route
+                    path="/case-studies"
+                    element={<ContentList kind="case-studies" />}
+                  />
+                  <Route
+                    path="/case-studies/:slug"
+                    element={<Detail kind="case-studies" />}
+                  />
+                  <Route path="/help" element={<ContentList kind="help" />} />
+                  <Route path="/help/:slug" element={<Detail kind="help" />} />
+                  <Route path="/quote" element={<Contact />} />
+                  <Route
+                    path="/contact"
+                    element={<Navigate to="/quote" replace />}
+                  />
+                  <Route
+                    path="/meeting"
+                    element={<Contact key="meeting" meeting />}
+                  />
+                  <Route
+                    path="/partnership"
+                    element={<Contact key="partnership" partnership />}
+                  />
+                  <Route path="/client-portal" element={<Portal />} />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path="/careers" element={<Careers />} />
+                  <Route path="/resources" element={<Resources />} />
+                  <Route
+                    path="/portfolio-download"
+                    element={<Navigate to="/all-projects" replace />}
+                  />
+                  <Route path="/privacy-policy" element={<Legal />} />
+                  <Route path="/terms-conditions" element={<Legal terms />} />
+                  <Route
+                    path="/seo-audit"
+                    element={<Navigate to="/help" replace />}
+                  />
+                  <Route
+                    path="/testimonials"
+                    element={<Navigate to="/about-us" replace />}
+                  />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </main>
+            <Footer />
+            <QuickLinks />
+          </div>
+        </BrowserRouter>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
-
-export default App;
