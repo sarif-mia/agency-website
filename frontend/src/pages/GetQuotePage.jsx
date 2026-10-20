@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { ArrowLeft, Calculator, CheckCircle, Clock, DollarSign, Users, Briefcase } from 'lucide-react';
 
 const GetQuotePage = () => {
@@ -165,7 +165,7 @@ const GetQuotePage = () => {
   };
 
   const renderStep1 = () => (
-    <motion.div
+    <Motion.div
       className="form-step"
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
@@ -212,11 +212,11 @@ const GetQuotePage = () => {
           />
         </div>
       </div>
-    </motion.div>
+    </Motion.div>
   );
 
   const renderStep2 = () => (
-    <motion.div
+    <Motion.div
       className="form-step"
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
@@ -280,11 +280,11 @@ const GetQuotePage = () => {
           placeholder="Tell us about your project goals, target audience, and any specific requirements..."
         />
       </div>
-    </motion.div>
+    </Motion.div>
   );
 
   const renderStep3 = () => (
-    <motion.div
+    <Motion.div
       className="form-step"
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
@@ -325,11 +325,11 @@ const GetQuotePage = () => {
           ))}
         </div>
       </div>
-    </motion.div>
+    </Motion.div>
   );
 
   const renderStep4 = () => (
-    <motion.div
+    <Motion.div
       className="form-step quote-result"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
@@ -384,14 +384,14 @@ const GetQuotePage = () => {
           Download Quote PDF
         </button>
       </div>
-    </motion.div>
+    </Motion.div>
   );
 
   return (
     <div className="quote-page">
       <div className="container">
         {/* Back Button */}
-        <motion.div
+        <Motion.div
           className="back-navigation"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -401,10 +401,10 @@ const GetQuotePage = () => {
             <ArrowLeft size={20} />
             Back to Home
           </Link>
-        </motion.div>
+        </Motion.div>
 
         {/* Header */}
-        <motion.header
+        <Motion.header
           className="page-header"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -418,11 +418,11 @@ const GetQuotePage = () => {
           <p className="page-description">
             Tell us about your project and get an instant estimate for your next digital solution
           </p>
-        </motion.header>
+        </Motion.header>
 
         {/* Progress Bar */}
         {currentStep <= 3 && (
-          <motion.div
+          <Motion.div
             className="progress-bar"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -446,7 +446,7 @@ const GetQuotePage = () => {
                 style={{ width: `${((currentStep - 1) / 2) * 100}%` }}
               ></div>
             </div>
-          </motion.div>
+          </Motion.div>
         )}
 
         {/* Form */}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
@@ -8,7 +8,7 @@ const Portfolio = ({ projects: propProjects, loading: propLoading }) => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [, setError] = useState(null);
 
   const filters = ['All', 'Web', 'Mobile', 'Branding', 'Marketing', 'Design'];
 
@@ -27,7 +27,7 @@ const Portfolio = ({ projects: propProjects, loading: propLoading }) => {
 
           // Try to fetch from API
           const response = await api.projects.getAll();
-          if (response && response.length > 0) {
+          if ((response.results || response)?.length > 0) {
             setProjects(response.results || response);
           }
           setError(null);
@@ -104,21 +104,15 @@ const Portfolio = ({ projects: propProjects, loading: propLoading }) => {
   ];
 
   // Handle project view
-  const handleViewProject = (project) => {
+  const handleViewProject = () => {
     // Navigate to All Projects page which has detailed project views
     window.location.href = '/all-projects';
   };
 
   // Handle external link
-  const handleExternalLink = (project) => {
+  const handleExternalLink = () => {
     // Open the agency website as demo
     window.open(window.location.origin, '_blank');
-  };
-
-  // Handle view all projects
-  const handleViewAllProjects = () => {
-    // This function is no longer needed since we're using Link component
-    // But keeping it for backward compatibility if called elsewhere
   };
 
   // Filter projects based on active filter
@@ -145,7 +139,7 @@ const Portfolio = ({ projects: propProjects, loading: propLoading }) => {
   return (
     <section className="portfolio-section section" id="portfolio">
       <div className="container">
-        <motion.div
+        <Motion.div
           className="portfolio-header"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -156,9 +150,9 @@ const Portfolio = ({ projects: propProjects, loading: propLoading }) => {
           <p className="section-subtitle">
             Discover our latest projects and see how we've helped businesses achieve their digital goals
           </p>
-        </motion.div>
+        </Motion.div>
 
-        <motion.div
+        <Motion.div
           className="filter-tabs"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -166,7 +160,7 @@ const Portfolio = ({ projects: propProjects, loading: propLoading }) => {
           viewport={{ once: true }}
         >
           {filters.map((filter) => (
-            <motion.button
+            <Motion.button
               key={filter}
               className={`filter-btn ${activeFilter === filter ? 'active' : ''}`}
               onClick={() => setActiveFilter(filter)}
@@ -174,14 +168,14 @@ const Portfolio = ({ projects: propProjects, loading: propLoading }) => {
               whileTap={{ scale: 0.95 }}
             >
               {filter}
-            </motion.button>
+            </Motion.button>
           ))}
-        </motion.div>
+        </Motion.div>
 
-        <motion.div className="portfolio-grid" layout>
+        <Motion.div className="portfolio-grid" layout>
           <AnimatePresence mode="wait">
             {filteredProjects.map((project) => (
-              <motion.div
+              <Motion.div
                 key={project.id}
                 className="portfolio-item"
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -195,22 +189,22 @@ const Portfolio = ({ projects: propProjects, loading: propLoading }) => {
                   <img src={project.image} alt={project.title} />
                   <div className="image-overlay">
                     <div className="overlay-content">
-                      <motion.button
+                      <Motion.button
                         className="overlay-btn view-btn"
                         onClick={() => handleViewProject(project)}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
                         <Eye size={20} />
-                      </motion.button>
-                      <motion.button
+                      </Motion.button>
+                      <Motion.button
                         className="overlay-btn link-btn"
                         onClick={() => handleExternalLink(project)}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
                         <ExternalLink size={20} />
-                      </motion.button>
+                      </Motion.button>
                     </div>
                   </div>
                   <div className="project-category">{project.category}</div>
@@ -231,12 +225,12 @@ const Portfolio = ({ projects: propProjects, loading: propLoading }) => {
                 </div>
 
                 <div className="project-glow"></div>
-              </motion.div>
+              </Motion.div>
             ))}
           </AnimatePresence>
-        </motion.div>
+        </Motion.div>
 
-        <motion.div
+        <Motion.div
           className="portfolio-cta"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -246,7 +240,7 @@ const Portfolio = ({ projects: propProjects, loading: propLoading }) => {
           <Link to="/all-projects" className="neon-button">
             View All Projects
           </Link>
-        </motion.div>
+        </Motion.div>
       </div>
 
       <style jsx>{`

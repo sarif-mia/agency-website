@@ -45,8 +45,12 @@ export default defineConfig({
     
     // Proxy API calls to backend during development
     proxy: {
+      '/media': {
+        target: process.env.API_PROXY_TARGET || 'http://127.0.0.1:8000',
+        changeOrigin: true
+      },
       '/api': {
-        target: 'http://localhost:8000',
+        target: process.env.API_PROXY_TARGET || 'http://127.0.0.1:8000',
         changeOrigin: true,
         secure: false
       }
@@ -79,7 +83,7 @@ export default defineConfig({
       'framer-motion',
       'aos',
       'lucide-react',
-      'react-helmet-async'
+      'react-helmet'
     ]
   }
 })

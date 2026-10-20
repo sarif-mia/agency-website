@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { 
   ArrowLeft, 
   Briefcase, 
@@ -122,7 +122,7 @@ const CareersPage = () => {
   return (
     <div className="careers-page">
       <div className="container">
-        <motion.div
+        <Motion.div
           className="back-navigation"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -132,9 +132,9 @@ const CareersPage = () => {
             <ArrowLeft size={20} />
             Back to Home
           </Link>
-        </motion.div>
+        </Motion.div>
 
-        <motion.header
+        <Motion.header
           className="page-header"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -148,10 +148,10 @@ const CareersPage = () => {
           <p className="page-description">
             Build your career with a passionate team creating exceptional digital experiences.
           </p>
-        </motion.header>
+        </Motion.header>
 
         {/* Benefits */}
-        <motion.section
+        <Motion.section
           className="benefits-section"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -162,7 +162,7 @@ const CareersPage = () => {
             {companyBenefits.map((benefit, index) => {
               const IconComponent = benefit.icon;
               return (
-                <motion.div
+                <Motion.div
                   key={index}
                   className="benefit-card"
                   initial={{ opacity: 0, y: 30 }}
@@ -174,14 +174,14 @@ const CareersPage = () => {
                   </div>
                   <h3>{benefit.title}</h3>
                   <p>{benefit.description}</p>
-                </motion.div>
+                </Motion.div>
               );
             })}
           </div>
-        </motion.section>
+        </Motion.section>
 
         {/* Job Filters */}
-        <motion.section
+        <Motion.section
           className="jobs-filter"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -199,10 +199,10 @@ const CareersPage = () => {
               </button>
             ))}
           </div>
-        </motion.section>
+        </Motion.section>
 
         {/* Job Listings */}
-        <motion.section
+        <Motion.section
           className="jobs-section"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -210,7 +210,7 @@ const CareersPage = () => {
         >
           <div className="jobs-grid">
             {filteredJobs.map((job, index) => (
-              <motion.div
+              <Motion.div
                 key={job.id}
                 className={`job-card ${job.featured ? 'featured' : ''}`}
                 initial={{ opacity: 0, y: 30 }}
@@ -271,13 +271,13 @@ const CareersPage = () => {
                     </button>
                   </div>
                 </div>
-              </motion.div>
+              </Motion.div>
             ))}
           </div>
-        </motion.section>
+        </Motion.section>
 
         {/* Application Form */}
-        <motion.section
+        <Motion.section
           className="application-section"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -384,7 +384,7 @@ const CareersPage = () => {
               </button>
             </form>
           </div>
-        </motion.section>
+        </Motion.section>
       </div>
 
       <style jsx>{`

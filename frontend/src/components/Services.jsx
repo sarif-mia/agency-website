@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { Code, Palette, Smartphone, Globe, Zap, Rocket } from 'lucide-react';
 import api from '../services/api';
 
 const Services = ({ services: propServices, loading: propLoading }) => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [, setError] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
   const [showServiceModal, setShowServiceModal] = useState(false);
 
@@ -149,7 +149,7 @@ const Services = ({ services: propServices, loading: propLoading }) => {
   return (
     <section className="services-section section" id="services">
       <div className="container">
-        <motion.div
+        <Motion.div
           className="services-header"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -160,9 +160,9 @@ const Services = ({ services: propServices, loading: propLoading }) => {
           <p className="section-subtitle">
             We offer a comprehensive suite of digital services to help your business thrive in the modern world
           </p>
-        </motion.div>
+        </Motion.div>
 
-        <motion.div
+        <Motion.div
           className="services-grid"
           variants={containerVariants}
           initial="hidden"
@@ -172,7 +172,7 @@ const Services = ({ services: propServices, loading: propLoading }) => {
           {services.map((service, index) => {
             const IconComponent = iconMap[service.icon] || Code;
             return (
-              <motion.div
+              <Motion.div
                 key={service.id || index}
                 className="service-card"
                 variants={cardVariants}
@@ -198,25 +198,25 @@ const Services = ({ services: propServices, loading: propLoading }) => {
                   ))}
                 </ul>
 
-                <motion.button
+                <Motion.button
                   className="service-cta"
                   onClick={() => handleLearnMore(service)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Learn More
-                </motion.button>
+                </Motion.button>
 
                 <div className="card-glow"></div>
-              </motion.div>
+              </Motion.div>
             );
           })}
-        </motion.div>
+        </Motion.div>
       </div>
 
       {/* Service Details Modal */}
       {showServiceModal && selectedService && (
-        <motion.div
+        <Motion.div
           className="service-modal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -227,7 +227,7 @@ const Services = ({ services: propServices, loading: propLoading }) => {
             }
           }}
         >
-          <motion.div
+          <Motion.div
             className="service-modal-content"
             initial={{ opacity: 0, scale: 0.9, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -287,8 +287,8 @@ const Services = ({ services: propServices, loading: propLoading }) => {
                 </button>
               </div>
             </div>
-          </motion.div>
-        </motion.div>
+          </Motion.div>
+        </Motion.div>
       )}
 
       <style jsx>{`

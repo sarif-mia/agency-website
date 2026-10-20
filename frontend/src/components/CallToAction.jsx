@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { Rocket, ArrowRight, Mail, Phone } from 'lucide-react';
 import ContactForm from './ContactForm';
 
@@ -9,14 +9,14 @@ const CallToAction = () => {
     <section className="cta-section section" id="contact">
       <div className="container">
         <div className="cta-background">
-          <motion.div
+          <Motion.div
             className="cta-content"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <motion.div
+            <Motion.div
               className="cta-icon"
               animate={{ 
                 y: [0, -10, 0],
@@ -30,9 +30,9 @@ const CallToAction = () => {
             >
               <Rocket size={60} />
               <div className="icon-glow"></div>
-            </motion.div>
+            </Motion.div>
 
-            <motion.h1
+            <Motion.h1
               className="cta-title"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -40,9 +40,9 @@ const CallToAction = () => {
               viewport={{ once: true }}
             >
               Let's Build Something Great Together 🚀
-            </motion.h1>
+            </Motion.h1>
 
-            <motion.p
+            <Motion.p
               className="cta-description"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -51,9 +51,9 @@ const CallToAction = () => {
             >
               Ready to transform your digital presence? We're here to turn your vision into reality 
               with cutting-edge solutions that drive results. Let's create something amazing together.
-            </motion.p>
+            </Motion.p>
 
-            <motion.div
+            <Motion.div
               className="cta-stats"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -72,16 +72,16 @@ const CallToAction = () => {
                 <span className="stat-number gradient-text">5+</span>
                 <span className="stat-label">Years Experience</span>
               </div>
-            </motion.div>
+            </Motion.div>
 
-            <motion.div
+            <Motion.div
               className="cta-buttons"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.9 }}
               viewport={{ once: true }}
             >
-              <motion.button
+              <Motion.button
                 className="neon-button primary-cta"
                 onClick={() => setShowContactForm(true)}
                 whileHover={{ 
@@ -92,9 +92,9 @@ const CallToAction = () => {
               >
                 <span>Start Your Project</span>
                 <ArrowRight size={20} />
-              </motion.button>
+              </Motion.button>
 
-              <motion.button
+              <Motion.button
                 className="neon-button secondary-cta"
                 onClick={() => setShowContactForm(true)}
                 whileHover={{ 
@@ -105,11 +105,11 @@ const CallToAction = () => {
               >
                 <span>Schedule a Call</span>
                 <Phone size={18} />
-              </motion.button>
-            </motion.div>
-          </motion.div>
+              </Motion.button>
+            </Motion.div>
+          </Motion.div>
 
-          <motion.div
+          <Motion.div
             className="cta-decoration"
             animate={{ 
               rotate: 360,
@@ -123,10 +123,10 @@ const CallToAction = () => {
             <div className="decoration-ring ring-1"></div>
             <div className="decoration-ring ring-2"></div>
             <div className="decoration-ring ring-3"></div>
-          </motion.div>
+          </Motion.div>
 
           <div className="floating-elements">
-            <motion.div
+            <Motion.div
               className="floating-element element-1"
               animate={{ 
                 y: [0, -20, 0],
@@ -138,7 +138,7 @@ const CallToAction = () => {
                 ease: "easeInOut"
               }}
             />
-            <motion.div
+            <Motion.div
               className="floating-element element-2"
               animate={{ 
                 y: [0, 15, 0],
@@ -151,7 +151,7 @@ const CallToAction = () => {
                 delay: 2
               }}
             />
-            <motion.div
+            <Motion.div
               className="floating-element element-3"
               animate={{ 
                 y: [0, -15, 0],
@@ -170,7 +170,7 @@ const CallToAction = () => {
       
       {/* Contact Form Modal */}
       {showContactForm && (
-        <motion.div
+        <Motion.div
           className="contact-modal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -181,7 +181,7 @@ const CallToAction = () => {
             }
           }}
         >
-          <motion.div
+          <Motion.div
             className="contact-modal-content"
             initial={{ opacity: 0, scale: 0.9, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -203,8 +203,8 @@ const CallToAction = () => {
                 setTimeout(() => setShowContactForm(false), 3000);
               }}
             />
-          </motion.div>
-        </motion.div>
+          </Motion.div>
+        </Motion.div>
       )}
       
       <style jsx>{`

@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const About = () => {
@@ -7,7 +7,7 @@ const About = () => {
     <section className="about-section section" id="about">
       <div className="container">
         <div className="about-content">
-          <motion.div
+          <Motion.div
             className="about-illustration"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -15,7 +15,7 @@ const About = () => {
             viewport={{ once: true }}
           >
             <div className="illustration-container">
-              <motion.div
+              <Motion.div
                 className="illustration-element primary"
                 animate={{ 
                   y: [0, -15, 0],
@@ -28,9 +28,9 @@ const About = () => {
                 }}
               >
                 <div className="element-inner"></div>
-              </motion.div>
+              </Motion.div>
               
-              <motion.div
+              <Motion.div
                 className="illustration-element secondary"
                 animate={{ 
                   y: [0, 15, 0],
@@ -44,9 +44,9 @@ const About = () => {
                 }}
               >
                 <div className="element-inner"></div>
-              </motion.div>
+              </Motion.div>
               
-              <motion.div
+              <Motion.div
                 className="illustration-element tertiary"
                 animate={{ 
                   scale: [1, 1.1, 1],
@@ -59,20 +59,20 @@ const About = () => {
                 }}
               >
                 <div className="element-inner"></div>
-              </motion.div>
+              </Motion.div>
               
               <div className="glow-effect"></div>
             </div>
-          </motion.div>
+          </Motion.div>
           
-          <motion.div
+          <Motion.div
             className="about-text"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
             viewport={{ once: true }}
           >
-            <motion.h1
+            <Motion.h1
               className="section-title gradient-text"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -80,9 +80,9 @@ const About = () => {
               viewport={{ once: true }}
             >
               About Our Agency
-            </motion.h1>
+            </Motion.h1>
             
-            <motion.p
+            <Motion.p
               className="about-description"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -93,9 +93,9 @@ const About = () => {
               transforming your digital presence. With over 5 years of experience in the industry, 
               we've helped hundreds of businesses achieve their goals through cutting-edge design 
               and development solutions.
-            </motion.p>
+            </Motion.p>
             
-            <motion.div
+            <Motion.div
               className="about-features"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -131,9 +131,9 @@ const About = () => {
                   <p>Built with the latest technologies and trends</p>
                 </div>
               </div>
-            </motion.div>
+            </Motion.div>
             
-            <motion.div
+            <Motion.div
               className="about-cta"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -143,8 +143,8 @@ const About = () => {
               <Link to="/about-us" className="neon-button">
                 Learn More About Us
               </Link>
-            </motion.div>
-          </motion.div>
+            </Motion.div>
+          </Motion.div>
         </div>
       </div>
       

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { ArrowLeft, Eye, ThumbsUp, HelpCircle } from 'lucide-react';
 import api from '../services/api';
 
@@ -169,11 +169,11 @@ const HelpArticlePage = () => {
   return (
     <div className="help-article-page">
       <div className="container">
-        <motion.div className="back-navigation" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+        <Motion.div className="back-navigation" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
           <Link to="/help" className="back-btn"><ArrowLeft size={20} />Back to Help Center</Link>
-        </motion.div>
+        </Motion.div>
 
-        <motion.header className="article-header" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
+        <Motion.header className="article-header" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
           <div className="category-badge"><HelpCircle size={16} />{article.category}</div>
           <h1 className="article-title">{article.title}</h1>
           <p className="article-excerpt">{article.excerpt}</p>
@@ -181,11 +181,11 @@ const HelpArticlePage = () => {
             <span><Eye size={16} />{article.view_count} views</span>
             <span><ThumbsUp size={16} />{article.helpful_votes} helpful</span>
           </div>
-        </motion.header>
+        </Motion.header>
 
-        <motion.article className="article-content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
+        <Motion.article className="article-content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
           <div className="content-body" dangerouslySetInnerHTML={{ __html: article.content }} />
-        </motion.article>
+        </Motion.article>
       </div>
 
       <style jsx>{`

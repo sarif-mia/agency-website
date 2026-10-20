@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { Search, Building, ExternalLink, TrendingUp } from 'lucide-react';
 import api from '../services/api';
 
 const CaseStudiesPage = () => {
   const [caseStudies, setCaseStudies] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedIndustry, setSelectedIndustry] = useState('');
   const [filteredCaseStudies, setFilteredCaseStudies] = useState([]);
@@ -217,10 +217,10 @@ const CaseStudiesPage = () => {
       {/* Hero Section */}
       <section className="hero">
         <div className="container">
-          <motion.div className="hero-content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
+          <Motion.div className="hero-content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
             <h1>Case Studies</h1>
             <p>Real success stories from our clients across various industries</p>
-          </motion.div>
+          </Motion.div>
         </div>
       </section>
 
@@ -256,7 +256,7 @@ const CaseStudiesPage = () => {
           ) : (
             <div className="studies-grid">
               {filteredCaseStudies.map((study, index) => (
-                <motion.article key={study.id} className={`case-card ${study.is_featured ? 'featured' : ''}`} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }}>
+                <Motion.article key={study.id} className={`case-card ${study.is_featured ? 'featured' : ''}`} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }}>
                   {study.featured_image_url && (
                     <div className="card-image">
                       <img src={study.featured_image_url} alt={study.title} loading="lazy" />
@@ -299,7 +299,7 @@ const CaseStudiesPage = () => {
                       )}
                     </div>
                   </div>
-                </motion.article>
+                </Motion.article>
               ))}
             </div>
           )}

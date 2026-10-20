@@ -1,0 +1,92 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Agency Website (Docker Compose)",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"up",
+				"--build"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Run Agency Website Frontend",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"--prefix",
+				"frontend",
+				"run",
+				"dev",
+				"--",
+				"--host",
+				"0.0.0.0"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Run Agency Website Backend",
+			"type": "shell",
+			"command": "python3",
+			"args": [
+				"backend/manage.py",
+				"runserver",
+				"127.0.0.1:8000"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Prepare Agency Backend Environment",
+			"type": "shell",
+			"command": "python3",
+			"args": [
+				"-m",
+				"venv",
+				"backend/.venv"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Install Agency Backend Dependencies",
+			"type": "shell",
+			"command": "backend/.venv/bin/python",
+			"args": [
+				"-m",
+				"pip",
+				"install",
+				"-r",
+				"backend/requirements.txt"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Initialize Agency Backend Database",
+			"type": "shell",
+			"command": "backend/.venv/bin/python",
+			"args": [
+				"backend/manage.py",
+				"migrate",
+				"--noinput"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Run Agency Website API",
+			"type": "shell",
+			"command": "backend/.venv/bin/python",
+			"args": [
+				"backend/manage.py",
+				"runserver",
+				"0.0.0.0:8000"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}

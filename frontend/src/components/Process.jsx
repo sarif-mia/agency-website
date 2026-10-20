@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { Search, Lightbulb, Code2, Rocket } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -77,7 +77,7 @@ const Process = () => {
   return (
     <section className="process-section section" id="process">
       <div className="container">
-        <motion.div
+        <Motion.div
           className="process-header"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -88,10 +88,10 @@ const Process = () => {
           <p className="section-subtitle">
             We follow a proven methodology to ensure every project delivers exceptional results
           </p>
-        </motion.div>
+        </Motion.div>
 
         <div className="process-timeline">
-          <motion.svg
+          <Motion.svg
             className="timeline-line"
             viewBox="0 0 800 400"
             initial="hidden"
@@ -112,7 +112,7 @@ const Process = () => {
                 </feMerge>
               </filter>
             </defs>
-            <motion.path
+            <Motion.path
               d="M 100 200 Q 250 100 400 200 Q 550 300 700 200"
               stroke="url(#lineGradient)"
               strokeWidth="3"
@@ -120,11 +120,11 @@ const Process = () => {
               filter="url(#glow)"
               variants={lineVariants}
             />
-          </motion.svg>
+          </Motion.svg>
 
           <div className="process-steps">
             {steps.map((step, index) => (
-              <motion.div
+              <Motion.div
                 key={step.id}
                 className={`process-step step-${index + 1}`}
                 custom={index}
@@ -139,7 +139,7 @@ const Process = () => {
               >
                 <div className="step-indicator">
                   <div className="step-number">{step.id}</div>
-                  <motion.div
+                  <Motion.div
                     className="step-icon"
                     whileHover={{ 
                       rotate: 360,
@@ -148,7 +148,7 @@ const Process = () => {
                   >
                     <step.icon size={24} />
                     <div className="icon-glow"></div>
-                  </motion.div>
+                  </Motion.div>
                 </div>
 
                 <div className="step-content">
@@ -157,7 +157,7 @@ const Process = () => {
                   
                   <ul className="step-details">
                     {step.details.map((detail, idx) => (
-                      <motion.li
+                      <Motion.li
                         key={idx}
                         className="detail-item"
                         initial={{ opacity: 0, x: -20 }}
@@ -167,18 +167,18 @@ const Process = () => {
                       >
                         <span className="detail-bullet">•</span>
                         {detail}
-                      </motion.li>
+                      </Motion.li>
                     ))}
                   </ul>
                 </div>
 
                 <div className="step-glow"></div>
-              </motion.div>
+              </Motion.div>
             ))}
           </div>
         </div>
 
-        <motion.div
+        <Motion.div
           className="process-cta"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -192,7 +192,7 @@ const Process = () => {
           <button className="neon-button" onClick={handleGetStarted}>
             Get Started Today
           </button>
-        </motion.div>
+        </Motion.div>
       </div>
       
       <style jsx>{`

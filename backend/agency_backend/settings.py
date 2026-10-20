@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-from decouple import config  # Add this import
+from decouple import config
 
 # Import dj_database_url only if available (for production)
 try:
@@ -23,8 +23,6 @@ except ImportError:
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Add this for Railway compatibility
-import os
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-render-deployment-key-change-in-production-123456789')
@@ -41,6 +39,16 @@ ALLOWED_HOSTS = [
 # Add this for Railway compatibility
 if 'ALLOWED_HOSTS' in os.environ:
     ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
+
+if os.environ.get('VERCEL'):
+    for host_variable in ('VERCEL_URL', 'VERCEL_PROJECT_PRODUCTION_URL', 'VERCEL_BRANCH_URL'):
+        host = os.environ.get(host_variable)
+        if host:
+            ALLOWED_HOSTS.append(host)
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    CSRF_TRUSTED_ORIGINS = [f'https://{host}' for host in ALLOWED_HOSTS if host.endswith('.vercel.app')]
 
 
 # Application definition
@@ -168,7 +176,10 @@ STATICFILES_DIRS = [
 
 # Add this for Railway compatibility
 if not DEBUG:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STORAGES = {
+        'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+        'staticfiles': {'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage'},
+    }
 
 # Media files
 MEDIA_URL = '/media/'
@@ -219,6 +230,8 @@ REST_FRAMEWORK = {
 
 # CORS Configuration
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:5174",
@@ -258,7 +271,8 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='dummy-password')
 if not EMAIL_HOST_PASSWORD or EMAIL_HOST_PASSWORD in ['your-gmail-app-password-here', 'dummy-password']:
     # Fallback to console backend if no password is set
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    print("Warning: Using console email backend. Set EMAIL_HOST_PASSWORD for email functionality.")
+    import logging
+    logging.getLogger(__name__).warning("Using console email backend. Set EMAIL_HOST_PASSWORD for email functionality.")
 
 DEFAULT_FROM_EMAIL = 'Agency Website <sitegenit@gmail.com>'
 

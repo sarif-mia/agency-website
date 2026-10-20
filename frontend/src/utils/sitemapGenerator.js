@@ -1,8 +1,8 @@
+import { API_BASE_URL } from '../services/api';
 // Dynamic Sitemap Generator for React Router
-import { siteConfig } from './seoConfig';
 
 // Route configuration for sitemap generation
-const routes = [
+export const routes = [
   {
     path: '/',
     changefreq: 'weekly',
@@ -251,11 +251,7 @@ export const fetchDynamicRoutes = async () => {
   
   try {
     // Fetch blog posts from backend
-    const API_URL = import.meta.env.VITE_API_URL || (
-      import.meta.env.PROD
-        ? 'https://agency-backend.onrender.com/api'
-        : 'http://localhost:8000/api'
-    );
+    const API_URL = API_BASE_URL;
     const blogResponse = await fetch(`${API_URL}/blog/?format=json`);
     if (blogResponse.ok) {
       const blogPosts = await blogResponse.json();
@@ -298,7 +294,7 @@ export const fetchDynamicRoutes = async () => {
     }
 
     // Fetch help articles from backend
-    const helpResponse = await fetch('http://localhost:8000/api/help/?format=json');
+    const helpResponse = await fetch(`${API_URL}/help/?format=json`);
     if (helpResponse.ok) {
       const helpArticles = await helpResponse.json();
       helpArticles.results?.forEach(article => {
@@ -329,7 +325,7 @@ const servicesResponse = await fetch(`${API_URL}/services/?format=json`);
     }
 
     // Fetch projects from backend
-    const projectsResponse = await fetch('http://localhost:8000/api/projects/?format=json');
+    const projectsResponse = await fetch(`${API_URL}/projects/?format=json`);
     if (projectsResponse.ok) {
       const projects = await projectsResponse.json();
       projects.results?.forEach(project => {

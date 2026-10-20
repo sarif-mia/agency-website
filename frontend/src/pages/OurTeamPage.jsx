@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { ArrowLeft, Users, Award, MapPin, Mail, Linkedin, Github, Star } from 'lucide-react';
 
 const OurTeamPage = () => {
@@ -99,7 +99,7 @@ const OurTeamPage = () => {
   return (
     <div className="team-page">
       <div className="container">
-        <motion.div
+        <Motion.div
           className="back-navigation"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -109,9 +109,9 @@ const OurTeamPage = () => {
             <ArrowLeft size={20} />
             Back to Home
           </Link>
-        </motion.div>
+        </Motion.div>
 
-        <motion.header
+        <Motion.header
           className="page-header"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -125,10 +125,10 @@ const OurTeamPage = () => {
           <p className="page-description">
             Meet the talented individuals behind SiteGenIT's success. Together, we create exceptional digital experiences.
           </p>
-        </motion.header>
+        </Motion.header>
 
         {/* Team Stats */}
-        <motion.section
+        <Motion.section
           className="team-stats"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -138,7 +138,7 @@ const OurTeamPage = () => {
             {stats.map((stat, index) => {
               const IconComponent = stat.icon;
               return (
-                <motion.div
+                <Motion.div
                   key={index}
                   className="stat-card"
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -150,14 +150,14 @@ const OurTeamPage = () => {
                   </div>
                   <h3 className="stat-number">{stat.number}</h3>
                   <p className="stat-label">{stat.label}</p>
-                </motion.div>
+                </Motion.div>
               );
             })}
           </div>
-        </motion.section>
+        </Motion.section>
 
         {/* Department Filter */}
-        <motion.section
+        <Motion.section
           className="department-filter"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -175,10 +175,10 @@ const OurTeamPage = () => {
               </button>
             ))}
           </div>
-        </motion.section>
+        </Motion.section>
 
         {/* Team Grid */}
-        <motion.section
+        <Motion.section
           className="team-grid-section"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -186,7 +186,7 @@ const OurTeamPage = () => {
         >
           <div className="team-grid">
             {filteredTeam.map((member, index) => (
-              <motion.div
+              <Motion.div
                 key={member.id}
                 className="team-card"
                 initial={{ opacity: 0, y: 30 }}
@@ -230,13 +230,13 @@ const OurTeamPage = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </Motion.div>
             ))}
           </div>
-        </motion.section>
+        </Motion.section>
 
         {/* Join Team CTA */}
-        <motion.section
+        <Motion.section
           className="join-team-cta"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -255,7 +255,7 @@ const OurTeamPage = () => {
               </a>
             </div>
           </div>
-        </motion.section>
+        </Motion.section>
       </div>
 
       <style jsx>{`

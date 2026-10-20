@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { 
   Menu, 
   X, 
@@ -14,9 +14,11 @@ import {
   BarChart
 } from 'lucide-react';
 import api from '../services/api';
+import { useAuth } from '../context/auth';
 
 const Header3D = () => {
   const navigate = useNavigate();
+  const { login, register } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isMeetingModalOpen, setIsMeetingModalOpen] = useState(false);
@@ -112,7 +114,7 @@ const Header3D = () => {
     
     if (item.isRoute || item.href.startsWith('/')) {
       return (
-        <motion.div {...motionProps}>
+        <Motion.div {...motionProps}>
           <Link
             to={item.href}
             onClick={() => setIsMenuOpen(false)}
@@ -120,16 +122,16 @@ const Header3D = () => {
           >
             {content}
           </Link>
-        </motion.div>
+        </Motion.div>
       );
     } else {
       return (
-        <motion.button
+        <Motion.button
           {...motionProps}
           onClick={() => handleNavigation(item)}
         >
           {content}
-        </motion.button>
+        </Motion.button>
       );
     }
   };
@@ -158,23 +160,19 @@ const Header3D = () => {
     try {
       let response;
       if (authMode === 'login') {
-        response = await api.auth.login({
-          email: authForm.email,
-          password: authForm.password
-        });
+        response = await login(authForm.email, authForm.password);
       } else {
         if (authForm.password !== authForm.confirmPassword) {
           throw new Error('Passwords do not match');
         }
-        response = await api.auth.register({
-          email: authForm.email,
-          password: authForm.password,
-          confirm_password: authForm.confirmPassword,
-          first_name: authForm.firstName,
-          last_name: authForm.lastName
-        });
+        response = await register(
+          `${authForm.firstName} ${authForm.lastName}`,
+          authForm.email,
+          authForm.password
+        );
       }
       
+      if (!response.success) throw new Error(response.error || response.message);
       setMessage(response.message);
       setMessageType('success');
       
@@ -211,7 +209,7 @@ const Header3D = () => {
     setMessage('');
     
     try {
-      const response = await api.meeting.scheduleRequest(meetingForm);
+      await api.meeting.scheduleRequest(meetingForm);
       setMessage('✅ Meeting request submitted successfully! Your request has been added to our priority queue. Our team will contact you within 24 hours to confirm your meeting schedule. Check your email for confirmation.');
       setMessageType('success');
       
@@ -231,7 +229,7 @@ const Header3D = () => {
         setMessage('');
       }, 4000);
       
-    } catch (error) {
+    } catch {
       setMessage('❌ Failed to schedule meeting. Please check your information and try again. If the problem persists, contact us directly.');
       setMessageType('error');
     } finally {
@@ -241,7 +239,7 @@ const Header3D = () => {
 
   return (
     <>
-      <motion.header
+      <Motion.header
         className={`header-3d ${scrolled ? 'scrolled' : ''}`}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -249,7 +247,7 @@ const Header3D = () => {
       >
         <div className="header-container">
           {/* Simple Logo */}
-          <motion.div
+          <Motion.div
             className="logo-3d"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
@@ -302,7 +300,7 @@ const Header3D = () => {
               `}</style>
             </div>
             <span className="logo-text gradient-text">SiteGenIT</span>
-          </motion.div>
+          </Motion.div>
 
           {/* Desktop Navigation */}
           <nav className="desktop-nav">
@@ -313,40 +311,40 @@ const Header3D = () => {
 
           {/* Action Buttons */}
           <div className="action-buttons">
-            <motion.button
+            <Motion.button
               className="action-btn meeting-btn"
               onClick={() => setIsMeetingModalOpen(true)}
               whileHover={{ scale: 1.1, boxShadow: "0 0 25px rgba(0, 245, 255, 0.5)" }}
               whileTap={{ scale: 0.95 }}
             >
               <Calendar size={20} />
-            </motion.button>
+            </Motion.button>
 
-            <motion.button
+            <Motion.button
               className="action-btn auth-btn"
               onClick={() => setIsAuthModalOpen(true)}
               whileHover={{ scale: 1.1, boxShadow: "0 0 25px rgba(153, 102, 255, 0.5)" }}
               whileTap={{ scale: 0.95 }}
             >
               <User size={20} />
-            </motion.button>
+            </Motion.button>
 
             {/* Mobile Menu Toggle */}
-            <motion.button
+            <Motion.button
               className="mobile-menu-toggle"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </motion.button>
+            </Motion.button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
         <AnimatePresence>
           {isMenuOpen && (
-            <motion.div
+            <Motion.div
               className="mobile-nav"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
@@ -381,22 +379,22 @@ const Header3D = () => {
                   </button>
                 </div>
               </div>
-            </motion.div>
+            </Motion.div>
           )}
         </AnimatePresence>
-      </motion.header>
+      </Motion.header>
 
       {/* Authentication Modal */}
       <AnimatePresence>
         {isAuthModalOpen && (
-          <motion.div
+          <Motion.div
             className="modal-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsAuthModalOpen(false)}
           >
-            <motion.div
+            <Motion.div
               className="auth-modal"
               initial={{ scale: 0.9, opacity: 0, y: 50 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -547,22 +545,22 @@ const Header3D = () => {
                   </div>
                 )}
               </div>
-            </motion.div>
-          </motion.div>
+            </Motion.div>
+          </Motion.div>
         )}
       </AnimatePresence>
 
       {/* Meeting Scheduling Modal */}
       <AnimatePresence>
         {isMeetingModalOpen && (
-          <motion.div
+          <Motion.div
             className="modal-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsMeetingModalOpen(false)}
           >
-            <motion.div
+            <Motion.div
               className="meeting-modal"
               initial={{ scale: 0.9, opacity: 0, y: 50 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -702,8 +700,8 @@ const Header3D = () => {
                   </button>
                 </form>
               </div>
-            </motion.div>
-          </motion.div>
+            </Motion.div>
+          </Motion.div>
         )}
       </AnimatePresence>
 

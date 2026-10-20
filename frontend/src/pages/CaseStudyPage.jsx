@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { ArrowLeft, Building, Clock, ExternalLink, TrendingUp } from 'lucide-react';
 import api from '../services/api';
 
@@ -150,11 +150,11 @@ The system now serves over 50,000 patients and continues to scale with their gro
   return (
     <div className="case-study-page">
       <div className="container">
-        <motion.div className="back-navigation" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+        <Motion.div className="back-navigation" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
           <Link to="/case-studies" className="back-btn"><ArrowLeft size={20} />Back to Case Studies</Link>
-        </motion.div>
+        </Motion.div>
 
-        <motion.header className="case-header" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
+        <Motion.header className="case-header" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
           {caseStudy.featured_image_url && (
             <div className="featured-image">
               <img src={caseStudy.featured_image_url} alt={caseStudy.title} />
@@ -186,9 +186,9 @@ The system now serves over 50,000 patients and continues to scale with their gro
               </div>
             )}
           </div>
-        </motion.header>
+        </Motion.header>
 
-        <motion.div className="case-content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+        <Motion.div className="case-content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
           <div className="content-grid">
             <section className="challenge-section">
               <h2><span className="section-number">01</span>The Challenge</h2>
@@ -216,9 +216,9 @@ The system now serves over 50,000 patients and continues to scale with their gro
               )}
             </section>
           </div>
-        </motion.div>
+        </Motion.div>
 
-        <motion.footer className="case-footer" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+        <Motion.footer className="case-footer" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
           <div className="footer-content">
             <div className="cta-section">
               <h3>Ready to Transform Your Business?</h3>
@@ -233,7 +233,7 @@ The system now serves over 50,000 patients and continues to scale with their gro
               Back to all case studies
             </Link>
           </div>
-        </motion.footer>
+        </Motion.footer>
       </div>
 
       <style jsx>{`

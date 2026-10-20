@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { Calendar, Clock, Tag, ArrowLeft, Share2 } from 'lucide-react';
 import api from '../services/api';
 
@@ -200,7 +200,7 @@ const BlogPostPage = () => {
     <div className="blog-post-page">
       <div className="container">
         {/* Back Button */}
-        <motion.div
+        <Motion.div
           className="back-navigation"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -210,10 +210,10 @@ const BlogPostPage = () => {
             <ArrowLeft size={20} />
             Back to Blog
           </Link>
-        </motion.div>
+        </Motion.div>
 
         {/* Article Header */}
-        <motion.header
+        <Motion.header
           className="article-header"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -253,10 +253,10 @@ const BlogPostPage = () => {
               </div>
             )}
           </div>
-        </motion.header>
+        </Motion.header>
 
         {/* Article Content */}
-        <motion.article
+        <Motion.article
           className="article-content"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -266,10 +266,10 @@ const BlogPostPage = () => {
             className="content-body"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
-        </motion.article>
+        </Motion.article>
 
         {/* Article Footer */}
-        <motion.footer
+        <Motion.footer
           className="article-footer"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -289,7 +289,7 @@ const BlogPostPage = () => {
               Back to all articles
             </Link>
           </div>
-        </motion.footer>
+        </Motion.footer>
       </div>
 
       <style jsx>{`

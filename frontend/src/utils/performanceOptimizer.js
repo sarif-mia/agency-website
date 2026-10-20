@@ -81,7 +81,7 @@ export class CoreWebVitalsOptimizer {
       
       try {
         lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
-      } catch (e) {
+      } catch {
         // Handle browsers that don't support this metric
       }
 
@@ -95,7 +95,7 @@ export class CoreWebVitalsOptimizer {
       
       try {
         fidObserver.observe({ entryTypes: ['first-input'] });
-      } catch (e) {
+      } catch {
         // Handle browsers that don't support this metric
       }
 
@@ -115,7 +115,7 @@ export class CoreWebVitalsOptimizer {
       
       try {
         clsObserver.observe({ entryTypes: ['layout-shift'] });
-      } catch (e) {
+      } catch {
         // Handle browsers that don't support this metric
       }
     }
@@ -157,7 +157,7 @@ export const optimizeImages = () => {
 
 // Service Worker registration for caching
 export const registerServiceWorker = () => {
-  if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+  if ('serviceWorker' in navigator && import.meta.env.PROD) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js')
         .then((registration) => {
@@ -194,8 +194,8 @@ export const optimizeMainThread = () => {
 
 const initializeAnalytics = () => {
   // Initialize Google Analytics or other analytics
-  if (typeof gtag !== 'undefined') {
-    gtag('config', 'GA_MEASUREMENT_ID');
+  if (typeof window.gtag === 'function') {
+    window.gtag('config', 'GA_MEASUREMENT_ID');
   }
 };
 

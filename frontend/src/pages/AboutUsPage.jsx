@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { ArrowLeft, Users, Target, Award, Heart, Globe, Calendar, MapPin, Mail, Phone } from 'lucide-react';
 import SEO from '../components/SEO';
 import { getPageSEO } from '../utils/seoConfig';
@@ -92,7 +92,7 @@ const AboutUsPage = () => {
         structuredData={aboutSEO.structuredData}
       />
       <div className="container">
-        <motion.div
+        <Motion.div
           className="back-navigation"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -102,10 +102,10 @@ const AboutUsPage = () => {
             <ArrowLeft size={20} />
             Back to Home
           </Link>
-        </motion.div>
+        </Motion.div>
 
         {/* Hero Section */}
-        <motion.header
+        <Motion.header
           className="page-header"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -115,10 +115,10 @@ const AboutUsPage = () => {
           <p className="page-subtitle">
             Empowering businesses with innovative digital solutions since 2019
           </p>
-        </motion.header>
+        </Motion.header>
 
         {/* Company Info */}
-        <motion.section
+        <Motion.section
           className="company-info"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -141,10 +141,10 @@ const AboutUsPage = () => {
               <p>Creative professionals dedicated to your success</p>
             </div>
           </div>
-        </motion.section>
+        </Motion.section>
 
         {/* Mission & Vision */}
-        <motion.section
+        <Motion.section
           className="mission-vision"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -168,10 +168,10 @@ const AboutUsPage = () => {
               </p>
             </div>
           </div>
-        </motion.section>
+        </Motion.section>
 
         {/* Core Values */}
-        <motion.section
+        <Motion.section
           className="core-values"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -182,7 +182,7 @@ const AboutUsPage = () => {
             {values.map((value, index) => {
               const IconComponent = value.icon;
               return (
-                <motion.div
+                <Motion.div
                   key={index}
                   className="value-card"
                   initial={{ opacity: 0, y: 30 }}
@@ -194,14 +194,14 @@ const AboutUsPage = () => {
                   </div>
                   <h3>{value.title}</h3>
                   <p>{value.description}</p>
-                </motion.div>
+                </Motion.div>
               );
             })}
           </div>
-        </motion.section>
+        </Motion.section>
 
         {/* Achievements */}
-        <motion.section
+        <Motion.section
           className="achievements"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -212,7 +212,7 @@ const AboutUsPage = () => {
             {achievements.map((achievement, index) => {
               const IconComponent = achievement.icon;
               return (
-                <motion.div
+                <Motion.div
                   key={index}
                   className="achievement-card"
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -225,14 +225,14 @@ const AboutUsPage = () => {
                   <h3 className="achievement-number">{achievement.number}</h3>
                   <h4 className="achievement-label">{achievement.label}</h4>
                   <p className="achievement-description">{achievement.description}</p>
-                </motion.div>
+                </Motion.div>
               );
             })}
           </div>
-        </motion.section>
+        </Motion.section>
 
         {/* Team Section */}
-        <motion.section
+        <Motion.section
           className="team-section"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -241,7 +241,7 @@ const AboutUsPage = () => {
           <h2 className="section-title">Meet Our Team</h2>
           <div className="team-grid">
             {teamMembers.map((member, index) => (
-              <motion.div
+              <Motion.div
                 key={member.id}
                 className="team-card"
                 initial={{ opacity: 0, y: 30 }}
@@ -262,13 +262,13 @@ const AboutUsPage = () => {
                     ))}
                   </div>
                 </div>
-              </motion.div>
+              </Motion.div>
             ))}
           </div>
-        </motion.section>
+        </Motion.section>
 
         {/* Contact Section */}
-        <motion.section
+        <Motion.section
           className="contact-section"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -287,7 +287,7 @@ const AboutUsPage = () => {
               </a>
             </div>
           </div>
-        </motion.section>
+        </Motion.section>
       </div>
 
       <style jsx>{`

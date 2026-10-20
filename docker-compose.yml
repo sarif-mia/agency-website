@@ -8,16 +8,19 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=agency_backend.settings
       - DEBUG=True
+      - DATABASE_URL=postgres://agency_user:agency_password@db:5432/agency_db
     volumes:
       - ./backend:/app
     depends_on:
       - db
-    command: python manage.py runserver 0.0.0.0:8000
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    environment:
+      - API_PROXY_TARGET=http://backend:8000
     ports:
       - "3000:3000"
     volumes:

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { ArrowLeft, Download, FileText, Code, Palette, BookOpen, Star, Eye } from 'lucide-react';
 
 const FreeResourcesPage = () => {
@@ -126,7 +126,7 @@ const FreeResourcesPage = () => {
     <div className="free-resources-page">
       <div className="container">
         {/* Back Button */}
-        <motion.div
+        <Motion.div
           className="back-navigation"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -136,10 +136,10 @@ const FreeResourcesPage = () => {
             <ArrowLeft size={20} />
             Back to Home
           </Link>
-        </motion.div>
+        </Motion.div>
 
         {/* Header */}
-        <motion.header
+        <Motion.header
           className="page-header"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -153,10 +153,10 @@ const FreeResourcesPage = () => {
           <p className="page-description">
             Download free templates, guides, code snippets, and design assets to boost your projects
           </p>
-        </motion.header>
+        </Motion.header>
 
         {/* Categories Filter */}
-        <motion.section
+        <Motion.section
           className="categories-section"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -174,10 +174,10 @@ const FreeResourcesPage = () => {
               </button>
             ))}
           </div>
-        </motion.section>
+        </Motion.section>
 
         {/* Resources Grid */}
-        <motion.section
+        <Motion.section
           className="resources-section"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -185,7 +185,7 @@ const FreeResourcesPage = () => {
         >
           <div className="resources-grid">
             {filteredResources.map((resource, index) => (
-              <motion.div
+              <Motion.div
                 key={resource.id}
                 className="resource-card"
                 initial={{ opacity: 0, y: 30 }}
@@ -237,10 +237,10 @@ const FreeResourcesPage = () => {
                     </button>
                   </div>
                 </div>
-              </motion.div>
+              </Motion.div>
             ))}
           </div>
-        </motion.section>
+        </Motion.section>
       </div>
 
       <style jsx>{`

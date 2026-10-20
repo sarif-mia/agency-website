@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import {
     ArrowLeft,
     User,
@@ -16,7 +16,7 @@ import {
     CheckCircle,
     AlertCircle
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/auth';
 
 const ClientDashboardPage = () => {
     const { user, logout } = useAuth();
@@ -93,7 +93,7 @@ const ClientDashboardPage = () => {
         <div className="client-dashboard-page">
             <div className="container">
                 {/* Header */}
-                <motion.header
+                <Motion.header
                     className="dashboard-header"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -114,10 +114,10 @@ const ClientDashboardPage = () => {
                             Logout
                         </button>
                     </div>
-                </motion.header>
+                </Motion.header>
 
                 {/* Navigation Tabs */}
-                <motion.nav
+                <Motion.nav
                     className="dashboard-nav"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -142,10 +142,10 @@ const ClientDashboardPage = () => {
                             </button>
                         );
                     })}
-                </motion.nav>
+                </Motion.nav>
 
                 {/* Content Area */}
-                <motion.main
+                <Motion.main
                     className="dashboard-content"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -360,7 +360,7 @@ const ClientDashboardPage = () => {
                             </div>
                         </div>
                     )}
-                </motion.main>
+                </Motion.main>
             </div>
 
             <style jsx>{`

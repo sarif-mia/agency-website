@@ -1,5 +1,6 @@
 from rest_framework import generics, status, filters
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
@@ -712,6 +713,7 @@ The Team
 
 class MeetingRequestListView(generics.ListAPIView):
     """List meeting requests (admin only)"""
+    permission_classes = [IsAdminUser]
     queryset = MeetingRequest.objects.all()
     serializer_class = MeetingRequestListSerializer
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
@@ -1082,6 +1084,7 @@ class FooterDataView(APIView):
 # =============================================================================
 
 @api_view(['GET'])
+@permission_classes([IsAdminUser])
 def dashboard_statistics_api(request):
     """
     API endpoint for dashboard statistics (for real-time updates)

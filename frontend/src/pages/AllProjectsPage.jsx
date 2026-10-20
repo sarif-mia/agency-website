@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ExternalLink, Eye, Filter, Search, Calendar, Tag } from 'lucide-react';
 
 const AllProjectsPage = () => {
@@ -176,7 +176,7 @@ const AllProjectsPage = () => {
   return (
     <div className="all-projects-page">
       <div className="container">
-        <motion.div
+        <Motion.div
           className="back-navigation"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -186,9 +186,9 @@ const AllProjectsPage = () => {
             <ArrowLeft size={20} />
             Back to Home
           </Link>
-        </motion.div>
+        </Motion.div>
 
-        <motion.header
+        <Motion.header
           className="page-header"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -198,10 +198,10 @@ const AllProjectsPage = () => {
           <p className="page-description">
             Explore our complete portfolio of successful digital projects and client solutions
           </p>
-        </motion.header>
+        </Motion.header>
 
         {/* Controls */}
-        <motion.div
+        <Motion.div
           className="controls-section"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -221,7 +221,7 @@ const AllProjectsPage = () => {
           {/* Filter Tabs */}
           <div className="filter-tabs">
             {filters.map((filter) => (
-              <motion.button
+              <Motion.button
                 key={filter}
                 className={`filter-btn ${activeFilter === filter ? 'active' : ''}`}
                 onClick={() => setActiveFilter(filter)}
@@ -229,7 +229,7 @@ const AllProjectsPage = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 {filter}
-              </motion.button>
+              </Motion.button>
             ))}
           </div>
 
@@ -243,20 +243,20 @@ const AllProjectsPage = () => {
               <option value="featured">Featured First</option>
             </select>
           </div>
-        </motion.div>
+        </Motion.div>
 
         {/* Results Count */}
-        <motion.div
+        <Motion.div
           className="results-info"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <p>Showing {sortedProjects.length} of {projects.length} projects</p>
-        </motion.div>
+        </Motion.div>
 
         {/* Projects Grid */}
-        <motion.div
+        <Motion.div
           className="projects-grid"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -264,7 +264,7 @@ const AllProjectsPage = () => {
         >
           <AnimatePresence mode="wait">
             {sortedProjects.map((project) => (
-              <motion.div
+              <Motion.div
                 key={project.id}
                 className={`project-card ${project.featured ? 'featured' : ''}`}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -279,22 +279,22 @@ const AllProjectsPage = () => {
                   <img src={project.image} alt={project.title} />
                   <div className="image-overlay">
                     <div className="overlay-content">
-                      <motion.button
+                      <Motion.button
                         className="overlay-btn view-btn"
                         onClick={() => handleViewProject(project)}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
                         <Eye size={20} />
-                      </motion.button>
-                      <motion.button
+                      </Motion.button>
+                      <Motion.button
                         className="overlay-btn link-btn"
                         onClick={() => handleExternalLink(project)}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
                         <ExternalLink size={20} />
-                      </motion.button>
+                      </Motion.button>
                     </div>
                   </div>
                   <div className="project-category">{project.category}</div>
@@ -338,14 +338,14 @@ const AllProjectsPage = () => {
                     ))}
                   </div>
                 </div>
-              </motion.div>
+              </Motion.div>
             ))}
           </AnimatePresence>
-        </motion.div>
+        </Motion.div>
 
         {/* No Results */}
         {sortedProjects.length === 0 && (
-          <motion.div
+          <Motion.div
             className="no-results"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -353,11 +353,11 @@ const AllProjectsPage = () => {
           >
             <h3>No projects found</h3>
             <p>Try adjusting your search or filter criteria</p>
-          </motion.div>
+          </Motion.div>
         )}
 
         {/* CTA Section */}
-        <motion.section
+        <Motion.section
           className="cta-section"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -375,7 +375,7 @@ const AllProjectsPage = () => {
               </Link>
             </div>
           </div>
-        </motion.section>
+        </Motion.section>
       </div>
 
       <style jsx>{`

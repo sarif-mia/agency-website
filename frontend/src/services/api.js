@@ -1,45 +1,32 @@
 import { useState } from 'react';
 
-// API Configuration and Service Functions
-// Updated with proper production backend URL
-const API_BASE_URL = import.meta.env.VITE_API_URL || (
-  import.meta.env.PROD
-    ? 'http://localhost:8000/api'  // Docker backend URL
-    : 'http://localhost:8000/api'
-);
+// Use Vite's development proxy and same-origin API routing in production.
+export const API_BASE_URL = (import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '');
+
 const handleResponse = async (response) => {
+  if (response.status === 204) return null;
+  const data = await response.json().catch(() => null);
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ message: 'An error occurred' }));
-    throw new Error(error.message || `HTTP error! status: ${response.status}`);
+    const details = data?.errors || data;
+    const message = data?.message || data?.detail ||
+      (details && Object.values(details).flat().join(' ')) ||
+      `Request failed (${response.status})`;
+    throw new Error(message);
   }
-  return response.json();
+  return data;
 };
 
-// Helper function to make API calls
 const apiCall = async (endpoint, options = {}) => {
-  const url = `${API_BASE_URL}${endpoint}`;
-  const config = {
+  const token = localStorage.getItem('authToken');
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    ...options,
     headers: {
       'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Token ${token}` } : {}),
       ...options.headers,
     },
-    ...options,
-  };
-
-  try {
-    const response = await fetch(url, config);
-    return await handleResponse(response);
-  } catch (error) {
-    console.warn(`API call failed for ${endpoint}:`, error.message);
-    // Return empty data structure instead of throwing error
-    // This allows the frontend to work without backend
-    return {
-      results: [],
-      data: [],
-      message: 'Backend not available - using demo mode',
-      success: false
-    };
-  }
+  });
+  return handleResponse(response);
 };
 
 // Projects API

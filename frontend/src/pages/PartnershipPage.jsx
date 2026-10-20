@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { ArrowLeft, Handshake, Users, TrendingUp, Award, Mail, Phone, CheckCircle } from 'lucide-react';
 
 const PartnershipPage = () => {
@@ -73,7 +73,7 @@ const PartnershipPage = () => {
   return (
     <div className="partnership-page">
       <div className="container">
-        <motion.div
+        <Motion.div
           className="back-navigation"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -83,9 +83,9 @@ const PartnershipPage = () => {
             <ArrowLeft size={20} />
             Back to Home
           </Link>
-        </motion.div>
+        </Motion.div>
 
-        <motion.header
+        <Motion.header
           className="page-header"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -99,9 +99,9 @@ const PartnershipPage = () => {
           <p className="page-description">
             Join our network of partners and grow together. Let's create amazing digital experiences as a team.
           </p>
-        </motion.header>
+        </Motion.header>
 
-        <motion.section
+        <Motion.section
           className="partnership-types"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -134,9 +134,9 @@ const PartnershipPage = () => {
               );
             })}
           </div>
-        </motion.section>
+        </Motion.section>
 
-        <motion.section
+        <Motion.section
           className="partnership-form-section"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -242,9 +242,9 @@ const PartnershipPage = () => {
               </button>
             </form>
           </div>
-        </motion.section>
+        </Motion.section>
 
-        <motion.section
+        <Motion.section
           className="contact-info-section"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -264,7 +264,7 @@ const PartnershipPage = () => {
               <a href="tel:+8801571447136">Call Now</a>
             </div>
           </div>
-        </motion.section>
+        </Motion.section>
       </div>
 
       <style jsx>{`

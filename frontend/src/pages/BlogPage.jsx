@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { Calendar, Clock, Tag, Search, Filter } from 'lucide-react';
 import api from '../services/api';
 
@@ -182,7 +182,7 @@ const BlogPage = () => {
       {/* Hero Section */}
       <section className="blog-hero">
         <div className="container">
-          <motion.div
+          <Motion.div
             className="hero-content"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -190,7 +190,7 @@ const BlogPage = () => {
           >
             <h1>Our Blog</h1>
             <p>Insights, tips, and trends from our expert team</p>
-          </motion.div>
+          </Motion.div>
         </div>
       </section>
 
@@ -220,7 +220,7 @@ const BlogPage = () => {
           ) : (
             <div className="posts-grid">
               {filteredPosts.map((post, index) => (
-                <motion.article
+                <Motion.article
                   key={post.id}
                   className={`blog-card ${post.is_featured ? 'featured' : ''}`}
                   initial={{ opacity: 0, y: 30 }}
@@ -271,7 +271,7 @@ const BlogPage = () => {
                       Read Article
                     </Link>
                   </div>
-                </motion.article>
+                </Motion.article>
               ))}
             </div>
           )}

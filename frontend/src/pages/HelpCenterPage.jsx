@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { Search, HelpCircle, FileText, Users, Settings, Zap, Eye, ThumbsUp } from 'lucide-react';
 import api from '../services/api';
 
@@ -212,7 +212,7 @@ const HelpCenterPage = () => {
       {/* Hero Section */}
       <section className="help-hero">
         <div className="container">
-          <motion.div
+          <Motion.div
             className="hero-content"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -220,7 +220,7 @@ const HelpCenterPage = () => {
           >
             <h1>Help Center</h1>
             <p>Find answers to your questions and learn how to get the most out of our services</p>
-          </motion.div>
+          </Motion.div>
         </div>
       </section>
 
@@ -271,7 +271,7 @@ const HelpCenterPage = () => {
               ) : (
                 <div className="articles-grid">
                   {filteredArticles.map((article, index) => (
-                    <motion.article
+                    <Motion.article
                       key={article.id}
                       className={`help-card ${article.is_featured ? 'featured' : ''}`}
                       initial={{ opacity: 0, y: 30 }}
@@ -308,7 +308,7 @@ const HelpCenterPage = () => {
                       <Link to={`/help/${article.slug}`} className="read-btn">
                         Read Article
                       </Link>
-                    </motion.article>
+                    </Motion.article>
                   ))}
                 </div>
               )}

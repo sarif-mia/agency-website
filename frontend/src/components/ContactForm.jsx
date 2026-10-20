@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import api from '../services/api';
 
 const ContactForm = ({ isQuick = false, onSuccess, onError }) => {
@@ -67,7 +67,7 @@ const ContactForm = ({ isQuick = false, onSuccess, onError }) => {
 
   if (success) {
     return (
-      <motion.div
+      <Motion.div
         className="success-message"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -76,12 +76,12 @@ const ContactForm = ({ isQuick = false, onSuccess, onError }) => {
         <div className="success-icon">✓</div>
         <h3>Message Sent Successfully!</h3>
         <p>Thank you for contacting us. We'll get back to you within 24 hours.</p>
-      </motion.div>
+      </Motion.div>
     );
   }
 
   return (
-    <motion.form
+    <Motion.form
       className="contact-form"
       onSubmit={handleSubmit}
       initial={{ opacity: 0, y: 20 }}
@@ -173,16 +173,16 @@ const ContactForm = ({ isQuick = false, onSuccess, onError }) => {
       </div>
 
       {error && (
-        <motion.div
+        <Motion.div
           className="error-message"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
           {error}
-        </motion.div>
+        </Motion.div>
       )}
 
-      <motion.button
+      <Motion.button
         type="submit"
         className={`submit-btn ${loading ? 'loading' : ''}`}
         disabled={loading}
@@ -197,7 +197,7 @@ const ContactForm = ({ isQuick = false, onSuccess, onError }) => {
         ) : (
           'Send Message'
         )}
-      </motion.button>
+      </Motion.button>
 
       <style jsx>{`
         .contact-form {
@@ -452,7 +452,7 @@ const ContactForm = ({ isQuick = false, onSuccess, onError }) => {
           }
         }
       `}</style>
-    </motion.form>
+    </Motion.form>
   );
 };
 

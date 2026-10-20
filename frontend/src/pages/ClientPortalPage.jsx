@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { ArrowLeft, Lock, User, Mail, Key, Eye, EyeOff, CheckCircle, AlertCircle } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/auth';
 
 const ClientPortalPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -63,7 +63,7 @@ const ClientPortalPage = () => {
           setErrorMessage(result.error);
         }
       }
-    } catch (error) {
+    } catch {
       setErrorMessage('An unexpected error occurred. Please try again.');
     }
   };
@@ -71,7 +71,7 @@ const ClientPortalPage = () => {
   return (
     <div className="client-portal-page">
       <div className="container">
-        <motion.div
+        <Motion.div
           className="back-navigation"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -81,9 +81,9 @@ const ClientPortalPage = () => {
             <ArrowLeft size={20} />
             Back to Home
           </Link>
-        </motion.div>
+        </Motion.div>
 
-        <motion.header
+        <Motion.header
           className="page-header"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -97,9 +97,9 @@ const ClientPortalPage = () => {
           <p className="page-description">
             Access your project dashboard, files, and account information
           </p>
-        </motion.header>
+        </Motion.header>
 
-        <motion.div
+        <Motion.div
           className="portal-container"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -204,7 +204,7 @@ const ClientPortalPage = () => {
 
             {/* Success/Error Messages */}
             {successMessage && (
-              <motion.div
+              <Motion.div
                 className="message success-message"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -212,11 +212,11 @@ const ClientPortalPage = () => {
               >
                 <CheckCircle size={20} />
                 <span>{successMessage}</span>
-              </motion.div>
+              </Motion.div>
             )}
 
             {errorMessage && (
-              <motion.div
+              <Motion.div
                 className="message error-message"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -224,7 +224,7 @@ const ClientPortalPage = () => {
               >
                 <AlertCircle size={20} />
                 <span>{errorMessage}</span>
-              </motion.div>
+              </Motion.div>
             )}
 
             <div className="portal-features">
@@ -257,9 +257,9 @@ const ClientPortalPage = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </Motion.div>
 
-        <motion.div
+        <Motion.div
           className="demo-credentials"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -275,7 +275,7 @@ const ClientPortalPage = () => {
               <strong>Password:</strong> demo123
             </div>
           </div>
-        </motion.div>
+        </Motion.div>
       </div>
 
       <style jsx>{`

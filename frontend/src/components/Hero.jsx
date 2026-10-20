@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
@@ -33,7 +33,7 @@ const Hero = () => {
   // Create floating particles
   const createParticles = () => {
     return Array.from({ length: 50 }, (_, i) => (
-      <motion.div
+      <Motion.div
         key={i}
         className="particle"
         style={{
@@ -62,13 +62,13 @@ const Hero = () => {
       <div className="hero-gradient-overlay"></div>
       
       <div className="container">
-        <motion.div
+        <Motion.div
           className="hero-content"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <motion.h2
+          <Motion.h2
             className="hero-title"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -76,7 +76,7 @@ const Hero = () => {
           >
             We Create{' '}
             <span className="gradient-text">
-              <motion.span
+              <Motion.span
                 key={currentWord}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -84,13 +84,13 @@ const Hero = () => {
                 transition={{ duration: 0.5 }}
               >
                 {words[currentWord]}
-              </motion.span>
+              </Motion.span>
             </span>
             <br />
             Experiences
-          </motion.h2>
+          </Motion.h2>
           
-          <motion.p
+          <Motion.p
             className="hero-subtitle"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -98,9 +98,9 @@ const Hero = () => {
           >
             Transform your ideas into extraordinary digital experiences with our cutting-edge solutions. 
             We're not just an agency - we're your creative partners in innovation.
-          </motion.p>
+          </Motion.p>
           
-          <motion.div
+          <Motion.div
             className="hero-buttons"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -112,9 +112,9 @@ const Hero = () => {
             <button className="neon-button secondary" onClick={handleViewWork}>
               View Our Work
             </button>
-          </motion.div>
+          </Motion.div>
           
-          <motion.div
+          <Motion.div
             className="hero-stats"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -132,10 +132,10 @@ const Hero = () => {
               <span className="stat-number gradient-text">24/7</span>
               <span className="stat-label">Support Available</span>
             </div>
-          </motion.div>
-        </motion.div>
+          </Motion.div>
+        </Motion.div>
         
-        <motion.div
+        <Motion.div
           className="hero-3d-element"
           animate={{ 
             y: [0, -20, 0],
@@ -156,10 +156,10 @@ const Hero = () => {
             <div className="cube-face top">C</div>
             <div className="cube-face bottom">Y</div>
           </div>
-        </motion.div>
+        </Motion.div>
         
         {/* Additional Floating Elements */}
-        <motion.div
+        <Motion.div
           className="hero-logo-cube"
           animate={{
             rotateX: [0, 360],
@@ -180,7 +180,7 @@ const Hero = () => {
             <div className="logo-face top">C</div>
             <div className="logo-face bottom">Y</div>
           </div>
-        </motion.div>
+        </Motion.div>
       </div>
       
       <style jsx>{`

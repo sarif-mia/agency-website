@@ -7,6 +7,10 @@ import json
 class Command(BaseCommand):
     help = 'Populate database with sample data for the agency website'
 
+    def add_arguments(self, parser):
+        parser.add_argument('--skip-subscribers', action='store_true',
+                            help='Do not create example newsletter subscribers')
+
     def handle(self, *args, **options):
         self.stdout.write(self.style.SUCCESS('Starting to populate sample data...'))
 
@@ -241,7 +245,7 @@ class Command(BaseCommand):
         ]
 
         for blog_data in blog_posts_data:
-            blog_data['slug'] = slugify(blog_data['title'])
+            blog_data['slug'] = slugify(blog_data['title'])[:BlogPost._meta.get_field('slug').max_length]
             blog_post, created = BlogPost.objects.get_or_create(
                 slug=blog_data['slug'],
                 defaults=blog_data
@@ -256,7 +260,7 @@ class Command(BaseCommand):
             {'email': 'mike@example.com', 'name': 'Mike Johnson'},
         ]
 
-        for subscriber_data in subscribers_data:
+        for subscriber_data in ([] if options['skip_subscribers'] else subscribers_data):
             subscriber, created = NewsletterSubscriber.objects.get_or_create(
                 email=subscriber_data['email'],
                 defaults=subscriber_data
@@ -383,7 +387,7 @@ class Command(BaseCommand):
         ]
 
         for case_study_data in case_studies_data:
-            case_study_data['slug'] = slugify(case_study_data['title'])
+            case_study_data['slug'] = slugify(case_study_data['title'])[:CaseStudy._meta.get_field('slug').max_length]
             case_study, created = CaseStudy.objects.get_or_create(
                 slug=case_study_data['slug'],
                 defaults=case_study_data

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { ArrowLeft, Download, FileText, Eye, Star } from 'lucide-react';
 
 const PortfolioDownloadPage = () => {
@@ -43,14 +43,14 @@ const PortfolioDownloadPage = () => {
   return (
     <div className="portfolio-download-page">
       <div className="container">
-        <motion.div className="back-navigation" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+        <Motion.div className="back-navigation" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
           <Link to="/" className="back-btn">
             <ArrowLeft size={20} />
             Back to Home
           </Link>
-        </motion.div>
+        </Motion.div>
 
-        <motion.header className="page-header" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
+        <Motion.header className="page-header" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
           <div className="header-icon">
             <FileText size={60} />
             <div className="icon-glow"></div>
@@ -59,9 +59,9 @@ const PortfolioDownloadPage = () => {
           <p className="page-description">
             Access our complete portfolio with detailed case studies and project documentation
           </p>
-        </motion.header>
+        </Motion.header>
 
-        <motion.section className="download-section" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
+        <Motion.section className="download-section" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
           <div className="download-card">
             <div className="card-header">
               <FileText size={32} />
@@ -96,9 +96,9 @@ const PortfolioDownloadPage = () => {
               </button>
             </div>
           </div>
-        </motion.section>
+        </Motion.section>
 
-        <motion.section className="portfolio-preview" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
+        <Motion.section className="portfolio-preview" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
           <h3>Featured Projects</h3>
           <div className="projects-grid">
             {portfolioItems.map((project) => (
@@ -121,7 +121,7 @@ const PortfolioDownloadPage = () => {
               </div>
             ))}
           </div>
-        </motion.section>
+        </Motion.section>
       </div>
 
       <style jsx>{`

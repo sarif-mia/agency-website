@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { ArrowLeft, FileText, AlertTriangle, DollarSign, Calendar, Scale } from 'lucide-react';
 
 const TermsConditionsPage = () => {
@@ -8,7 +8,7 @@ const TermsConditionsPage = () => {
     <div className="terms-page">
       <div className="container">
         {/* Back Button */}
-        <motion.div
+        <Motion.div
           className="back-navigation"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -18,10 +18,10 @@ const TermsConditionsPage = () => {
             <ArrowLeft size={20} />
             Back to Home
           </Link>
-        </motion.div>
+        </Motion.div>
 
         {/* Header */}
-        <motion.header
+        <Motion.header
           className="page-header"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -36,10 +36,10 @@ const TermsConditionsPage = () => {
             Please read these terms and conditions carefully before using our services.
           </p>
           <div className="last-updated">Last updated: August 28, 2025</div>
-        </motion.header>
+        </Motion.header>
 
         {/* Content */}
-        <motion.div
+        <Motion.div
           className="page-content"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -176,7 +176,7 @@ const TermsConditionsPage = () => {
             </section>
 
           </div>
-        </motion.div>
+        </Motion.div>
       </div>
 
       <style jsx>{`

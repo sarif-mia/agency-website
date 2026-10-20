@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { 
   MessageCircle,
   Send, 
@@ -160,7 +160,7 @@ const AIChatbot = () => {
   return (
     <>
       {/* Chat Toggle Button - Always visible */}
-      <motion.button
+      <Motion.button
         className="chat-toggle-btn"
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.1 }}
@@ -168,12 +168,12 @@ const AIChatbot = () => {
       >
         <MessageCircle size={24} />
         <span className="chat-pulse"></span>
-      </motion.button>
+      </Motion.button>
 
       {/* Chat Window - Show/Hide based on isOpen */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <Motion.div
             className={`chat-window ${isMinimized ? 'minimized' : ''}`}
             initial={{ scale: 0, opacity: 0, y: 100 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -216,7 +216,7 @@ const AIChatbot = () => {
               <>
                 <div className="chat-messages">
                   {messages.map((message) => (
-                    <motion.div
+                    <Motion.div
                       key={message.id}
                       className={`message ${message.sender}`}
                       initial={{ opacity: 0, y: 20 }}
@@ -249,12 +249,12 @@ const AIChatbot = () => {
                           })}
                         </span>
                       </div>
-                    </motion.div>
+                    </Motion.div>
                   ))}
                   
                   {/* Typing Indicator */}
                   {isTyping && (
-                    <motion.div
+                    <Motion.div
                       className="message bot typing"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -269,7 +269,7 @@ const AIChatbot = () => {
                           <span></span>
                         </div>
                       </div>
-                    </motion.div>
+                    </Motion.div>
                   )}
                   
                   <div ref={messagesEndRef} />
@@ -309,7 +309,7 @@ const AIChatbot = () => {
                 </div>
               </>
             )}
-          </motion.div>
+          </Motion.div>
         )}
       </AnimatePresence>
 

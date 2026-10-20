@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
@@ -9,7 +9,7 @@ const Testimonials = ({ testimonials: propTestimonials, loading: propLoading }) 
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [, setError] = useState(null);
   const [isDesktop, setIsDesktop] = useState(false);
   const navigate = useNavigate();
 
@@ -185,7 +185,7 @@ const Testimonials = ({ testimonials: propTestimonials, loading: propLoading }) 
   return (
     <section className="testimonials-section section" id="testimonials">
       <div className="container">
-        <motion.div
+        <Motion.div
           className="testimonials-header"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -196,25 +196,25 @@ const Testimonials = ({ testimonials: propTestimonials, loading: propLoading }) 
           <p className="section-subtitle">
             Don't just take our word for it - hear from the businesses we've helped succeed
           </p>
-        </motion.div>
+        </Motion.div>
 
         <div
           className="testimonials-container"
           onMouseEnter={() => setIsAutoPlaying(false)}
           onMouseLeave={() => setIsAutoPlaying(true)}
         >
-          <motion.button
+          <Motion.button
             className="nav-btn prev-btn"
             onClick={prevSlide}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
             <ChevronLeft size={24} />
-          </motion.button>
+          </Motion.button>
 
           <div className="testimonials-slider">
             <AnimatePresence mode="wait">
-              <motion.div
+              <Motion.div
                 key={currentIndex}
                 className="testimonials-grid"
                 initial={{ opacity: 0, x: 100 }}
@@ -323,25 +323,25 @@ const Testimonials = ({ testimonials: propTestimonials, loading: propLoading }) 
                     <div className="card-glow"></div>
                   </div>
                 )}
-              </motion.div>
+              </Motion.div>
             </AnimatePresence>
           </div>
 
-          <motion.button
+          <Motion.button
             className="nav-btn next-btn"
             onClick={nextSlide}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
             <ChevronRight size={24} />
-          </motion.button>
+          </Motion.button>
         </div>
 
         <div className="testimonials-indicators">
           {Array.from({
             length: isDesktop ? Math.ceil(testimonials.length / 2) : testimonials.length
           }, (_, index) => (
-            <motion.button
+            <Motion.button
               key={index}
               className={`indicator ${index === currentIndex ? 'active' : ''}`}
               onClick={() => setCurrentIndex(index)}
@@ -351,7 +351,7 @@ const Testimonials = ({ testimonials: propTestimonials, loading: propLoading }) 
           ))}
         </div>
 
-        <motion.div
+        <Motion.div
           className="testimonials-cta"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -362,7 +362,7 @@ const Testimonials = ({ testimonials: propTestimonials, loading: propLoading }) 
           <button className="neon-button" onClick={handleGetStarted}>
             Start Your Project
           </button>
-        </motion.div>
+        </Motion.div>
       </div>
 
       <style jsx>{`
