@@ -7,6 +7,7 @@ The redesign was checked with installed Google Chrome through Playwright at desk
 - `npm audit` and `pip-audit -r backend/requirements.txt` report zero known vulnerabilities.
 - Axe checks for WCAG A/AA and WCAG 2.1 AA report zero violations on the homepage, services, project inquiry, blog, meeting request, and sign-in pages after contrast corrections. Automated checks do not replace a full manual accessibility audit.
 - Thirty-six browser checks pass, covering registration with a single name and mixed-case email, a real empty dashboard, server-verified refresh, authenticated meeting creation, dashboard ownership, token revocation on logout, private redirects, incorrect-password feedback, login, contact submission, newsletter subscription, the public routes, portfolio filtering, project/article details, a simulated API failure and successful retry, resource downloads, the 404 page, keyboard dismissal of mobile navigation, and mobile overflow checks.
+- Two additional regression checks deliberately delay session verification and confirm that project and meeting forms still populate the signed-in identity correctly.
 - No JavaScript runtime errors were recorded during the browser flow.
 
 Temporary browser-test accounts, meetings, inquiries, and subscriptions are removed after verification.

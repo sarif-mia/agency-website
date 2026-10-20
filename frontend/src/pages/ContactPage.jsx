@@ -4,7 +4,19 @@ import { ArrowUpRight, Globe2, CheckCircle2 } from "lucide-react";
 import SEO from "../components/SEO";
 import api from "../services/api";
 import { useAuth } from "../context/auth";
-export default function ContactPage({ meeting = false, partnership = false }) {
+export default function ContactPage(props) {
+  const { restoring } = useAuth();
+  if (restoring)
+    return (
+      <div className="page-loading" role="status">
+        <span className="spinner" />
+        Checking your session…
+      </div>
+    );
+  return <ContactPageContent {...props} />;
+}
+
+function ContactPageContent({ meeting = false, partnership = false }) {
   const { user } = useAuth();
   const [form, setForm] = useState({
     name: user

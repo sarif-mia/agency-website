@@ -83,6 +83,7 @@ class AccountTests(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f"Token {result.data['token']}")
         response=self.client.post('/api/meetings/request/',fields,format='json')
         self.assertEqual(response.status_code,201)
+        self.assertEqual(response.data['data']['status'],'pending')
         self.assertEqual(MeetingRequest.objects.get(pk=response.data['data']['id']).user,user)
         overview=self.client.get('/api/client/overview/')
         self.assertEqual(overview.status_code,200)

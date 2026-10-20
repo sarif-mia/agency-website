@@ -703,7 +703,7 @@ Request ID: {meeting_request.id}
 Submitted: {meeting_request.created_at.strftime('%Y-%m-%d %H:%M:%S')}
 
 Please log in to the admin panel to manage this request:
-http://localhost:8000/admin/api/meetingrequest/{meeting_request.id}/
+{request.build_absolute_uri(f'/admin/api/meetingrequest/{meeting_request.id}/')}
                 """
                 
                 # Send email to site admin
@@ -720,7 +720,7 @@ http://localhost:8000/admin/api/meetingrequest/{meeting_request.id}/
                 confirmation_message = f"""
 Dear {meeting_request.name},
 
-Thank you for your meeting request. We've received your request and will contact you within 24 hours to confirm the details.
+Thank you for your meeting request. We've received your request and will follow up to confirm the details.
 
 Meeting Request Details:
 - Meeting Type: {meeting_request.get_meeting_type_display()}
@@ -746,15 +746,15 @@ The Team
             
             return Response({
                 'success': True,
-                'message': '🎉 Meeting request submitted successfully! Your request #' + str(meeting_request.id) + ' has been received and added to our priority queue. Our team will review your requirements and contact you within 24 hours to confirm your meeting schedule. Please check your email for confirmation details.',
+                'message': 'Your meeting request has been saved. The requested time is awaiting confirmation from the studio.',
                 'data': {
                     'id': meeting_request.id,
                     'request_number': f'MR-{meeting_request.id:04d}',
-                    'status': 'pending_review',
+                    'status': meeting_request.status,
                     'meeting_date': meeting_request.preferred_date,
                     'meeting_time': meeting_request.get_preferred_time_display(),
                     'meeting_type': meeting_request.get_meeting_type_display(),
-                    'next_steps': 'Our team will contact you within 24 hours to confirm the meeting details.',
+                    'next_steps': 'The studio will review your request and follow up to confirm the meeting details.',
                     'contact_email': settings.MEETING_REQUEST_EMAIL
                 }
             }, status=status.HTTP_201_CREATED)
